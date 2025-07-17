@@ -1,30 +1,33 @@
-// src/app/news/[slug]/page.tsx
+import { getAllPosts, getPostBySlug, NewsPost } from "@/lib/markdown";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { notFound } from 'next/navigation';
-import React from 'react';
-import { marked } from 'marked';
+export async function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 export default async function NewsPost({ params }: { params: { slug: string } }) {
-  const { slug } = params;
-  const filePath = path.join(process.cwd(), 'content/news', `${slug}.md`);
-
-  // Use fs.promises to keep it fully async (recommended)
   try {
-    const fileContents = await fs.promises.readFile(filePath, 'utf8');
-    const { data, content } = matter(fileContents);
-    const htmlContent = marked(content);
-
+    const post: NewsPost = getPostBySlug(params.slug);
     return (
-      <article className="prose lg:prose-xl p-4">
-        <h1>{data.title}</h1>
-        <p className="text-gray-500">{new Date(data.date).toLocaleDateString()}</p>
-        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+      <article className="prose prose-lg max-w-3xl mx-auto">
+        {post.image && (
+          <Image
+            src={post.image}
+            alt={post.title}
+            width={800}
+            height={400}
+            className="w-full h-auto rounded-lg mb-6"
+          />
+        )}
+        <h1>{post.title}</h1>
+        <p className="text-gray-500">{new Date(post.date).toDateString()}</p>
+        <MDXRemote source={post.content} />
       </article>
     );
-  } catch (err) {
+  } catch (error) {
     notFound();
   }
 }

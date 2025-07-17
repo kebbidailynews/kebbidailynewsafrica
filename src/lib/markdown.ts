@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
 
@@ -11,30 +11,32 @@ export interface NewsPost {
   content: string;
 }
 
-export function getAllPosts(): NewsPost[] {
+export async function getAllPosts(): Promise<NewsPost[]> {
   const newsDir = path.join(process.cwd(), "content/news");
-  const files = fs.readdirSync(newsDir);
-  return files.map((file) => {
-    const filePath = path.join(newsDir, file);
-    const fileContents = fs.readFileSync(filePath, "utf8");
-    const { data, content } = matter(fileContents);
-    return {
-      slug: file.replace(/\.md$/, ""),
-      title: data.title,
-      excerpt: data.excerpt,
-      date: data.date,
-      image: data.image,
-      content,
-    };
-  }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const files = await fs.readdir(newsDir);
+  const posts = await Promise.all(
+    files.map(async (file) => {
+      const filePath = path.join(newsDir, file);
+      const fileContents = await fs.readFile(filePath, "utf8");
+      const { data, content } = matter(fileContents);
+      return {
+        slug: file.replace(/\.md$/, ""),
+        title: data.title,
+        excerpt: data.excerpt,
+        date: data.date,
+        image: data.image,
+        content,
+      };
+    })
+  );
+  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getPostBySlug(slug: string): NewsPost {
+export async function getPostBySlug(slug: string): Promise<NewsPost> {
   const filePath = path.join(process.cwd(), "content/news", `${slug}.md`);
-  if (!fs.existsSync(filePath)) {
+  const fileContents = await fs.readFile(filePath, "utf8").catch(() => {
     throw new Error("Post not found");
-  }
-  const fileContents = fs.readFileSync(filePath, "utf8");
+  });
   const { data, content } = matter(fileContents);
   return {
     slug,

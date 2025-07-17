@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { NewsPost } from "@/lib/markdown";
+import type { NewsPost } from "@/lib/markdown";
 
 export default function NewsCard({ post }: { post: NewsPost }) {
   return (

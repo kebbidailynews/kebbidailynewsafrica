@@ -1,8 +1,8 @@
 import { getAllPosts } from "@/lib/markdown";
 import NewsCard from "@/components/NewsCard";
 
-export default function Home() {
-  const posts = getAllPosts();
+export default async function Home() {
+  const posts = await getAllPosts();
 
   return (
     <div>

@@ -1,19 +1,18 @@
 backend:
   name: git-gateway
-  branch: main
-
+  branch: main # Change to your production branch
+local_backend: true # Enable local CMS testing
 media_folder: "public/uploads"
 public_folder: "/uploads"
-
 collections:
   - name: "news"
     label: "News"
     folder: "content/news"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Excerpt", name: "excerpt", widget: "text" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Featured Image", name: "image", widget: "image", required: false }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Excerpt", name: "excerpt", widget: "string", required: true }
+      - { label: "Date", name: "date", widget: "datetime", required: true }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Content", name: "content", widget: "markdown", required: true }

@@ -18,7 +18,14 @@ export default function NewsCard({ post }: { post: NewsPost }) {
         <div className="p-4">
           <h2 className="text-xl font-semibold text-gray-900">{post.title}</h2>
           <p className="text-gray-600 mt-2">{post.excerpt}</p>
-          <p className="text-gray-500 text-sm mt-2">{new Date(post.date).toDateString()}</p>
+          <p className="text-gray-500 text-sm mt-2">By {post.author} on {new Date(post.date).toDateString()}</p>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {post.tags.map((tag) => (
+              <span key={tag} className="bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </Link>

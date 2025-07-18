@@ -12,6 +12,10 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Excerpt", name: "excerpt", widget: "string", required: true }
+      - { label: "Summary", name: "summary", widget: "text", required: true }
+      - { label: "Author", name: "author", widget: "string", required: true }
       - { label: "Date", name: "date", widget: "datetime", required: true }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Tags", name: "tags", widget: "list", required: true }
       - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Content", name: "content", widget: "markdown", required: true }

@@ -29,7 +29,15 @@ export default async function NewsPost({ params }: { params: { slug: string } })
           />
         )}
         <h1>{post.title}</h1>
-        <p className="text-gray-500">{new Date(post.date).toDateString()}</p>
+        <p className="text-gray-500">By {post.author} on {new Date(post.date).toDateString()}</p>
+        <p className="text-gray-600 italic">{post.summary}</p>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {post.tags.map((tag) => (
+            <span key={tag} className="bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">
+              {tag}
+            </span>
+          ))}
+        </div>
         {post.content ? (
           <MDXRemote source={post.content} />
         ) : (

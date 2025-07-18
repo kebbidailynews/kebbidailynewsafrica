@@ -6,7 +6,11 @@ export interface NewsPost {
   slug: string;
   title: string;
   excerpt: string;
+  summary: string;
+  author: string;
   date: string;
+  draft: boolean;
+  tags: string[];
   image?: string;
   content: string;
 }
@@ -23,15 +27,21 @@ export async function getAllPosts(): Promise<NewsPost[]> {
       console.log(`Parsed post: ${slug}, Content length: ${content.length}`);
       return {
         slug,
-        title: data.title,
-        excerpt: data.excerpt,
-        date: data.date,
+        title: data.title || "",
+        excerpt: data.excerpt || "",
+        summary: data.summary || "",
+        author: data.author || "Unknown",
+        date: data.date || new Date().toISOString(),
+        draft: data.draft ?? false,
+        tags: data.tags || [],
         image: data.image,
-        content,
+        content: content || data.content || "", // Fallback to content field if body is used
       };
     })
   );
-  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return posts
+    .filter((post) => !post.draft) // Exclude draft posts
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export async function getPostBySlug(slug: string): Promise<NewsPost> {
@@ -44,11 +54,15 @@ export async function getPostBySlug(slug: string): Promise<NewsPost> {
     console.log(`Loaded post: ${decodedSlug}, Content length: ${content.length}`);
     return {
       slug: decodedSlug,
-      title: data.title,
-      excerpt: data.excerpt,
-      date: data.date,
+      title: data.title || "",
+      excerpt: data.excerpt || "",
+      summary: data.summary || "",
+      author: data.author || "Unknown",
+      date: data.date || new Date().toISOString(),
+      draft: data.draft ?? false,
+      tags: data.tags || [],
       image: data.image,
-      content,
+      content: content || data.content || "",
     };
   } catch (error) {
     console.error(`Error loading post: ${decodedSlug}`, error);

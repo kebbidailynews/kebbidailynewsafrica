@@ -1,8 +1,15 @@
 ---
 title: The Agricultural Revolution in Kebbi is Transforming Nigeria
 excerpt: "Kebbi State’s Agricultural Revolution: Transforming Nigeria’s Breadbasket"
+summary: Kebbi State has cemented its status as Nigeria’s rice production hub,
+  contributing significantly to the nation’s goal of reducing food imports
+author: Kebbi Daily News
 date: 2025-07-18T16:37:13.833Z
-image: /uploads/a-wave-of-resignations-rocks-musk’s-empire.jpg
+draft: false
+tags:
+  - KebbiDailyNews
+  - KDNAfrica
+image: /uploads/the-agricultural-revolution-in-kebbi-is-transforming-nigeria.jpg
 content: >-
   Kebbi State, Nigeria’s “Land of Equity,” is emerging as a beacon of
   agricultural innovation, defying economic challenges to become a cornerstone

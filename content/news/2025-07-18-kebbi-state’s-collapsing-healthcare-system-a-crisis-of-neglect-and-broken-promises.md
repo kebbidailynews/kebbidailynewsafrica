@@ -2,9 +2,18 @@
 title: "Kebbi State’s Collapsing Healthcare System: A Crisis of Neglect and
   Broken Promises"
 excerpt: Primary healthcare centers in Kebbi are meant to serve as lifelines for
-  rural communities, providing essential services like maternal care,
-  vaccinations, and basic treatments.
+  rural communities
+summary: >+
+  These conditions have sparked public outrage, with residents and activists on
+  X platforms accusing the state government of neglecting healthcare despite
+  federal allocations.
+
+author: Kebbi Daily News
 date: 2025-07-18T16:11:28.295Z
+draft: false
+tags:
+  - KebbiHealth
+  - KebbiDailyNews
 image: /uploads/kebbi-state-collapsing-healthcare-system.jpg
 content: >-
   Kebbi State, known as Nigeria’s “Land of Equity,” is grappling with a dire

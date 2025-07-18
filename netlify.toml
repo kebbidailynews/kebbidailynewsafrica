@@ -4,6 +4,5 @@
   status = 200
 
 [build]
-  # 👇 Force legacy-peer-deps to resolve CMS + React 18 mismatch
-  command = "npm install --legacy-peer-deps && next build"
+  command = "next build"
   publish = ".next"

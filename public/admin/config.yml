@@ -1,16 +1,14 @@
 backend:
   name: git-gateway
-  branch: main # Use the branch your content lives on (e.g. main)
-
-media_folder: "public/uploads"  # Where images are stored in the repo
-public_folder: "/uploads"       # How the CMS refers to them in the frontend
-
+  branch: main
+media_folder: "public/uploads"
+public_folder: "/uploads"
 collections:
   - name: "news"
     label: "News"
-    folder: "content/news"      # Your actual folder for news content
+    folder: "content/news"
     create: true
-    slug: "{{slug}}"            # Auto-generates the filename
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Excerpt", name: "excerpt", widget: "string", required: true }

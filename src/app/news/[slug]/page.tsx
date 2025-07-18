@@ -16,6 +16,7 @@ export async function generateStaticParams() {
 export default async function NewsPost({ params }: { params: { slug: string } }) {
   try {
     const post: NewsPost = await getPostBySlug(params.slug);
+    console.log(`Rendering post: ${post.slug}, Content: ${post.content.slice(0, 100)}...`);
     return (
       <article className="prose prose-lg max-w-3xl mx-auto">
         {post.image && (
@@ -29,7 +30,11 @@ export default async function NewsPost({ params }: { params: { slug: string } })
         )}
         <h1>{post.title}</h1>
         <p className="text-gray-500">{new Date(post.date).toDateString()}</p>
-        <MDXRemote source={post.content} />
+        {post.content ? (
+          <MDXRemote source={post.content} />
+        ) : (
+          <p>No content available</p>
+        )}
       </article>
     );
   } catch (error) {

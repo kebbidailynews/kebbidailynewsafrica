@@ -19,8 +19,8 @@ export async function getAllPosts(): Promise<NewsPost[]> {
       const filePath = path.join(newsDir, file);
       const fileContents = await fs.readFile(filePath, "utf8");
       const { data, content } = matter(fileContents);
-      // Use the full filename (with date prefix) as the slug
       const slug = file.replace(/\.md$/, "");
+      console.log(`Parsed post: ${slug}, Content length: ${content.length}`);
       return {
         slug,
         title: data.title,
@@ -35,12 +35,13 @@ export async function getAllPosts(): Promise<NewsPost[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<NewsPost> {
-  // Decode URL-encoded characters (e.g., %E2%80%99 to ')
   const decodedSlug = decodeURIComponent(slug);
   const filePath = path.join(process.cwd(), "content/news", `${decodedSlug}.md`);
+  console.log(`Attempting to load slug: ${decodedSlug}, File path: ${filePath}`);
   try {
     const fileContents = await fs.readFile(filePath, "utf8");
     const { data, content } = matter(fileContents);
+    console.log(`Loaded post: ${decodedSlug}, Content length: ${content.length}`);
     return {
       slug: decodedSlug,
       title: data.title,
@@ -49,7 +50,8 @@ export async function getPostBySlug(slug: string): Promise<NewsPost> {
       image: data.image,
       content,
     };
-  } catch {
+  } catch (error) {
+    console.error(`Error loading post: ${decodedSlug}`, error);
     throw new Error("Post not found");
   }
 }

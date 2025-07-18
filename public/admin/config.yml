@@ -1,7 +1,6 @@
 backend:
   name: git-gateway
-  branch: main # Change to your production branch
-local_backend: true # Enable local CMS testing
+  branch: main # Adjust to your repository's main branch
 media_folder: "public/uploads"
 public_folder: "/uploads"
 collections:
@@ -9,7 +8,7 @@ collections:
     label: "News"
     folder: "content/news"
     create: true
-    slug: "{{slug}}"
+    slug: "{{slug}}" # Changed to match your original file naming
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Excerpt", name: "excerpt", widget: "string", required: true }

@@ -17,6 +17,7 @@ tags:
   - Bitcoin
   - blockchain
   - decentralized finance
+image: /uploads/kebbi-daily-news-bitcoin.jpg
 content: >-
   As of July 20, 2025, Bitcoin and blockchain technology are at the forefront of
   the financial revolution, captivating investors, technologists, and

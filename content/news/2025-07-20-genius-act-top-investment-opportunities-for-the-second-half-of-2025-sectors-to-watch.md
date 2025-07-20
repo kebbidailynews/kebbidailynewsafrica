@@ -12,7 +12,7 @@ tags:
   - investment opportunities 2025
   - water technology stocks
   - AI stocks
-image: /uploads/top-investment-opportunities-for-the-second-half-of-2025.jpg
+image: /uploads/top-investment-opportunities-for-the-second-half-of-2025-sectors-to-watch.png
 content: >-
   As we move into the second half of 2025, investors are eyeing opportunities
   amidst a dynamic economic landscape shaped by technological innovation, global

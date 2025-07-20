@@ -51,15 +51,5 @@ content: >-
   In 2025, the mini stadium is expected to host regional tournaments, attracting scouts and boosting Kebbi’s profile. With Nigeria’s football infrastructure growing—evidenced by a second FIFA-funded pitch in Delta State—the facility could spark a grassroots revolution. However, challenges like maintenance costs and security concerns, given recent banditry in Kebbi, must be addressed to ensure accessibility.
 
 
-
-
   The FIFA-funded mini stadium in Kebbi is more than a pitch—it’s a beacon of opportunity for youth and a catalyst for regional pride. As Kebbi leverages this facility in 2025, it could redefine Nigeria’s grassroots football landscape.
-
-
-
-
-  Keywords: FIFA mini stadium, Kebbi State, grassroots football, Nasir Idris, Nigeria 2025, football development, Birnin Kebbi, FIFA Forward Programme
-
-
-  Word Count: 498
 ---

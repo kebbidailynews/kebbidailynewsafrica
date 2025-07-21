@@ -1,5 +1,6 @@
 ---
-title: "The AI Talent War: Meta’s $300 Million Offers and the Race to Own the Future"
+title: "The AI Talent War: Meta’s USD300 Million Offers and the Race to Own the
+  Future"
 excerpt: AI is the backbone of the next industrial revolution
 summary: This post dives into the frenzy of the AI talent war, unpacking Meta’s
   bold move, the reactions on X, and what this means for innovation, power, and

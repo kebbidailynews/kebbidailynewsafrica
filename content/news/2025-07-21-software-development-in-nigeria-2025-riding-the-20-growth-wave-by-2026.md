@@ -11,6 +11,7 @@ tags:
   - software development Nigeria
   - remote tech jobs 2025
   - coding Nigeria
+image: /uploads/software-development-in-nigeria-2025-riding-the-20-growth-wave-by-2026.jpg
 content: >-
   In 2025, software development is a cornerstone of Nigeria’s burgeoning tech
   ecosystem, with demand projected to grow 20% by 2026, per industry insights.

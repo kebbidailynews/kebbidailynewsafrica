@@ -36,8 +36,6 @@ content: >-
   To qualify, applicants must demonstrate Exceptional Talent (5+ years as a recognized leader) or Exceptional Promise (emerging talent with <5 years). UI/UX designers and cloud computing professionals can apply by showcasing:
 
 
-
-
   Significant Contributions: For UI/UX, evidence includes impactful designs for fintech apps like Opay or healthtech platforms, backed by user feedback or A/B testing results. For cloud computing, highlight deployments on AWS or Azure for startups, per Immigram.
 
 
@@ -47,11 +45,7 @@ content: >-
   Leadership: Roles like design director or cloud architect, or founding a tech startup, strengthen cases, per Tech Nation.
 
 
-
-
   **Steps to Apply:**
-
-
 
 
   Prepare Evidence: Submit a CV, personal statement, three recommendation letters from industry leaders, and up to 10 documents (e.g., portfolio links, GitHub for cloud projects, or Figma designs). Nigerians can highlight local impact, like designing apps for Lagos startups.
@@ -61,8 +55,6 @@ content: >-
 
 
   Visa Application: Post-endorsement, apply within three months. No coding skills are needed for UI/UX, debunking myths that GTV is programmer-exclusive.
-
-
 
 
   **Leveraging UI/UX and Cloud Skills**
@@ -77,14 +69,10 @@ content: >-
   Unstable internet (use Starlink, $50/month) and power issues (solar inverters, ₦200,000) challenge remote work. Payment platforms like Astro Africa ensure dollar conversions. GTV rejections (30% rate) require balanced evidence, per Reddit.
 
 
-  2026 Outlook
+  **2026 Outlook**
 
 
   By 2026, UI/UX and cloud computing demand will rise 18-20%, per Indeed, with Nigeria’s tech talent fueling global roles. GTV approvals may increase as Tech Nation streamlines processes.
-
-
-
-
 
 
   UI/UX design and cloud computing open doors to the GTV, empowering Nigerians to join the UK’s tech scene. Start building your portfolio today to seize this opportunity.

@@ -12,7 +12,7 @@ tags:
   - Global Talent Visa
   - product design Nigeria
   - cloud computing
-image: /uploads/uiux-design-and-cloud-computing-securing-a-global-talent-visa-in-2025.jpg
+image: ""
 content: hi
 ---
 

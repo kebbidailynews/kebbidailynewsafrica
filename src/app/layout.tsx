@@ -7,19 +7,23 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Kebbi Daily News",
-  description: "Your trusted source for news and updates from Kebbi State, Nigeria",
+  description: "Your trusted source for news in Kebbi State, Nigeria",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-900`}>
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-8458799741626167" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8458799741626167"
+          crossOrigin="anonymous"
+        ></script>
+      </head>
+      <body className={inter.className}>
         <Header />
-        <main className="container mx-auto px-4 py-8 min-h-screen">{children}</main>
+        <main className="min-h-screen">{children}</main>
       </body>
     </html>
   );

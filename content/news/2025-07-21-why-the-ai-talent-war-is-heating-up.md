@@ -1,6 +1,7 @@
 ---
 title: Why the AI Talent War Is Heating Up
-excerpt: Why the AI Talent War Is Heating Up
+excerpt: The talent war isn’t just about money—it’s about power. Stay curious
+  and stay ahead.
 summary: Is this about building the future or sabotaging competitors? And what
   does it mean for the rest of us?
 author: Ekemini Thompson

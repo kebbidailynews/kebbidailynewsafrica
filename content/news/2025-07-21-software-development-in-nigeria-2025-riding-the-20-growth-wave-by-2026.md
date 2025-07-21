@@ -1,7 +1,7 @@
 ---
-title: "Software Development in Nigeria 2025: Riding the 20% Growth Wave by 2026"
-excerpt: Nigeria’s tech sector, valued at $5 billion, is driven by a young,
-  skilled workforce and global demand for software solutions
+title: "Software Development in Nigeria 2025: Riding excellent Growth Wave by 2026"
+excerpt: Nigeria’s tech sector, is driven by a young, skilled workforce and
+  global demand for software solutions
 summary: Software development in Nigeria is a goldmine in 2025, with 20% growth
   by 2026. Start now to ride the wave of global demand and local innovation.
 author: Ekemini Thompson

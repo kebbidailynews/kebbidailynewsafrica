@@ -1,7 +1,6 @@
 ---
 title: "UI/UX Design and Cloud Computing: Securing a Global Talent Visa in 2025"
-excerpt: Nigeria’s 70,000+ developers and growing design talent, per Jobberman,
-  position professionals to meet GTV criteria
+excerpt: Nigeria’s 70000 developers and growing design talent
 summary: "The GTV, administered by Tech Nation, targets leaders or potential
   leaders in digital technology, including UI/UX design and cloud computing.
   UI/UX designers create user-friendly interfaces for apps and websites, while

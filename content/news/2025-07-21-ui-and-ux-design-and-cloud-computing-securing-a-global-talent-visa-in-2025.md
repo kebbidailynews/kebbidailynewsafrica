@@ -1,8 +1,8 @@
 ---
-title: "UI and UX Design and Cloud Computing: Securing a Global Talent Visa"
-excerpt: "UI and UX Design and Cloud Computing: Securing a Global Talent Visa"
+title: "Product Design and Cloud Computing: Securing a Global Talent Visa"
+excerpt: "Product Design and Cloud Computing: Securing a Global Talent Visa"
 summary: >
-  UI/UX design and cloud computing open doors to the GTV, empowering Nigerians
+  Product design and cloud computing open doors to the GTV, empowering Nigerians
   to join the UK’s tech scene. Start building your portfolio today to seize this
   opportunity.
 author: KebbiDailyNews
@@ -10,7 +10,7 @@ date: 2025-07-21T00:59:48.863Z
 draft: false
 tags:
   - Global Talent Visa
-  - UIUX design Nigeria
+  - product design Nigeria
   - cloud computing
 image: /uploads/uiux-design-and-cloud-computing-securing-a-global-talent-visa-in-2025.jpg
 content: hi

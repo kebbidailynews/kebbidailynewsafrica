@@ -1,18 +1,17 @@
 ---
-title: "UI and UX Design and Cloud Computing: Securing a Global Talent Visa in 2025"
-excerpt: "UI and UX Design and Cloud Computing: Securing a Global Talent Visa in 2025"
+title: "UI and UX Design and Cloud Computing: Securing a Global Talent Visa"
+excerpt: "UI and UX Design and Cloud Computing: Securing a Global Talent Visa"
 summary: >
   UI/UX design and cloud computing open doors to the GTV, empowering Nigerians
   to join the UK’s tech scene. Start building your portfolio today to seize this
   opportunity.
-author: Kebbi Daily News
+author: KebbiDailyNews
 date: 2025-07-21T00:59:48.863Z
 draft: false
 tags:
-  - Global Talent Visa 2025
+  - Global Talent Visa
   - UIUX design Nigeria
   - cloud computing
-  - Tech Nation
 image: /uploads/uiux-design-and-cloud-computing-securing-a-global-talent-visa-in-2025.jpg
 content: >-
   In 2025, UI/UX design and cloud computing are high-demand fields globally,

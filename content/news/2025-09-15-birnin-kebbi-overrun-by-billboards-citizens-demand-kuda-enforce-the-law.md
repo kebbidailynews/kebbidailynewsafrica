@@ -5,7 +5,7 @@ summary: The streets of Birnin Kebbi are drowning in faces — not of
   entrepreneurs, innovators, or educators — but politicians.
 author: Kebbi Daily News
 date: 2025-09-15T08:18:05.696Z
-draft: true
+draft: false
 tags:
   - KebbiStatebillboards
   - kebbioverunbybillboards

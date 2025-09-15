@@ -7,7 +7,7 @@ summary: "Tesla officially began customer deliveries in India this week, which
   world’s largest auto markets. "
 author: Kebbi Daily News
 date: 2025-09-15T21:11:54.173Z
-draft: true
+draft: false
 tags:
   - Kebbi Daily News
   - India’s Tesla

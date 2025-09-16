@@ -10,7 +10,7 @@ draft: false
 tags:
   - Team Kauran Gwandu United
   - Team Due Process
-image: /uploads/a-3-3-draw-team-kauran-gwandu-united-and-team-due-process-community-politics.jpg
+image: /uploads/a-3-3-draw-team-kauran-gwandu-united-and-team-due-process-community-politics-1-.jpg
 content: >-
   Birnin Kebbi — What happened on that well-worn pitch at the FIFA Goal Project
   feels like football the way it should be: raw, alive, unpredictable. Team

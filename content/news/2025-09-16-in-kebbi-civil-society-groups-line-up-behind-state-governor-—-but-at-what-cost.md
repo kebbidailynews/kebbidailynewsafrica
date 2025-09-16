@@ -12,7 +12,7 @@ draft: false
 tags:
   - Kebbi Civil Society Groups
   - Governor Idris
-image: /uploads/in-kebbi-civil-society-groups-line-up-behind-governor-idris-—-but-at-what-cost.jpg
+image: /uploads/in-kebbi-civil-society-groups-line-up-behind-governor-idris-—-but-at-what-cost-1-.jpg
 content: >-
   Politics in Kebbi State took another theatrical turn this week as a coalition
   of civil society organizations marched into Government House to pay what can

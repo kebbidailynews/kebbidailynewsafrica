@@ -1,223 +1,200 @@
 ---
-title: Governors of Nasarawa and Gombe Arrive in Kebbi for Progressive
-  Governors’ Forum Meeting
-excerpt: Nasarawa and Gombe Govs Arrive in Kebbi for Progressive Governors’
-  Forum Meeting
-summary: The arrival of the two governors was met with excitement and optimism
-  among the people of Kebbi, as the meeting represents another opportunity for
-  the Progressive Governors’ Forum to strengthen unity, promote collaboration,
-  and renew its commitment to the principles of the All Progressives Congress
-  (APC) — the ruling party at the federal level.
+title: "Birnin Kebbi: Experts to organize Sustainable Financing for Women’s
+  Economic Inclusion"
+excerpt: Experts to organize Sustainable Financing for Women’s Economic Inclusion
+summary: The event, titled “Advancing Sustainable Financing for Women’s Economic
+  Inclusion and Development,” is scheduled to take place on Monday, October 20,
+  2025, at Saffar Guest Inn, Birnin Kebbi.
 author: Kebbi Daily News
-date: 2025-10-16T18:36:41.303Z
+date: 2025-10-16T19:55:56.353Z
 draft: false
 tags:
-  - Govs in Kebbi
-  - Progressive Governors’ Forum Meeting
-image: /uploads/governors-of-nasarawa-and-gombe-arrive-in-kebbi-for-progressive-governors’-forum-meeting.jpg
+  - Birnin Kebbi
+  - Women Economic Inclusion
+image: /uploads/experts-to-organize-sustainable-financing-for-women’s-economic-inclusion.jpg
 content: >-
-  Birnin Kebbi, October 16, 2025 — The Executive Governors of Nasarawa State,
-  Engineer Abdullahi Sule, and Gombe State, Muhammad Inuwa Yahaya, arrived in
-  Kebbi on Thursday afternoon ahead of the Progressive Governors’ Forum (PGF)
-  meeting scheduled to hold in the state capital, Birnin Kebbi.
+  Birnin Kebbi, Nigeria: Renowned women’s financial expert, Abbas Abdullahi
+  Maiyama, has been selected to attend and present a paper at a high-level forum
+  organized by Plan International, focused on advancing sustainable financing
+  for women’s economic inclusion and development.
 
 
 
 
-  Their arrival marks the beginning of a significant political gathering bringing together governors elected under the platform of the All Progressives Congress (APC) to discuss national development issues, inter-state collaboration, and strategies for strengthening good governance within the federation.
+  The event, titled “Advancing Sustainable Financing for Women’s Economic Inclusion and Development,” is scheduled to take place on Monday, October 20, 2025, at Saffar Guest Inn, Birnin Kebbi. The forum is expected to bring together development practitioners, policymakers, gender advocates, financial experts, and representatives from civil society to deliberate on innovative mechanisms for financing women’s empowerment initiatives and promoting gender-responsive development at the subnational and national levels.
 
 
 
 
-  The governors touched down at the Sir Ahmadu Bello International Airport, Birnin Kebbi, where they were warmly received by a delegation of top Kebbi State Government officials led by the Deputy Speaker of the Kebbi State House of Assembly, Hon. Muhammad Samaila.
+  **A Platform for Transformative Dialogue**
 
 
 
 
-  Also present at the airport were senior members of the Kebbi State Executive Council, political aides, and representatives of local government councils who came to extend a warm northern welcome to the visiting governors.
+  According to Maiyama, the conference provides a timely and strategic opportunity to deepen discussions on sustainable financing models that address the systemic barriers hindering women’s full participation in economic life.
 
 
 
 
-  **Warm Reception and Symbolic Unity**
+  “This engagement provides a unique platform to explore innovative strategies that promote sustainable financing, enhance women’s economic inclusion, and foster gender-responsive development,” he stated. “It also serves as an avenue for collaboration with key stakeholders, policymakers, and development partners committed to advancing women’s empowerment and inclusive growth.”
 
 
 
 
-  The arrival of the two governors was met with excitement and optimism among the people of Kebbi, as the meeting represents another opportunity for the Progressive Governors’ Forum to strengthen unity, promote collaboration, and renew its commitment to the principles of the All Progressives Congress (APC) — the ruling party at the federal level.
+  The presentation will focus on practical frameworks for mobilizing financial resources, public-private partnerships, and community-driven solutions that can bridge the gender financing gap and unlock women’s economic potential in Nigeria and beyond.
 
 
 
 
-  The Progressive Governors’ Forum, often regarded as the engine room of inter-state policy innovation, brings together governors of APC-controlled states to deliberate on national issues, align developmental policies, and share experiences on governance.
+  Maiyama’s paper will also highlight success stories from community-level programs, sustainable enterprise models, and inclusive policy reforms that have contributed to empowering women entrepreneurs, particularly in rural and underserved communities.
 
 
 
 
-  In a brief interaction with journalists upon arrival, aides to the visiting governors noted that the meeting in Kebbi was not just a routine gathering but a strategic forum aimed at reinforcing the collective resolve of APC governors to deliver tangible development and uphold accountability in their respective states.
+  **The Global Context: Why Sustainable Financing for Women Matters**
 
 
 
 
-  Governor Inuwa Yahaya of Gombe, known for his focus on infrastructural development and fiscal reforms, is expected to play a leading role in discussions relating to economic diversification and fiscal sustainability, while Governor Abdullahi Sule, a strong advocate for industrial growth and private sector participation, will likely emphasize investment partnerships and digital governance as key talking points.
+  Globally, women continue to face significant barriers in accessing finance, markets, and decision-making platforms. According to the World Bank, nearly one billion women worldwide remain excluded from formal financial systems, limiting their ability to save, invest, and contribute fully to economic growth.
 
 
 
 
-  **Kebbi’s Growing Political Significance**
+  In Nigeria, despite notable progress in recent years, gender disparities in access to credit, land ownership, and financial services persist. Studies by UN Women and the Central Bank of Nigeria (CBN) show that less than 35% of Nigerian women entrepreneurs have access to formal loans or investment opportunities, largely due to restrictive collateral requirements and sociocultural barriers.
 
 
 
 
-  The choice of Kebbi State as host of this edition of the PGF meeting carries both symbolic and strategic significance. Under the leadership of Governor Nasir Idris, Comrade Dr. (Kauran Gwandu), Kebbi has been steadily positioning itself as a beacon of stability and reform in the Northwest geopolitical zone.
+  Experts argue that addressing these inequalities is not only a moral imperative but also an economic necessity. Research by McKinsey Global Institute reveals that achieving gender parity in the workforce could add up to $28 trillion to global GDP by 2025.
 
 
 
 
-  Governor Idris, who has consistently demonstrated a commitment to inclusive governance, economic revival, and enhanced security collaboration, has in recent months drawn national attention through major policy initiatives and his openness to strategic partnerships with local and international organizations.
+  Plan International’s forum, therefore, seeks to translate these global conversations into actionable local strategies, empowering Nigerian women to become drivers of sustainable growth.
 
 
 
 
-  Just days before the PGF meeting, the governor had received a delegation from G-Safety, a global security consortium, to discuss ways to strengthen Kebbi’s security architecture and complement the efforts of existing agencies. This underscores the administration’s commitment to both regional stability and cross-border cooperation.
+  **Maiyama’s Contribution to Women’s Economic Development**
 
 
 
 
-  Hosting the Progressive Governors’ Forum in Kebbi therefore highlights the state’s emergence as a hub for political dialogue and strategic coordination among Nigeria’s northern APC states.
+  Abbas Abdullahi Maiyama is widely recognized for his commitment to advancing financial inclusion and women’s empowerment in Nigeria. Over the years, he has worked with multiple development agencies, microfinance institutions, and gender-focused initiatives to design inclusive financial products tailored to the needs of women in rural and semi-urban communities.
 
 
 
 
-  **Agenda of the Progressive Governors’ Forum Meeting**
+  His work emphasizes the importance of sustainable financing systems that combine accessibility, affordability, and adaptability. He has been instrumental in implementing projects that promote women-led cooperatives, microcredit schemes, and social enterprise models in northern Nigeria, particularly in Kebbi State, where women’s participation in trade and agriculture remains a cornerstone of local livelihoods.
 
 
 
 
-  Although details of the closed-door agenda were not immediately disclosed, sources within the Progressive Governors’ Forum confirmed that the Kebbi meeting will focus on several critical national and sub-national issues.
+  Maiyama’s advocacy aligns closely with Plan International’s mission of promoting equality for girls and empowering women through education, skills development, and access to economic opportunities.
 
 
 
 
-  Top on the list are discussions surrounding federal-state collaboration on security, agriculture, and economic recovery in the wake of the ongoing fiscal reforms being implemented by the Federal Government under President Bola Ahmed Tinubu.
+  “True empowerment goes beyond financial inclusion—it requires systemic change that recognizes the economic value women contribute to their communities,” he said. “When women have access to finance, education, and decision-making platforms, entire societies thrive.”
 
 
 
 
-  **Other areas of interest include:**
+  **Key Issues to Be Addressed at the Forum**
 
 
 
 
-  Improving food production and agricultural value chains — especially given the strategic agricultural potential of northern Nigeria.
+  The forum’s agenda, as outlined by Plan International, will revolve around four major themes:
 
 
 
 
-  Strengthening state-level revenue generation to reduce dependence on federal allocations.
+  Sustainable Financing Frameworks: Exploring innovative financing models that align with global development goals, including impact investing, blended finance, and gender bonds.
 
 
 
 
-  Expanding social welfare and youth empowerment initiatives to cushion the effects of subsidy removal and inflation.
+  Women’s Access to Credit and Financial Services: Addressing policy and institutional bottlenecks that prevent women from accessing affordable loans and business support services.
 
 
 
 
-  Fostering political stability and cohesion within the party at both national and grassroots levels.
+  Strengthening Public-Private Partnerships: Encouraging collaboration between governments, the private sector, and international donors to support women-led enterprises and social innovation.
 
 
 
 
-  A senior government official in Kebbi noted that “the meeting is also expected to provide a platform for governors to share progress reports on state-level projects and to align their developmental blueprints with the Renewed Hope Agenda of the Tinubu administration.”
+  Measuring Impact and Accountability: Developing tools for assessing the outcomes of gender-responsive financing and ensuring transparency in resource allocation.
 
 
 
 
-  **Strengthening Federal-State Cooperation**
+  The forum is expected to produce a communiqué that will serve as a roadmap for policymakers, donors, and civil society organizations in shaping future interventions around women’s economic empowerment.
 
 
 
 
-  The Progressive Governors’ Forum has, over the years, served as a stabilizing force within the APC, helping to mediate between federal and state governments and ensuring a unified approach to governance challenges.
+  **The Role of Plan International**
 
 
 
 
-  With current national debates surrounding fiscal autonomy, local government reforms, and national security coordination, this meeting in Kebbi comes at a particularly important time.
+  Founded in 1937, Plan International is one of the world’s leading humanitarian and development organizations working to advance children’s rights and gender equality. In Nigeria, the organization has been instrumental in supporting initiatives around girls’ education, sexual and reproductive health, economic empowerment, and climate resilience.
 
 
 
 
-  Governor Sule of Nasarawa, who has been vocal about the need for improved synergy between states and the federal government, is expected to reiterate the call for technological innovation in governance, stronger fiscal accountability, and private-sector-driven growth.
+  Through its gender-responsive financing programs, Plan International seeks to break cycles of poverty by enabling women and girls to access financial resources and participate meaningfully in the economy.
 
 
 
 
-  Similarly, Governor Yahaya of Gombe, who chairs several inter-state economic development committees, is expected to emphasize the importance of infrastructure financing, rural development, and effective utilization of natural resources to sustain growth and reduce poverty.
+  The upcoming Birnin Kebbi event is part of a broader series of dialogues aimed at localizing the 2030 Sustainable Development Goals (SDGs)—particularly Goal 5 (Gender Equality) and Goal 8 (Decent Work and Economic Growth)—within Nigeria’s development context.
 
 
 
 
-  **Atmosphere of Camaraderie**
+  **A National Imperative for Inclusive Growth**
 
 
 
 
-  At the airport, there was a clear display of camaraderie as the visiting governors exchanged pleasantries with officials and local dignitaries. Traditional drummers and cultural troupes entertained guests, while the airport surroundings were adorned with banners welcoming the dignitaries to the “Land of Equity.”
+  The focus on sustainable financing for women aligns with the Nigerian government’s ongoing reforms to boost financial inclusion and support small and medium-sized enterprises (SMEs). Initiatives such as the Development Bank of Nigeria (DBN), the Women’s Fund for Economic Empowerment (WOFEE), and the CBN’s Financial Inclusion Strategy have laid the groundwork for more equitable access to finance.
 
 
 
 
-  Deputy Speaker Hon. Muhammad Samaila, who led the Kebbi reception team, described the visit as “a proud moment for the state,” noting that “Kebbi is honored to host leaders who have shown consistent commitment to national unity and progressive governance.”
+  However, experts like Maiyama insist that policy frameworks alone are not enough—implementation and sustainability are key. “We must ensure that policies translate into practical outcomes for real women on the ground,” he emphasized. “Sustainable financing should be intentional, inclusive, and adaptable to local realities.”
 
 
 
 
-  He added that “this forum provides not just a political meeting but a chance for collective introspection, learning, and inspiration across the APC states.”
+  He further noted that empowering women economically has a multiplier effect—improving household income, enhancing education for children, and reducing poverty across communities.
 
 
 
 
-  **National Implications**
+  **Expectations and Outlook**
 
 
 
 
-  Observers believe that the outcomes of the PGF meeting in Kebbi could influence key national discussions ahead of the upcoming National Economic Council (NEC) deliberations and intergovernmental budget planning sessions.
+  As anticipation builds ahead of the October 20 event, stakeholders in development, finance, and gender advocacy view the forum as a milestone in the collective effort to make gender equality a central pillar of Nigeria’s economic strategy.
 
 
 
 
-  By uniting the policy priorities of APC-controlled states, the forum could play a pivotal role in shaping the next phase of national economic recovery efforts, especially in light of Nigeria’s transition towards a more diversified and technology-driven economy.
+  Maiyama’s presentation is expected to inspire practical discussions on policy reform, financial innovation, and multi-sectoral collaboration. The engagement will also serve as a platform to strengthen partnerships between government agencies, donor organizations, and community-based women’s groups.
 
 
 
 
-  Political analysts also note that the gathering may help consolidate the APC’s internal cohesion amid growing political realignments and rising public expectations.
+  Observers note that the outcomes of the forum could influence future state and federal-level programs focused on women’s entrepreneurship, especially within northern Nigeria where access to finance remains limited.
 
 
 
 
-  **A Look Ahead**
-
-
-
-
-  As the governors settle in Birnin Kebbi for the main session of the Progressive Governors’ Forum, expectations remain high that concrete resolutions will emerge from their deliberations — resolutions that will translate into tangible improvements in governance, development, and inter-state cooperation.
-
-
-
-
-  The choice of Kebbi as host state, the participation of forward-thinking governors like Sule and Yahaya, and the active leadership of Governor Nasir Idris all signal that the APC is seeking renewed focus on performance, policy continuity, and people-centered governance.
-
-
-
-
-  For the people of Kebbi, the meeting is more than a political event — it is a testament to the state’s growing national relevance, its hospitality, and its readiness to play a leading role in shaping Nigeria’s political and economic trajectory.
-
-
-
-
-  As the forum commences, all eyes will be on Birnin Kebbi — the city that, this week, stands as the meeting point of ideas, leadership, and progress in Nigeria’s evolving democratic landscape.
+  Ultimately, the event underscores a growing recognition that investing in women is investing in the nation—a principle that guides both Plan International’s mission and the lifelong advocacy of experts like Abbas Abdullahi Maiyama.
 ---

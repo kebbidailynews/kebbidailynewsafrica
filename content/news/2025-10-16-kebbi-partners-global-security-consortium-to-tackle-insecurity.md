@@ -10,7 +10,7 @@ draft: false
 tags:
   - Kebbi Security Consortium
   - Insecurity
-image: /uploads/gov.-idris-welcomes-global-security-consortium-to-kebbi-reinforces-commitment-to-fighting-criminality.jpg
+image: /uploads/gov.-idris-welcomes-global-security-consortium-to-kebbi-reinforces-commitment-to-fighting-criminality-1-.jpg
 content: >-
   Kebbi Partners Global Security Consortium to Tackle Insecurity
 

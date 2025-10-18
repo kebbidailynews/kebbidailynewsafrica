@@ -5,7 +5,7 @@ summary: "NEMA's Flood Aid Reaches Kebbi's Northwest Victims: A Lifeline That
   Feels Too Short"
 author: Kebbi Daily News
 date: 2025-10-18T08:02:14.705Z
-draft: true
+draft: false
 tags:
   - NEMA's Flood Aid
   - Kebbi's Northwest Victims

@@ -7,7 +7,7 @@ summary: "The visit happened on October 15. Maisudan drove from the state
   center for about 80,000 people in the area. "
 author: Kebbi Daily News
 date: 2025-10-20T05:49:03.647Z
-draft: true
+draft: false
 tags:
   - Cholera in Suru
   - Lawmaker Maisudan

@@ -1,33 +1,42 @@
+// components/NewsCard.tsx
 import Link from "next/link";
 import Image from "next/image";
-import type { NewsPost } from "@/lib/markdown";
 
-export default function NewsCard({ post }: { post: NewsPost }) {
-  return (
-    <Link href={`/news/${post.slug}`} className="block">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-        {post.image && (
-          <Image
-            src={post.image}
-            alt={post.title}
-            width={400}
-            height={200}
-            className="w-full h-48 object-cover"
-          />
-        )}
-        <div className="p-4">
-          <h2 className="text-xl font-semibold text-gray-900">{post.title}</h2>
-          <p className="text-gray-600 mt-2">{post.excerpt}</p>
-          <p className="text-gray-500 text-sm mt-2">By {post.author} on {new Date(post.date).toDateString()}</p>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {post.tags.map((tag) => (
-              <span key={tag} className="bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">
-                {tag}
-              </span>
-            ))}
+export default function NewsCard({ post, variant }: { post: any; variant?: "breaking" }) {
+  if (variant === "breaking") {
+    return (
+      <Link href={`/news/${post.slug}`} className="group block">
+        <article className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition">
+          {post.image ? (
+            <div className="relative h-48">
+              <Image src={post.image} alt="" fill className="object-cover" />
+              <div className="absolute top-2 left-2 bg-red-700 text-white px-2 py-1 text-xs font-bold uppercase">
+                Breaking
+              </div>
+            </div>
+          ) : (
+            <div className="h-48 bg-red-700 flex items-center justify-center">
+              <span className="text-white text-3xl font-black">!</span>
+            </div>
+          )}
+          <div className="p-4">
+            <h3 className="text-lg font-bold group-hover:text-red-700 line-clamp-2">
+              {post.title}
+            </h3>
+            <p className="text-sm text-gray-600 mt-1">{post.excerpt}</p>
           </div>
-        </div>
-      </div>
+        </article>
+      </Link>
+    );
+  }
+
+  // Default card (for sidebar, etc.)
+  return (
+    <Link href={`/news/${post.slug}`} className="block group">
+      <h4 className="font-semibold group-hover:text-blue-700 line-clamp-2">
+        {post.title}
+      </h4>
+      <p className="text-xs text-gray-500 mt-1">{post.author}</p>
     </Link>
   );
 }

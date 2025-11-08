@@ -6,9 +6,16 @@ summary: The visual punch of the redesign makes it catnip for social media,
 author: KebbiDailyNews
 date: 2025-07-19T15:49:08.226Z
 draft: false
+
 tags:
-  - KebbiDailyNew
-  - DonaldTrump
+  - Politics
+  - Security
+  - Health
+  - Economy
+  - Education
+  - Sports
+  - Opinion
+
 image: /uploads/f4162d08-90ee-4b56-bb96-d85a0e8fbf2f.jpeg
 content: >-
   

@@ -25,7 +25,7 @@ type Author = {
 const AUTHOR_INFO: Record<string, Author> = {
   "ekemini-thompson": {
     name: "Ekemini Thompson",
-    bio: "Ekemini Thompson is an AI Research Engineer focused on artificial general intelligence (AGI) and a seasoned journalist covering politics, governance, and technology in Nigeria.",
+    bio: "Ekemini Thompson is an AI Research Engineer focused on artificial general intelligence (AGI) and a seasoned journalist covering politics, governance, and technology.",
     image: "/images/authors/ekemini-thompson.jpg",
     role: "AI Research Engineer & Senior Political Correspondent",
     twitter: "https://twitter.com/KaemzyThompson",

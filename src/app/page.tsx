@@ -18,24 +18,81 @@ function generateExcerpt(content: string, maxLength = 160) {
   return slice.slice(0, lastSpace) + "...";
 }
 
+// Helper: Convert author name to slug
+function getAuthorSlug(author: string): string {
+  return author
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-");
+}
+
 export default async function Home() {
-  const posts = (await getAllPosts()).filter(p => p.content?.trim());
+  const posts = (await getAllPosts()).filter((p) => p.content?.trim());
   const featured = posts[0] || null;
   const breaking = posts.slice(1, 4);
   const latest = posts.slice(4, 10);
-  const opinion = posts.filter(p => p.tags.includes("Opinion")).slice(0, 3);
-  const sports = posts.filter(p => p.tags.includes("Sports")).slice(0, 3);
+  const opinion = posts.filter((p) => p.tags.includes("Opinion")).slice(0, 3);
+  const sports = posts.filter((p) => p.tags.includes("Sports")).slice(0, 3);
   const moreNews = posts.slice(10);
+
+  // Structured Data
+  const homepageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Kebbi Daily News",
+    "url": "https://kebbidailynews.com",
+    "description": "Your trusted source for timely news, politics, security, and local stories from Kebbi State, Nigeria.",
+    "publisher": {
+      "@type": "NewsMediaOrganization",
+      "name": "Kebbi Daily News",
+      "url": "https://kebbidailynews.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kebbidailynews.com/favicon-32x32.png",
+      },
+      "sameAs": [
+        "https://twitter.com/kebbidailynews",
+        "https://facebook.com/kebbidailynews",
+      ],
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://kebbidailynews.com/search?q={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kebbidailynews.com" },
+    ],
+  };
 
   return (
     <>
       <InviteRedirect />
 
+      {/* Structured Data - Safe for hydration */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <div className="max-w-7xl mx-auto px-4 py-6 space-y-10">
-        {/* HERO: FULL-WIDTH FEATURED STORY */}
+        {/* HERO */}
         {featured && <FeaturedStory post={featured} />}
 
-        {/* BREAKING NEWS GRID */}
+        {/* BREAKING NEWS */}
         {breaking.length > 0 && (
           <section>
             <SectionHeader title="BREAKING NEWS" color="red" />
@@ -50,7 +107,7 @@ export default async function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* MAIN CONTENT */}
           <div className="lg:col-span-8 space-y-10">
-            {/* LATEST STORIES */}
+            {/* LATEST STORIES - FIXED HYDRATION */}
             {latest.length > 0 && (
               <section>
                 <SectionHeader title="LATEST STORIES" color="blue" />
@@ -69,9 +126,15 @@ export default async function Home() {
                             </h3>
                             <p className="text-sm text-gray-600 mt-1 line-clamp-2">{excerpt}</p>
                             <div className="flex gap-3 mt-2 text-xs text-gray-500">
-                              <span>{post.author}</span>
+                              <Link
+                                href={`/author/${getAuthorSlug(post.author)}`}
+                                className="hover:text-red-700 hover:underline"
+                              >
+                                {post.author}
+                              </Link>
                               <span>•</span>
-                              <time>
+                              {/* FIXED: suppressHydrationWarning prevents date mismatch */}
+                              <time suppressHydrationWarning>
                                 {new Date(post.date).toLocaleDateString("en-US", {
                                   month: "short",
                                   day: "numeric",
@@ -97,7 +160,6 @@ export default async function Home() {
                     : <p className="text-gray-500">No opinion pieces yet.</p>}
                 </div>
               </section>
-
               <section>
                 <SectionHeader title="SPORTS" color="green" />
                 <div className="space-y-4">
@@ -158,7 +220,6 @@ function SectionHeader({ title, color }: { title: string; color: "red" | "blue" 
     green: "bg-green-700",
     gray: "bg-gray-700",
   };
-
   return (
     <div className="flex items-center gap-3 mb-4">
       <div className={`w-1 h-8 ${colors[color]}`} />
@@ -172,7 +233,13 @@ function OpinionCard({ post }: { post: any }) {
     <Link href={`/news/${post.slug}`} className="block group">
       <div className="flex gap-3">
         {post.image ? (
-          <Image src={post.image} alt={post.title} width={80} height={80} className="object-cover rounded" />
+          <Image
+            src={post.image}
+            alt={post.title}
+            width={80}
+            height={80}
+            className="object-cover rounded"
+          />
         ) : (
           <div className="w-20 h-20 bg-purple-100 rounded flex items-center justify-center text-2xl font-bold text-purple-700">
             OP
@@ -180,7 +247,12 @@ function OpinionCard({ post }: { post: any }) {
         )}
         <div>
           <h4 className="font-bold text-sm group-hover:text-purple-700 line-clamp-2">{post.title}</h4>
-          <p className="text-xs text-gray-500 mt-1">By {post.author}</p>
+          <Link
+            href={`/author/${getAuthorSlug(post.author)}`}
+            className="text-xs text-gray-500 mt-1 hover:text-red-700 hover:underline"
+          >
+            By {post.author}
+          </Link>
         </div>
       </div>
     </Link>
@@ -193,6 +265,12 @@ function SportsCard({ post }: { post: any }) {
     <Link href={`/news/${post.slug}`} className="block group p-3 bg-green-50 rounded-lg hover:bg-green-100 transition">
       <h4 className="font-bold text-sm group-hover:text-green-700 line-clamp-2">{post.title}</h4>
       <p className="text-xs text-gray-600 mt-1">{excerpt}</p>
+      <Link
+        href={`/author/${getAuthorSlug(post.author)}`}
+        className="text-xs text-gray-500 mt-2 hover:text-red-700 hover:underline block"
+      >
+        By {post.author}
+      </Link>
     </Link>
   );
 }

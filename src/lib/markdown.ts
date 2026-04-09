@@ -23,10 +23,9 @@ export async function getAllPosts(): Promise<NewsPost[]> {
   const newsDir = path.join(process.cwd(), "content/news");
   const files = await fs.readdir(newsDir);
 
-  // Annotate posts as (NewsPost | null)[]
   const posts: (NewsPost | null)[] = await Promise.all(
     files
-      .filter(file => file.endsWith(".md"))
+      .filter((file) => file.endsWith(".md"))
       .map(async (file) => {
         const slug = file.replace(/\.md$/, "");
         const filePath = path.join(newsDir, file);
@@ -34,7 +33,6 @@ export async function getAllPosts(): Promise<NewsPost[]> {
         try {
           const fileContents = await fs.readFile(filePath, "utf8");
           const { data, content: bodyContent } = matter(fileContents);
-
           const rawContent = (data.content as string) || bodyContent || "";
           const finalContent = rawContent.trim();
 
@@ -45,7 +43,7 @@ export async function getAllPosts(): Promise<NewsPost[]> {
 
           return {
             slug,
-            title: (data.title as string) || slug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase()),
+            title: (data.title as string) || slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
             excerpt: (data.excerpt as string) || finalContent.slice(0, 160) + "...",
             summary: (data.summary as string) || "",
             author: (data.author as string) || "Kebbi Daily News",
@@ -83,7 +81,6 @@ export async function getPostBySlug(slug: string): Promise<NewsPost> {
   try {
     const fileContents = await fs.readFile(filePath, "utf8");
     const { data, content: bodyContent } = matter(fileContents);
-
     const rawContent = (data.content as string) || bodyContent || "";
     const finalContent = rawContent.trim();
 
@@ -93,7 +90,7 @@ export async function getPostBySlug(slug: string): Promise<NewsPost> {
 
     return {
       slug: decodedSlug,
-      title: (data.title as string) || decodedSlug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase()),
+      title: (data.title as string) || decodedSlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
       excerpt: (data.excerpt as string) || finalContent.slice(0, 160) + "...",
       summary: (data.summary as string) || "",
       author: (data.author as string) || "Kebbi Daily News",
@@ -107,4 +104,31 @@ export async function getPostBySlug(slug: string): Promise<NewsPost> {
     console.error(`Error loading post: ${decodedSlug}`, error);
     throw new Error("Post not found");
   }
+}
+
+// ==========================
+// NEW: Get Posts by Author (for author pages)
+// ==========================
+export async function getPostsByAuthor(authorSlug: string): Promise<NewsPost[]> {
+  const allPosts = await getAllPosts();
+
+  // Convert author slug to normalized form for matching
+  const normalizedAuthorSlug = authorSlug.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+  return allPosts
+    .filter((post) => {
+      const postAuthorSlug = post.author
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "")
+        .replace(/\s+/g, "-");
+      return postAuthorSlug === normalizedAuthorSlug || post.author.toLowerCase() === authorSlug.toLowerCase();
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+// Optional helper: Get unique authors (useful for an "Our Authors" page later)
+export async function getAllAuthors(): Promise<string[]> {
+  const posts = await getAllPosts();
+  const authors = new Set(posts.map((post) => post.author));
+  return Array.from(authors).sort();
 }

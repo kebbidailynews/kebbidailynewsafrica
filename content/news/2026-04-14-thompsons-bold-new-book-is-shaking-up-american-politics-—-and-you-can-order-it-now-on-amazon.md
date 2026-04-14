@@ -32,7 +32,7 @@ content: >-
   The Great Fragmentation: Why America Feels Broken, Why Both Parties Are Failing and How to Come Back Together was published on April 9, 2026, and is now available on Amazon Kindle. The book tackles one of the most urgent questions in American life: why do nearly half of all Americans feel that neither political party speaks for them — and what can be done about it?
 
 
-  National Law Review; National Today; OpenPR; EIN Presswire; NYC Today
+  [National Law Review](https://natlawreview.com/press-releases/new-book-challenges-both-parties-and-offers-americans-way-forward); [National Today](https://nationaltoday.com/us/ny/new-york/news/2026/04/13/new-book-challenges-both-parties-and-offers-americans-a-way-forward/); [OpenPR](https://www.openpr.com/news/4463289/new-book-the-great-fragmentation-challenges-both-political); [EIN Presswire](https://www.einpresswire.com/article/904977202/new-book-challenges-both-parties-and-offers-americans-a-way-forward); [NYC Today](https://nationaltoday.com/us/ny/new-york/news/2026/04/13/new-book-challenges-both-parties-and-offers-americans-a-way-forward/)
 
 
   **A book for the moment America is living through**
@@ -85,5 +85,5 @@ content: >-
 
   Source: EINPresswire / National Law Review, April 13, 2026. \
 
-  Contact: kebbidailynews, +234 808 543 4165.
+  Contact: [kebbidailynews](kebbidailynews.com).
 ---

@@ -19,7 +19,7 @@ tags:
   - The Great Fragmentation
   - Independent Voters
   - World News
-image: https://d2c0db5b8fb27c1c9887-9b32efc83a6b298bb22e7a1df0837426.ssl.cf2.rackcdn.com/24830532-the-great-fragmentation-784x1168.jpeg
+image: /uploads/ekemini-thompson.jpg
 content: >-
   A new book by Nigerian AI engineer and writer Ekemini Thompson is making waves
   across America — and it has already been featured by some of the country's

@@ -95,6 +95,7 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
   const catColor     = getCategoryColor(post.tags);
   const catSlug      = getCategorySlug(post.tags);
   const primaryTag   = post.tags[0] || "News";
+  const articleUrl    = `https://kebbidailynews.com/news/${decodedSlug}`;
 
   const imageUrl = post.image
     ? (post.image.startsWith("http")

@@ -1,156 +1,380 @@
-// app/news/[slug]/page.tsx
-import { getPostBySlug, type NewsPost } from "@/lib/markdown";
+// Updated file saved - see globals.css for styling updates
+import { getPostBySlug, getAllPosts, type NewsPost } from "@/lib/markdown";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
-import { notFound } from "next/navigation";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import NewsCard from "@/components/NewsCard";
 
-// Helper: safely decode slug (handles %E2%80%99 → ’)
 function safeSlug(slug: string): string {
+  try { return decodeURIComponent(slug); } catch { return slug; }
+}
+
+function getAuthorSlug(author: string): string {
+  return author.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-");
+}
+
+function generateExcerpt(content: string, maxLength = 160): string {
+  const stripped = content.replace(/#{1,6}\s/g, "").replace(/\*\*/g, "").trim();
+  if (stripped.length <= maxLength) return stripped;
+  const slice = stripped.slice(0, maxLength);
+  return slice.slice(0, slice.lastIndexOf(" ")) + "...";
+}
+
+function getCategoryColor(tags: string[]): string {
+  const tag = tags[0]?.toLowerCase() || "";
+  if (tag.includes("politi"))  return "#003366";
+  if (tag.includes("securi"))  return "#8B0000";
+  if (tag.includes("health"))  return "#006837";
+  if (tag.includes("econom"))  return "#1A5490";
+  if (tag.includes("educat"))  return "#2F5496";
+  if (tag.includes("sport"))   return "#004225";
+  if (tag.includes("opinion")) return "#4A4A4A";
+  return "#CC0000";
+}
+
+function getCategorySlug(tags: string[]): string {
+  const tag = tags[0]?.toLowerCase() || "";
+  if (tag.includes("politi"))  return "politics";
+  if (tag.includes("securi"))  return "security";
+  if (tag.includes("health"))  return "health";
+  if (tag.includes("econom"))  return "economy";
+  if (tag.includes("educat"))  return "education";
+  if (tag.includes("sport"))   return "sports";
+  if (tag.includes("opinion")) return "opinion";
+  return tag;
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const decodedSlug = safeSlug(params.slug);
   try {
-    return decodeURIComponent(slug);
+    const post = await getPostBySlug(decodedSlug);
+    const excerpt = post.excerpt || generateExcerpt(post.content);
+    const imageUrl = post.image?.startsWith("http")
+      ? post.image
+      : `https://kebbidailynews.com${post.image?.startsWith("/") ? "" : "/"}${post.image}`;
+    return {
+      title: post.title,
+      description: excerpt,
+      openGraph: {
+        title: post.title,
+        description: excerpt,
+        images: post.image ? [{ url: imageUrl }] : [],
+        type: "article",
+        publishedTime: new Date(post.date).toISOString(),
+        authors: [post.author],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: post.title,
+        description: excerpt,
+        images: post.image ? [imageUrl] : [],
+      },
+    };
   } catch {
-    return slug;
+    return {};
   }
 }
 
-// Generate author slug (e.g., "Ekemini Thompson" → "ekemini-thompson")
-function getAuthorSlug(author: string): string {
-  return author
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, "")   // Remove special characters
-    .replace(/\s+/g, "-");          // Replace spaces with hyphens
-}
-
-// Optional: generate smart excerpt
-function generateExcerpt(content: string, maxLength = 160) {
-  const trimmed = content.trim();
-  if (trimmed.length <= maxLength) return trimmed;
-  const slice = trimmed.slice(0, maxLength);
-  const lastSpace = slice.lastIndexOf(" ");
-  return slice.slice(0, lastSpace) + "...";
-}
-
-export default async function NewsPost({ params }: { params: { slug: string } }) {
+export default async function NewsArticlePage({ params }: { params: { slug: string } }) {
   const decodedSlug = safeSlug(params.slug);
 
   let post: NewsPost | null = null;
   try {
     post = await getPostBySlug(decodedSlug);
   } catch (error) {
-    console.warn(`Post not found or invalid: ${decodedSlug}`, error);
+    console.warn(`Post not found: ${decodedSlug}`, error);
     notFound();
   }
 
-  if (!post?.content?.trim()) {
-    notFound();
-  }
+  if (!post?.content?.trim()) notFound();
 
-  // Ensure excerpt exists
-  const excerpt = post.excerpt || generateExcerpt(post.content);
-
-  // Format date to ISO 8601 for Google News
+  const excerpt      = post.excerpt || generateExcerpt(post.content);
   const formattedDate = new Date(post.date).toISOString();
+  const catColor     = getCategoryColor(post.tags);
+  const catSlug      = getCategorySlug(post.tags);
+  const primaryTag   = post.tags[0] || "News";
 
-  // Make image URL absolute
-  const imageUrls = post.image
-    ? [
-        post.image.startsWith("http")
-          ? post.image
-          : `https://kebbidailynews.com${post.image.startsWith("/") ? "" : "/"}${post.image}`,
-      ]
-    : [];
+  const imageUrl = post.image
+    ? (post.image.startsWith("http")
+        ? post.image
+        : `https://kebbidailynews.com${post.image.startsWith("/") ? "" : "/"}${post.image}`)
+    : "";
 
-  // Full NewsArticle schema
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
-    "mainEntityOfPage": {
+    mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `https://kebbidailynews.com/news/${decodedSlug}`,
     },
-    "headline": post.title,
-    "image": imageUrls,
-    "datePublished": formattedDate,
-    "dateModified": formattedDate,
-    "author": {
+    headline: post.title,
+    image: imageUrl ? [imageUrl] : [],
+    datePublished: formattedDate,
+    dateModified: formattedDate,
+    author: {
       "@type": "Person",
-      "name": post.author,
-      "url": `https://kebbidailynews.com/author/${getAuthorSlug(post.author)}`,   // ← Improved
+      name: post.author,
+      url: `https://kebbidailynews.com/author/${getAuthorSlug(post.author)}`,
     },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Kebbi Daily News",
-      "logo": {
+    publisher: {
+      "@type": "NewsMediaOrganization",
+      name: "Kebbi Daily News",
+      logo: {
         "@type": "ImageObject",
-        "url": "https://kebbidailynews.com/favicon-32x32.png",
+        url: "https://kebbidailynews.com/favicon-32x32.png",
       },
     },
-    "description": excerpt,
+    description: excerpt,
   };
+
+  // Related posts (same category, exclude current)
+  let relatedPosts: NewsPost[] = [];
+  try {
+    const all = await getAllPosts();
+    relatedPosts = all
+      .filter((p) => p.slug !== post!.slug && p.tags.some((t) => t.toLowerCase().includes(catSlug)))
+      .slice(0, 3);
+  } catch { /* non-critical */ }
 
   return (
     <>
-      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(articleSchema),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      <article className="prose prose-lg max-w-3xl mx-auto p-6">
-        {post.image && (
-          <Image
-            src={post.image}
-            alt={post.title}
-            width={800}
-            height={400}
-            className="w-full h-auto rounded-lg mb-6 shadow-md"
-            priority
-          />
-        )}
+      <div className="max-w-7xl mx-auto px-4 pt-4 pb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{post.title}</h1>
+          {/* ── MAIN ARTICLE ─────────────────────────────────── */}
+          <article className="lg:col-span-8">
 
-        {/* Clickable Author Name */}
-        <p className="text-gray-500 text-sm">
-          By{" "}
-          <Link
-            href={`/author/${getAuthorSlug(post.author)}`}
-            className="text-red-700 hover:underline font-medium"
-          >
-            <strong>{post.author}</strong>
-          </Link>{" "}
-          on{" "}
-          {new Date(post.date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </p>
-
-        {post.summary && <p className="text-gray-600 italic mt-2">{post.summary}</p>}
-        {!post.summary && <p className="text-gray-600 italic mt-2">{excerpt}</p>}
-
-        {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 my-4">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium"
+            {/* Breadcrumb - Fox News style */}
+            <nav className="flex items-center gap-2 text-xs font-semibold text-gray-500 mb-4">
+              <Link href="/" className="hover:text-[#CC0000] transition-colors">Home</Link>
+              <span className="text-gray-300">|</span>
+              <Link
+                href={`/category/${catSlug}`}
+                className="hover:text-[#CC0000] transition-colors uppercase"
+                style={{ color: catColor }}
               >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+                {primaryTag}
+              </Link>
+            </nav>
 
-        <div className="mt-8 border-t pt-6">
-          <MDXRemote source={post.content} />
+            {/* Category badge + headline - Fox News bold style */}
+            <div className="mb-5">
+              <div
+                className="font-bold text-xs tracking-wider text-white px-3 py-1.5 uppercase inline-block mb-4 rounded-sm"
+                style={{ backgroundColor: catColor }}
+              >
+                {primaryTag.toUpperCase()}
+              </div>
+
+              <h1 className="font-bold text-[2.75rem] md:text-5xl leading-[1.1] text-gray-900 mb-5 tracking-tight">
+                {post.title}
+              </h1>
+
+              {/* Excerpt / deck - Fox News style */}
+              <p className="text-gray-700 text-xl leading-relaxed font-normal mb-5">
+                {post.summary || excerpt}
+              </p>
+            </div>
+
+            {/* Byline - Fox News compact style */}
+            <div className="flex flex-wrap items-center gap-3 pb-4 mb-5 border-b border-gray-200 text-sm">
+              <div className="flex items-center gap-2">
+                <span className="text-gray-500 text-xs">By</span>
+                <Link
+                  href={`/author/${getAuthorSlug(post.author)}`}
+                  className="font-bold text-sm hover:underline text-[#003D7A] transition-colors"
+                >
+                  {post.author}
+                </Link>
+              </div>
+              <span className="text-gray-300">|</span>
+              <time className="text-gray-500 text-xs">
+                {new Date(post.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            </div>
+
+            {/* Hero image - BOXED FOX NEWS STYLE with standard dimensions */}
+            {post.image && (
+              <div className="mb-8">
+                <div className="relative w-full bg-black" style={{ aspectRatio: '16/9' }}>
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    width={1200}
+                    height={675}
+                    className="w-full h-full object-cover"
+                    priority
+                    style={{ maxHeight: '540px' }}
+                  />
+                  {/* Fox News signature red bar at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#CC0000]" />
+                </div>
+                {/* Image caption area - Fox News style */}
+                <div className="bg-gray-50 px-4 py-2 border-l-4 border-[#CC0000]">
+                  <p className="text-xs text-gray-600 italic">
+                    {post.title}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Article body - Fox News typography */}
+            <div className="prose-news max-w-none">
+              <MDXRemote source={post.content} />
+            </div>
+
+            {/* Social share bar - Fox News style */}
+            <div className="mt-8 pt-6 pb-6 border-y border-gray-200">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Share:</span>
+                <div className="flex gap-2">
+                  {/* Placeholder social buttons */}
+                  <button className="w-9 h-9 bg-[#1877F2] text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity">
+                    <span className="text-xs font-bold">f</span>
+                  </button>
+                  <button className="w-9 h-9 bg-black text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity">
+                    <span className="text-xs font-bold">𝕏</span>
+                  </button>
+                  <button className="w-9 h-9 bg-[#0A66C2] text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity">
+                    <span className="text-xs font-bold">in</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Tags - Fox News minimal style */}
+            {post.tags.length > 0 && (
+              <div className="mt-6 flex flex-wrap items-center gap-2">
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+                  Topics:
+                </span>
+                {post.tags.map((tag) => (
+                  <Link
+                    key={tag}
+                    href={`/category/${tag.toLowerCase()}`}
+                    className="text-xs font-semibold text-[#003D7A] hover:underline uppercase tracking-wide"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* Related stories - Fox News grid */}
+            {relatedPosts.length > 0 && (
+              <div className="mt-12 pt-8 border-t-4 border-[#CC0000]">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">More {primaryTag}</h2>
+                  <Link
+                    href={`/category/${catSlug}`}
+                    className="text-xs font-bold text-[#003D7A] hover:underline uppercase tracking-wide"
+                  >
+                    See All →
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                  {relatedPosts.map((p) => (
+                    <NewsCard key={p.slug} post={p} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </article>
+
+          {/* ── SIDEBAR - FOX NEWS STYLE ──────────────────────── */}
+          <aside className="lg:col-span-4">
+            <div className="sticky top-24 space-y-6">
+
+              {/* Trending section - Fox News style */}
+              {relatedPosts.length > 0 && (
+                <div className="border-t-4 border-[#CC0000] bg-white shadow-sm">
+                  <div className="bg-gray-900 px-4 py-3">
+                    <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                      Trending in {primaryTag}
+                    </h3>
+                  </div>
+                  <div className="divide-y divide-gray-100">
+                    {relatedPosts.map((p, i) => (
+                      <div key={p.slug} className="flex items-start gap-3 p-4 hover:bg-gray-50 transition-colors">
+                        <span className="flex-shrink-0 w-7 h-7 bg-[#CC0000] text-white font-bold text-sm flex items-center justify-center rounded">
+                          {i + 1}
+                        </span>
+                        <Link
+                          href={`/news/${p.slug}`}
+                          className="text-sm font-bold text-gray-900 leading-tight hover:text-[#CC0000] transition-colors line-clamp-3"
+                        >
+                          {p.title}
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
+                    <Link
+                      href={`/category/${catSlug}`}
+                      className="text-xs font-bold text-[#003D7A] hover:underline uppercase tracking-wide"
+                    >
+                      View All {primaryTag} →
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {/* Ad slot - Fox News style */}
+              <div className="bg-gray-100 border border-gray-200">
+                <div className="bg-gray-200 px-3 py-2 border-b border-gray-300">
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                    Advertisement
+                  </span>
+                </div>
+                <div className="flex items-center justify-center h-[250px] text-gray-400 text-xs font-semibold">
+                  300 × 250
+                </div>
+              </div>
+
+              {/* Newsletter signup - Fox News style */}
+              <div className="border-t-4 border-[#CC0000] bg-gradient-to-b from-gray-50 to-white p-5 shadow-sm">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  Newsletter
+                </h3>
+                <p className="text-xs text-gray-600 mb-4 leading-relaxed">
+                  Get breaking news and daily headlines delivered to your email inbox.
+                </p>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full px-3 py-2 border border-gray-300 rounded text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-[#CC0000]"
+                />
+                <button className="w-full bg-[#CC0000] text-white font-bold text-sm py-2 rounded hover:bg-[#A30000] transition-colors uppercase tracking-wide">
+                  Subscribe
+                </button>
+              </div>
+
+              {/* Ad slot bottom */}
+              <div className="bg-gray-100 border border-gray-200">
+                <div className="bg-gray-200 px-3 py-2 border-b border-gray-300">
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                    Advertisement
+                  </span>
+                </div>
+                <div className="flex items-center justify-center h-[600px] text-gray-400 text-xs font-semibold">
+                  300 × 600
+                </div>
+              </div>
+            </div>
+          </aside>
+
         </div>
-      </article>
+      </div>
     </>
   );
 }

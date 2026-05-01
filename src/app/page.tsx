@@ -1,358 +1,225 @@
 // app/page.tsx
-import { getAllPosts } from "@/lib/markdown";
+import { getAllPosts, type NewsPost } from "@/lib/markdown";
 import NewsCard from "@/components/NewsCard";
 import FeaturedStory from "@/components/FeaturedStory";
 import Sidebar from "@/components/Sidebar";
 import InviteRedirect from "@/components/InviteRedirect";
 import Link from "next/link";
 import Image from "next/image";
-import { Metadata } from "next";
 
 export const revalidate = 60;
 
-// ======================
-// SEO METADATA (UPGRADED)
-// ======================
-export const metadata: Metadata = {
-  metadataBase: new URL("https://kebbidailynews.com"),
-
-  title: {
-    default: "Kebbi Daily News - Latest News in Kebbi State, Nigeria",
-    template: "%s | Kebbi Daily News",
-  },
-
+export const metadata = {
+  title: "Kebbi Daily News — Latest News from Kebbi State",
   description:
-    "Breaking news, politics, security updates, business, and local stories from Kebbi State, Nigeria. Stay informed with Kebbi Daily News.",
-
-  keywords: [
-    "Kebbi news",
-    "Kebbi State news",
-    "Birnin Kebbi",
-    "Nigeria breaking news",
-    "Kebbi politics",
-    "Kebbi security",
-  ],
-
-  alternates: {
-    canonical: "/",
-  },
-
-  openGraph: {
-    title: "Kebbi Daily News",
-    description:
-      "Trusted source for breaking news, politics, and local stories in Kebbi State, Nigeria.",
-    url: "/",
-    siteName: "Kebbi Daily News",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Kebbi Daily News",
-      },
-    ],
-    locale: "en_NG",
-    type: "website",
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Kebbi Daily News",
-    description:
-      "Breaking news and local stories from Kebbi State, Nigeria.",
-    images: ["/og-image.jpg"],
-  },
-
-  category: "news",
+    "Breaking news, politics, security, and local stories from Kebbi State, Nigeria.",
 };
 
-// ======================
-// HELPERS
-// ======================
-function generateExcerpt(content: string, maxLength = 160) {
-  const trimmed = content.trim();
-  if (trimmed.length <= maxLength) return trimmed;
-  const slice = trimmed.slice(0, maxLength);
-  const lastSpace = slice.lastIndexOf(" ");
-  return slice.slice(0, lastSpace) + "...";
+function generateExcerpt(content: string, maxLength = 160): string {
+  const stripped = content.replace(/#{1,6}\s/g, "").replace(/\*\*/g, "").trim();
+  if (stripped.length <= maxLength) return stripped;
+  const slice = stripped.slice(0, maxLength);
+  return slice.slice(0, slice.lastIndexOf(" ")) + "...";
 }
 
-function getAuthorSlug(author: string): string {
-  return author
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-");
+function timeAgo(dateStr: string): string {
+  const date = new Date(dateStr);
+  const now = new Date();
+  const diffH = Math.floor((now.getTime() - date.getTime()) / 3600000);
+  const diffD = Math.floor(diffH / 24);
+  if (diffH < 1) return "Just now";
+  if (diffH < 24) return `${diffH}h ago`;
+  if (diffD < 7) return `${diffD}d ago`;
+  return date.toLocaleDateString("en-US", { month: "long", day: "numeric" });
 }
 
-// ======================
-// PAGE
-// ======================
 export default async function Home() {
-  const posts = (await getAllPosts()).filter((p) => p.content?.trim());
+  let allPosts: NewsPost[] = [];
 
-  const featured = posts[0] || null;
-  const breaking = posts.slice(1, 4);
-  const latest = posts.slice(4, 10);
-  const opinion = posts.filter((p) => p.tags.includes("Opinion")).slice(0, 3);
-  const sports = posts.filter((p) => p.tags.includes("Sports")).slice(0, 3);
-  const moreNews = posts.slice(10);
+  try {
+    allPosts = await getAllPosts();
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+  }
 
-  // ======================
-  // STRUCTURED DATA (GOOGLE NEWS READY)
-  // ======================
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "NewsMediaOrganization",
-        name: "Kebbi Daily News",
-        url: "https://kebbidailynews.com",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://kebbidailynews.com/favicon-32x32.png",
-        },
-        sameAs: [
-          "https://twitter.com/kebbidailynews",
-          "https://facebook.com/kebbidailynews",
-        ],
-        areaServed: {
-          "@type": "Place",
-          name: "Kebbi State, Nigeria",
-        },
-      },
-      {
-        "@type": "WebSite",
-        url: "https://kebbidailynews.com",
-        name: "Kebbi Daily News",
-        potentialAction: {
-          "@type": "SearchAction",
-          target:
-            "https://kebbidailynews.com/search?q={search_term_string}",
-          "query-input": "required name=search_term_string",
-        },
-      },
-      {
-        "@type": "WebPage",
-        name: "Homepage",
-        url: "https://kebbidailynews.com",
-        description:
-          "Latest news, politics, security updates and local stories from Kebbi State.",
-      },
-    ],
-  };
+  const featured   = allPosts[0];
+  const breaking   = allPosts.slice(1, 5);
+  const subHero    = allPosts.slice(1, 4);   // 3 cards under hero
+  const latest     = allPosts.slice(4, 10);
+  const politics   = allPosts.filter((p) => p.tags.some((t) => t.toLowerCase().includes("politi"))).slice(0, 3);
+  const security   = allPosts.filter((p) => p.tags.some((t) => t.toLowerCase().includes("securi"))).slice(0, 4);
+  const moreNews   = allPosts.slice(10, 22);
 
   return (
     <>
       <InviteRedirect />
 
-      {/* SEO: Hidden H1 for Google */}
-      <h1 className="sr-only">
-        Kebbi Daily News - Latest News in Kebbi State, Nigeria
-      </h1>
+      <div className="max-w-7xl mx-auto px-4 pt-5 pb-14">
 
-      {/* Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-
-      <div className="max-w-7xl mx-auto px-4 py-8 space-y-12">
-        {/* Featured */}
-        {featured && <FeaturedStory post={featured} />}
-
-        {/* Breaking */}
-        {breaking.length > 0 && (
-          <section>
-            <SectionHeader title="BREAKING NEWS" color="red" />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {breaking.map((post) => (
-                <NewsCard key={post.slug} post={post} variant="breaking" />
-              ))}
-            </div>
-          </section>
+        {/* ── HERO ───────────────────────────────────────────── */}
+        {featured && (
+          <div className="mb-4">
+            <FeaturedStory post={featured} isHero />
+          </div>
         )}
 
+        {/* ── SUB-HERO 3-COLUMN STRIP ─────────────────────────── */}
+        {subHero.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 border border-gray-200 bg-white mb-6 divide-y sm:divide-y-0 sm:divide-x divide-gray-200">
+            {subHero.map((post) => (
+              <div key={post.slug} className="p-4 hover:bg-gray-50 transition-colors">
+                <span className="bg-[#CC0000] text-white font-condensed font-bold text-[9px] tracking-[1.5px] px-2 py-0.5 uppercase inline-block mb-2">
+                  {post.tags[0]?.toUpperCase() || "NEWS"}
+                </span>
+                <h3 className="font-condensed font-bold text-[15px] leading-snug hover:text-[#CC0000] transition-colors">
+                  <Link href={`/news/${post.slug}`}>{post.title}</Link>
+                </h3>
+                <p className="text-[11px] text-gray-400 mt-1.5">{timeAgo(post.date)}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── BREAKING NEWS TICKER BAR ─────────────────────────── */}
+        {breaking.length > 0 && (
+          <div className="flex items-center bg-[#CC0000] text-white mb-8 overflow-hidden">
+            <div className="flex-shrink-0 bg-black text-white font-condensed font-black text-[10px] tracking-[2px] px-4 py-2.5 uppercase whitespace-nowrap">
+              Breaking
+            </div>
+            <div className="flex-1 overflow-hidden py-2.5 px-4">
+              <div className="flex gap-10 animate-marquee whitespace-nowrap text-sm font-semibold">
+                {[...breaking, ...breaking].map((post, i) => (
+                  <Link key={i} href={`/news/${post.slug}`} className="hover:underline flex-shrink-0">
+                    {post.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── MAIN 2-COLUMN LAYOUT ─────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* MAIN */}
+
+          {/* CONTENT */}
           <div className="lg:col-span-8 space-y-12">
-            {/* Latest */}
+
+            {/* Latest News */}
             {latest.length > 0 && (
               <section>
-                <SectionHeader title="LATEST STORIES" color="blue" />
-                <div className="space-y-8">
-                  {latest.map((post, i) => {
-                    const excerpt =
-                      post.excerpt || generateExcerpt(post.content);
-
-                    return (
-                      <article
-                        key={post.slug}
-                        className="flex gap-4 border-b pb-8 last:border-0"
-                      >
-                        <div className="text-4xl font-black text-gray-200">
-                          {String(i + 1).padStart(2, "0")}
-                        </div>
-
-                        <div className="flex-1">
-                          <Link
-                            href={`/news/${post.slug}`}
-                            className="group block"
-                          >
-                            <h2 className="text-2xl font-bold group-hover:text-blue-700">
-                              {post.title}
-                            </h2>
-
-                            <p className="text-gray-600 mt-2 line-clamp-3">
-                              {excerpt}
-                            </p>
-
-                            <div className="flex gap-3 mt-3 text-sm text-gray-500">
-                              <Link
-                                href={`/author/${getAuthorSlug(post.author)}`}
-                                className="hover:underline"
-                              >
-                                {post.author}
-                              </Link>
-
-                              <span>•</span>
-
-                              <time suppressHydrationWarning>
-                                {new Date(post.date).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    month: "long",
-                                    day: "numeric",
-                                  }
-                                )}
-                              </time>
-                            </div>
-                          </Link>
-                        </div>
-                      </article>
-                    );
-                  })}
+                <div className="section-header">
+                  <h2>Latest News</h2>
+                  <Link href="/news" className="text-[#CC0000] font-condensed font-bold text-xs tracking-wide hover:underline uppercase">
+                    View All →
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {latest.map((post) => (
+                    <NewsCard key={post.slug} post={post} variant="large" />
+                  ))}
                 </div>
               </section>
             )}
 
-            {/* Opinion + Sports */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Politics */}
+            {politics.length > 0 && (
               <section>
-                <SectionHeader title="OPINION" color="purple" />
-                <div className="space-y-6">
-                  {opinion.map((post) => (
-                    <OpinionCard key={post.slug} post={post} />
+                <div className="section-header section-header--blue">
+                  <h2 className="text-blue-700">Politics</h2>
+                  <Link href="/category/politics" className="text-blue-600 font-condensed font-bold text-xs tracking-wide hover:underline uppercase">
+                    View All →
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {politics.map((post) => (
+                    <NewsCard key={post.slug} post={post} />
                   ))}
                 </div>
               </section>
+            )}
 
+            {/* Security */}
+            {security.length > 0 && (
               <section>
-                <SectionHeader title="SPORTS" color="green" />
-                <div className="space-y-6">
-                  {sports.map((post) => (
-                    <SportsCard key={post.slug} post={post} />
+                <div className="section-header section-header--orange">
+                  <h2 className="text-orange-700">Security</h2>
+                  <Link href="/category/security" className="text-orange-600 font-condensed font-bold text-xs tracking-wide hover:underline uppercase">
+                    View All →
+                  </Link>
+                </div>
+                <div className="space-y-5">
+                  {security.map((post) => (
+                    <article
+                      key={post.slug}
+                      className="flex gap-5 pb-5 border-b border-gray-100 last:border-0 last:pb-0 group"
+                    >
+                      {post.image && (
+                        <div className="relative w-36 h-24 flex-shrink-0 bg-gray-200 overflow-hidden">
+                          <Image
+                            src={post.image}
+                            alt={post.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <span className="bg-orange-700 text-white font-condensed font-bold text-[9px] tracking-[1.5px] px-2 py-0.5 uppercase inline-block mb-1.5">
+                          Security
+                        </span>
+                        <h3 className="font-condensed font-bold text-lg leading-tight mb-1.5 hover:text-[#CC0000] transition-colors">
+                          <Link href={`/news/${post.slug}`}>{post.title}</Link>
+                        </h3>
+                        <p className="text-gray-500 text-sm line-clamp-2 mb-2">
+                          {post.excerpt || generateExcerpt(post.content)}
+                        </p>
+                        <p className="text-[11px] text-gray-400">
+                          By{" "}
+                          <span className="text-orange-700 font-semibold">{post.author}</span>
+                          {" • "}
+                          {timeAgo(post.date)}
+                        </p>
+                      </div>
+                    </article>
                   ))}
                 </div>
               </section>
-            </div>
+            )}
+
+            {/* More Stories */}
+            {moreNews.length > 0 && (
+              <section>
+                <div className="section-header section-header--gray">
+                  <h2>More Stories</h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {moreNews.map((post) => (
+                    <NewsCard key={post.slug} post={post} />
+                  ))}
+                </div>
+
+                {/* Load more */}
+                <div className="text-center mt-8">
+                  <Link
+                    href="/news"
+                    className="inline-block border-2 border-[#CC0000] text-[#CC0000] font-condensed font-black text-sm tracking-[2px] uppercase px-10 py-3 hover:bg-[#CC0000] hover:text-white transition-colors"
+                  >
+                    Load More Stories
+                  </Link>
+                </div>
+              </section>
+            )}
+
           </div>
 
           {/* SIDEBAR */}
           <div className="lg:col-span-4">
-            <Sidebar />
+            <div className="sticky top-24">
+              <Sidebar />
+            </div>
           </div>
         </div>
-
-        {/* Newsletter */}
-        <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white p-10 rounded-2xl text-center">
-          <h2 className="text-3xl font-black mb-3">
-            Stay Informed About Kebbi State
-          </h2>
-          <p className="text-lg mb-6">
-            Get daily news updates delivered to your inbox.
-          </p>
-          <form className="max-w-md mx-auto flex gap-2">
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              className="flex-1 px-5 py-4 rounded-xl text-gray-900"
-            />
-            <button className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-xl">
-              Subscribe
-            </button>
-          </form>
-        </div>
-
-        {/* More */}
-        {moreNews.length > 0 && (
-          <section>
-            <SectionHeader title="MORE NEWS" color="gray" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {moreNews.map((post) => (
-                <NewsCard key={post.slug} post={post} />
-              ))}
-            </div>
-          </section>
-        )}
       </div>
     </>
-  );
-}
-
-// ======================
-// COMPONENTS (UNCHANGED)
-// ======================
-function SectionHeader({ title, color }: { title: string; color: string }) {
-  const colors: Record<string, string> = {
-    red: "bg-red-600",
-    blue: "bg-blue-600",
-    purple: "bg-purple-600",
-    green: "bg-green-600",
-    gray: "bg-gray-600",
-  };
-
-  return (
-    <div className="flex items-center gap-3 mb-6">
-      <div className={`w-1.5 h-8 ${colors[color]}`} />
-      <h2 className="text-2xl font-black uppercase tracking-widest text-gray-900">
-        {title}
-      </h2>
-    </div>
-  );
-}
-
-function OpinionCard({ post }: { post: any }) {
-  return (
-    <Link href={`/news/${post.slug}`} className="block group">
-      <div className="flex gap-3">
-        {post.image ? (
-          <Image src={post.image} alt={post.title} width={80} height={80} className="object-cover rounded" />
-        ) : (
-          <div className="w-20 h-20 bg-purple-100 rounded flex items-center justify-center text-2xl font-bold text-purple-700">
-            OP
-          </div>
-        )}
-        <div className="flex-1">
-          <h4 className="font-bold text-base group-hover:text-purple-700 line-clamp-2">
-            {post.title}
-          </h4>
-          <p className="text-xs text-gray-500 mt-1">By {post.author}</p>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function SportsCard({ post }: { post: any }) {
-  const excerpt = post.excerpt || generateExcerpt(post.content);
-  return (
-    <Link href={`/news/${post.slug}`} className="block group p-4 bg-green-50 rounded-xl hover:bg-green-100">
-      <h4 className="font-bold group-hover:text-green-700 line-clamp-2">
-        {post.title}
-      </h4>
-      <p className="text-sm text-gray-600 mt-2 line-clamp-2">{excerpt}</p>
-      <p className="text-xs text-gray-500 mt-3">By {post.author}</p>
-    </Link>
   );
 }

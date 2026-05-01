@@ -3,23 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 
 const NAV_ITEMS = [
-  { name: "Home", href: "/" },
-  { name: "Politics", href: "/category/politics" },
-  { name: "Security", href: "/category/security" },
-  { name: "Health", href: "/category/health" },
-  { name: "Economy", href: "/category/economy" },
-  { name: "Education", href: "/category/education" },
-  { name: "Sports", href: "/category/sports" },
-  { name: "Opinion", href: "/category/opinion" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
+  { name: "HOME", href: "/" },
+  { name: "POLITICS", href: "/category/politics" },
+  { name: "SECURITY", href: "/category/security" },
+  { name: "HEALTH", href: "/category/health" },
+  { name: "ECONOMY", href: "/category/economy" },
+  { name: "EDUCATION", href: "/category/education" },
+  { name: "SPORTS", href: "/category/sports" },
+  { name: "OPINION", href: "/category/opinion" },
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
 
   const isActive = (href: string) => {
@@ -28,78 +27,138 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white border-b-4 border-red-700 shadow-lg sticky top-0 z-50">
-      <nav className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center py-3">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center space-x-2 transition-transform hover:scale-105"
-            onClick={() => setMenuOpen(false)}
-          >
-            <div className="bg-red-700 text-white w-10 h-10 flex items-center justify-center rounded font-black text-lg">
-              KDN
-            </div>
-            <span className="font-black text-xl md:text-2xl text-gray-900 tracking-tight">
-              Kebbi Daily News
-            </span>
-          </Link>
+    <header className="bg-[#0A0A0A] text-white sticky top-0 z-50 shadow-2xl">
+      {/* Top Red Identity Bar */}
+      <div className="bg-[#CC0000] py-1 text-center text-[10px] font-extrabold tracking-[4px] uppercase">
+        Kebbi Daily News &mdash; Your Trusted Source for Kebbi State News
+      </div>
 
-          {/* Desktop Navigation */}
-          <ul className="hidden lg:flex items-center space-x-1">
+      {/* Main Header Row */}
+      <div className="border-b-[3px] border-[#CC0000]">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between py-3 gap-4">
+
+            {/* Logo */}
+            <Link
+              href="/"
+              className="flex items-center gap-3 flex-shrink-0 group"
+              onClick={() => setMenuOpen(false)}
+            >
+              <div className="bg-[#CC0000] text-white w-11 h-11 flex items-center justify-center font-black text-sm border-2 border-white tracking-widest">
+                KDN
+              </div>
+              <div className="leading-none">
+                <div className="font-black text-[28px] tracking-[-1px] leading-none font-condensed">
+                  <span className="text-white">KEBBI</span>
+                  <span className="text-[#CC0000]">DAILY</span>
+                </div>
+                <div className="text-[9px] tracking-[4px] text-gray-500 font-bold mt-0.5">
+                  NEWS
+                </div>
+              </div>
+            </Link>
+
+            {/* Desktop Nav */}
+            <nav className="hidden lg:block flex-1">
+              <ul className="flex items-center">
+                {NAV_ITEMS.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      className={`
+                        block px-4 py-3 text-[11px] font-black uppercase tracking-[1.5px] transition-colors duration-150
+                        ${isActive(item.href)
+                          ? "bg-[#CC0000] text-white"
+                          : "text-gray-300 hover:bg-[#CC0000] hover:text-white"
+                        }
+                      `}
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {/* Right Controls */}
+            <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
+              {/* Live Badge */}
+              <div className="flex items-center gap-1.5 bg-[#CC0000] text-white text-[10px] font-black px-3 py-1.5 tracking-[2px] uppercase">
+                <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                LIVE
+              </div>
+
+              {/* Search */}
+              <button
+                onClick={() => setSearchOpen(!searchOpen)}
+                className="p-2 text-gray-400 hover:text-white transition-colors"
+                aria-label="Search"
+              >
+                <Search size={18} />
+              </button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="lg:hidden p-2 text-white"
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X size={26} /> : <Menu size={26} />}
+            </button>
+          </div>
+
+          {/* Search Bar (slide-down) */}
+          {searchOpen && (
+            <div className="hidden lg:flex border-t border-gray-800 py-3">
+              <input
+                type="text"
+                placeholder="Search Kebbi Daily News..."
+                autoFocus
+                className="flex-1 bg-gray-900 text-white placeholder-gray-500 px-4 py-2 text-sm border border-gray-700 focus:border-[#CC0000] outline-none"
+              />
+              <button className="bg-[#CC0000] text-white px-6 text-xs font-black tracking-widest uppercase">
+                SEARCH
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="lg:hidden border-t border-gray-800 bg-[#0A0A0A]">
+          <ul className="divide-y divide-gray-800">
             {NAV_ITEMS.map((item) => (
               <li key={item.name}>
                 <Link
                   href={item.href}
+                  onClick={() => setMenuOpen(false)}
                   className={`
-                    block px-4 py-2 text-sm font-bold uppercase tracking-wider transition-all duration-200
-                    ${isActive(item.href)
-                      ? "bg-red-700 text-white"
-                      : "text-gray-700 hover:bg-red-700 hover:text-white"
-                    }
+                    flex items-center px-6 py-4 text-sm font-black uppercase tracking-[1.5px]
+                    ${isActive(item.href) ? "text-[#CC0000]" : "text-gray-300"}
                   `}
                 >
+                  {isActive(item.href) && (
+                    <span className="w-1 h-4 bg-[#CC0000] mr-3 flex-shrink-0" />
+                  )}
                   {item.name}
                 </Link>
               </li>
             ))}
           </ul>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="lg:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {menuOpen && (
-          <div className="lg:hidden border-t border-gray-200">
-            <ul className="py-2">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className={`
-                      block px-6 py-3 font-bold uppercase text-sm tracking-wider transition
-                      ${isActive(item.href)
-                        ? "bg-red-700 text-white"
-                        : "text-gray-700 hover:bg-red-50"
-                      }
-                    `}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="px-6 py-4 border-t border-gray-800">
+            <div className="flex items-center gap-2 bg-gray-900 border border-gray-700 px-3 py-2">
+              <Search size={14} className="text-gray-500" />
+              <input
+                type="text"
+                placeholder="Search..."
+                className="flex-1 bg-transparent text-white placeholder-gray-500 text-sm outline-none"
+              />
+            </div>
           </div>
-        )}
-      </nav>
+        </div>
+      )}
     </header>
   );
 }

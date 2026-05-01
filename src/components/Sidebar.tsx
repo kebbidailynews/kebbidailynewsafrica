@@ -1,46 +1,109 @@
 // components/Sidebar.tsx
+import Link from "next/link";
 import { getAllPosts } from "@/lib/markdown";
 
 export default async function Sidebar() {
-  const posts = await getAllPosts();
-  const mostRead = posts.slice(0, 5);
+  let allPosts: Awaited<ReturnType<typeof getAllPosts>> = [];
+
+  try {
+    allPosts = await getAllPosts();
+  } catch {
+    // Silently fail — sidebar is non-critical
+  }
+
+  const trending = allPosts.slice(0, 6);
+  const opinions = allPosts
+    .filter((p) => p.tags.some((t) => t.toLowerCase().includes("opinion")))
+    .slice(0, 2);
 
   return (
-    <aside className="space-y-6">
-      {/* Ad Block */}
-      <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-64 flex items-center justify-center text-gray-500">
-        ADVERTISEMENT
+    <aside className="space-y-5">
+
+      {/* Ad Slot (top) */}
+      <div className="sidebar-widget">
+        <div className="sidebar-widget__head">Advertisement</div>
+        <div className="ad-slot h-[250px]">
+          <span>300 × 250</span>
+        </div>
       </div>
 
-      {/* Most Read */}
-      <div>
-        <h3 className="text-xl font-black uppercase text-red-700 border-b-2 border-red-700 pb-1 mb-4">
-          MOST READ
-        </h3>
-        <ol className="space-y-3">
-          {mostRead.map((post, i) => (
-            <li key={post.slug} className="flex items-start space-x-2">
-              <span className="text-2xl font-bold text-gray-400">{i + 1}</span>
-              <a href={`/news/${post.slug}`} className="text-sm font-medium hover:text-red-700 line-clamp-2">
-                {post.title}
-              </a>
-            </li>
+      {/* Trending Now */}
+      {trending.length > 0 && (
+        <div className="sidebar-widget">
+          <div className="sidebar-widget__head">Trending Now</div>
+          <div className="divide-y divide-gray-100">
+            {trending.map((post, i) => (
+              <div key={post.slug} className="flex items-start gap-3 p-3">
+                <span className="trending-num">{i + 1}</span>
+                <Link
+                  href={`/news/${post.slug}`}
+                  className="text-[13px] font-semibold text-gray-800 leading-snug hover:text-[#CC0000] transition-colors line-clamp-2"
+                >
+                  {post.title}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Opinion / Analysis */}
+      {opinions.length > 0 && (
+        <div className="sidebar-widget">
+          <div className="sidebar-widget__head">Opinion & Analysis</div>
+          <div className="divide-y divide-gray-100">
+            {opinions.map((post) => (
+              <div key={post.slug} className="p-4">
+                <p className="font-condensed font-black text-[15px] leading-tight mb-1 hover:text-[#CC0000]">
+                  <Link href={`/news/${post.slug}`}>{post.title}</Link>
+                </p>
+                <p className="text-[11px] text-gray-400">
+                  By <span className="text-[#CC0000] font-semibold">{post.author}</span>
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="p-3 border-t border-gray-100">
+            <Link
+              href="/category/opinion"
+              className="text-[11px] text-[#CC0000] font-bold tracking-wide hover:underline uppercase"
+            >
+              View All Opinion →
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Categories */}
+      <div className="sidebar-widget">
+        <div className="sidebar-widget__head">Browse by Section</div>
+        <div className="p-3 grid grid-cols-2 gap-2">
+          {[
+            { name: "Politics", href: "/category/politics", color: "#1A56CC" },
+            { name: "Security", href: "/category/security", color: "#E06800" },
+            { name: "Health",   href: "/category/health",   color: "#166534" },
+            { name: "Economy",  href: "/category/economy",  color: "#6D28D9" },
+            { name: "Education",href: "/category/education",color: "#0E7490" },
+            { name: "Sports",   href: "/category/sports",   color: "#065F46" },
+          ].map(({ name, href, color }) => (
+            <Link
+              key={name}
+              href={href}
+              className="text-white font-condensed font-bold text-[11px] tracking-[1px] uppercase py-2 px-3 text-center hover:opacity-90 transition-opacity"
+              style={{ backgroundColor: color }}
+            >
+              {name}
+            </Link>
           ))}
-        </ol>
+        </div>
       </div>
 
-      {/* Newsletter */}
-      <div className="bg-red-700 text-white p-6 rounded-lg">
-        <h3 className="font-black text-lg uppercase">Stay Informed</h3>
-        <p className="text-sm mt-1">Get daily Kebbi news in your inbox</p>
-        <input
-          type="email"
-          placeholder="Enter email"
-          className="w-full mt-3 px-3 py-2 rounded text-gray-900"
-        />
-        <button className="w-full mt-2 bg-white text-red-700 font-bold py-2 rounded uppercase">
-          Subscribe
-        </button>
+      {/* Ad Slot (bottom) */}
+      <div className="sidebar-widget">
+        <div className="sidebar-widget__head">Advertisement</div>
+        <div className="ad-slot h-[200px]">
+          <span>300 × 200</span>
+        </div>
       </div>
     </aside>
   );

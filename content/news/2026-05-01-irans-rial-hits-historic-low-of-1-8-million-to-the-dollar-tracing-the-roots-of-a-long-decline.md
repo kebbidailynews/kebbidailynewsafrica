@@ -13,7 +13,7 @@ tags:
   - Tehran
   - revolution
   - Iran rial
-image: /uploads/15d2525c-5e6e-45d8-bee6-69814d34b8ba.jpeg
+image: /uploads/a30652c7-c975-4617-a6d2-b5410a6a123d.webp
 content: >-
   Tehran, Iran — Iran's national currency, the rial, plunged to a record low of
   approximately 1.8 million rials per U.S. dollar on the open market this week,

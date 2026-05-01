@@ -550,3 +550,33 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
   }
 }
+
+/* Add to globals.css */
+.sidebar-widget {
+  transition: box-shadow 0.2s ease;
+}
+
+.sidebar-widget:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Trending numbers animation */
+.trending-num {
+  transition: all 0.2s ease;
+}
+
+.sidebar-widget a:hover + .trending-num {
+  transform: scale(1.1);
+}
+
+/* Better touch targets on mobile */
+@media (max-width: 768px) {
+  .sidebar-widget button,
+  .sidebar-widget a {
+    min-height: 40px;
+  }
+  
+  .sidebar-widget input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}

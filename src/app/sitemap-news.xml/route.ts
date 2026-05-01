@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600; // Revalidate every hour (or lower to 300 for more frequent updates)
 
 // Optional: Limit to last 48-72 hours (Google recommendation)
-const HOURS_TO_INCLUDE = 72;
+const HOURS_TO_INCLUDE = 2160;
 
 function formatDateForNews(dateString: string): string {
   return new Date(dateString).toISOString();

@@ -524,3 +524,29 @@ h1, h2, h3, h4, h5, h6 {
 .aspect-1-1 {
   aspect-ratio: 1 / 1;
 }
+
+/* Article reading improvements for mobile */
+@media (max-width: 768px) {
+  .prose p, 
+  .prose li {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .prose h2 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .prose h3 {
+    font-size: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  
+  /* Better touch targets for inline links */
+  .prose a {
+    padding: 0.125rem 0;
+    display: inline-block;
+  }
+}

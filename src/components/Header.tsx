@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const NAV_ITEMS = [
   { name: "HOME", href: "/" },
@@ -18,7 +18,6 @@ const NAV_ITEMS = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
 
   const isActive = (href: string) => {
@@ -29,9 +28,6 @@ export default function Header() {
   return (
     <header className="bg-[#0A0A0A] text-white sticky top-0 z-50 shadow-2xl">
       {/* Top Red Identity Bar */}
-      <div className="bg-[#CC0000] py-1 text-center text-[10px] font-extrabold tracking-[4px] uppercase">
-        Kebbi Daily News &mdash; Your Trusted Source for Kebbi State News
-      </div>
 
       {/* Main Header Row */}
       <div className="border-b-[3px] border-[#CC0000]">
@@ -80,22 +76,13 @@ export default function Header() {
               </ul>
             </nav>
 
-            {/* Right Controls */}
+            {/* Right Controls - Live Badge Only */}
             <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
               {/* Live Badge */}
               <div className="flex items-center gap-1.5 bg-[#CC0000] text-white text-[10px] font-black px-3 py-1.5 tracking-[2px] uppercase">
                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                 LIVE
               </div>
-
-              {/* Search */}
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className="p-2 text-gray-400 hover:text-white transition-colors"
-                aria-label="Search"
-              >
-                <Search size={18} />
-              </button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -107,21 +94,6 @@ export default function Header() {
               {menuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
           </div>
-
-          {/* Search Bar (slide-down) */}
-          {searchOpen && (
-            <div className="hidden lg:flex border-t border-gray-800 py-3">
-              <input
-                type="text"
-                placeholder="Search Kebbi Daily News..."
-                autoFocus
-                className="flex-1 bg-gray-900 text-white placeholder-gray-500 px-4 py-2 text-sm border border-gray-700 focus:border-[#CC0000] outline-none"
-              />
-              <button className="bg-[#CC0000] text-white px-6 text-xs font-black tracking-widest uppercase">
-                SEARCH
-              </button>
-            </div>
-          )}
         </div>
       </div>
 
@@ -147,16 +119,6 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <div className="px-6 py-4 border-t border-gray-800">
-            <div className="flex items-center gap-2 bg-gray-900 border border-gray-700 px-3 py-2">
-              <Search size={14} className="text-gray-500" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="flex-1 bg-transparent text-white placeholder-gray-500 text-sm outline-none"
-              />
-            </div>
-          </div>
         </div>
       )}
     </header>

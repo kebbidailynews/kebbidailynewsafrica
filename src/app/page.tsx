@@ -13,6 +13,7 @@ export const metadata = {
   title: "Kebbi Daily News — Latest News from Kebbi State",
   description:
     "Breaking news, politics, security, and local stories from Kebbi State, Nigeria.",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
 
 function generateExcerpt(content: string, maxLength = 160): string {
@@ -44,7 +45,7 @@ export default async function Home() {
 
   const featured   = allPosts[0];
   const breaking   = allPosts.slice(1, 5);
-  const subHero    = allPosts.slice(1, 4);   // 3 cards under hero
+  const subHero    = allPosts.slice(1, 4);
   const latest     = allPosts.slice(4, 10);
   const politics   = allPosts.filter((p) => p.tags.some((t) => t.toLowerCase().includes("politi"))).slice(0, 3);
   const security   = allPosts.filter((p) => p.tags.some((t) => t.toLowerCase().includes("securi"))).slice(0, 4);
@@ -54,42 +55,42 @@ export default async function Home() {
     <>
       <InviteRedirect />
 
-      <div className="max-w-7xl mx-auto px-4 pt-5 pb-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-3 sm:pt-5 pb-10 sm:pb-14">
 
         {/* ── HERO ───────────────────────────────────────────── */}
         {featured && (
-          <div className="mb-4">
+          <div className="mb-3 sm:mb-4">
             <FeaturedStory post={featured} isHero />
           </div>
         )}
 
-        {/* ── SUB-HERO 3-COLUMN STRIP ─────────────────────────── */}
+        {/* ── SUB-HERO (Mobile: Stacked, Tablet/Desktop: 3-column) ── */}
         {subHero.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 border border-gray-200 bg-white mb-6 divide-y sm:divide-y-0 sm:divide-x divide-gray-200">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-0 border-0 sm:border border-gray-200 bg-white mb-6 divide-y sm:divide-y-0 sm:divide-x divide-gray-200">
             {subHero.map((post) => (
-              <div key={post.slug} className="p-4 hover:bg-gray-50 transition-colors">
-                <span className="bg-[#CC0000] text-white font-condensed font-bold text-[9px] tracking-[1.5px] px-2 py-0.5 uppercase inline-block mb-2">
+              <div key={post.slug} className="p-3 sm:p-4 hover:bg-gray-50 transition-colors">
+                <span className="bg-[#CC0000] text-white font-condensed font-bold text-[9px] sm:text-[9px] tracking-[1.5px] px-2 py-0.5 uppercase inline-block mb-2">
                   {post.tags[0]?.toUpperCase() || "NEWS"}
                 </span>
-                <h3 className="font-condensed font-bold text-[15px] leading-snug hover:text-[#CC0000] transition-colors">
+                <h3 className="font-condensed font-bold text-sm sm:text-[15px] leading-snug hover:text-[#CC0000] transition-colors">
                   <Link href={`/news/${post.slug}`}>{post.title}</Link>
                 </h3>
-                <p className="text-[11px] text-gray-400 mt-1.5">{timeAgo(post.date)}</p>
+                <p className="text-[10px] sm:text-[11px] text-gray-400 mt-1.5">{timeAgo(post.date)}</p>
               </div>
             ))}
           </div>
         )}
 
-        {/* ── BREAKING NEWS TICKER BAR ─────────────────────────── */}
+        {/* ── BREAKING NEWS TICKER (Mobile optimized) ────────── */}
         {breaking.length > 0 && (
-          <div className="flex items-center bg-[#CC0000] text-white mb-8 overflow-hidden">
-            <div className="flex-shrink-0 bg-black text-white font-condensed font-black text-[10px] tracking-[2px] px-4 py-2.5 uppercase whitespace-nowrap">
+          <div className="flex items-center bg-[#CC0000] text-white mb-6 sm:mb-8 overflow-hidden rounded-sm">
+            <div className="flex-shrink-0 bg-black text-white font-condensed font-black text-[9px] sm:text-[10px] tracking-[2px] px-3 sm:px-4 py-2 uppercase whitespace-nowrap">
               Breaking
             </div>
-            <div className="flex-1 overflow-hidden py-2.5 px-4">
-              <div className="flex gap-10 animate-marquee whitespace-nowrap text-sm font-semibold">
+            <div className="flex-1 overflow-hidden py-2 px-3 sm:px-4">
+              <div className="flex gap-6 sm:gap-10 animate-marquee whitespace-nowrap text-xs sm:text-sm font-semibold">
                 {[...breaking, ...breaking].map((post, i) => (
-                  <Link key={i} href={`/news/${post.slug}`} className="hover:underline flex-shrink-0">
+                  <Link key={i} href={`/news/${post.slug}`} className="hover:underline flex-shrink-0 truncate max-w-[200px] sm:max-w-none">
                     {post.title}
                   </Link>
                 ))}
@@ -98,22 +99,22 @@ export default async function Home() {
           </div>
         )}
 
-        {/* ── MAIN 2-COLUMN LAYOUT ─────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* ── MAIN 2-COLUMN LAYOUT (Mobile: 1 column, Desktop: 12-col grid) ── */}
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 sm:gap-8">
 
           {/* CONTENT */}
-          <div className="lg:col-span-8 space-y-12">
+          <div className="lg:col-span-8 space-y-8 sm:space-y-12">
 
             {/* Latest News */}
             {latest.length > 0 && (
               <section>
-                <div className="section-header">
-                  <h2>Latest News</h2>
+                <div className="section-header flex justify-between items-center mb-4 sm:mb-6">
+                  <h2 className="text-xl sm:text-2xl font-bold">Latest News</h2>
                   <Link href="/news" className="text-[#CC0000] font-condensed font-bold text-xs tracking-wide hover:underline uppercase">
                     View All →
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   {latest.map((post) => (
                     <NewsCard key={post.slug} post={post} variant="large" />
                   ))}
@@ -124,13 +125,13 @@ export default async function Home() {
             {/* Politics */}
             {politics.length > 0 && (
               <section>
-                <div className="section-header section-header--blue">
-                  <h2 className="text-blue-700">Politics</h2>
+                <div className="section-header section-header--blue flex justify-between items-center mb-4 sm:mb-6">
+                  <h2 className="text-xl sm:text-2xl font-bold text-blue-700">Politics</h2>
                   <Link href="/category/politics" className="text-blue-600 font-condensed font-bold text-xs tracking-wide hover:underline uppercase">
                     View All →
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {politics.map((post) => (
                     <NewsCard key={post.slug} post={post} />
                   ))}
@@ -141,20 +142,20 @@ export default async function Home() {
             {/* Security */}
             {security.length > 0 && (
               <section>
-                <div className="section-header section-header--orange">
-                  <h2 className="text-orange-700">Security</h2>
+                <div className="section-header section-header--orange flex justify-between items-center mb-4 sm:mb-6">
+                  <h2 className="text-xl sm:text-2xl font-bold text-orange-700">Security</h2>
                   <Link href="/category/security" className="text-orange-600 font-condensed font-bold text-xs tracking-wide hover:underline uppercase">
                     View All →
                   </Link>
                 </div>
-                <div className="space-y-5">
+                <div className="space-y-4 sm:space-y-5">
                   {security.map((post) => (
                     <article
                       key={post.slug}
-                      className="flex gap-5 pb-5 border-b border-gray-100 last:border-0 last:pb-0 group"
+                      className="flex flex-col sm:flex-row gap-3 sm:gap-5 pb-4 sm:pb-5 border-b border-gray-100 last:border-0 last:pb-0 group"
                     >
                       {post.image && (
-                        <div className="relative w-36 h-24 flex-shrink-0 bg-gray-200 overflow-hidden">
+                        <div className="relative w-full sm:w-36 h-48 sm:h-24 flex-shrink-0 bg-gray-200 overflow-hidden rounded-sm">
                           <Image
                             src={post.image}
                             alt={post.title}
@@ -167,13 +168,13 @@ export default async function Home() {
                         <span className="bg-orange-700 text-white font-condensed font-bold text-[9px] tracking-[1.5px] px-2 py-0.5 uppercase inline-block mb-1.5">
                           Security
                         </span>
-                        <h3 className="font-condensed font-bold text-lg leading-tight mb-1.5 hover:text-[#CC0000] transition-colors">
+                        <h3 className="font-condensed font-bold text-base sm:text-lg leading-tight mb-1.5 hover:text-[#CC0000] transition-colors">
                           <Link href={`/news/${post.slug}`}>{post.title}</Link>
                         </h3>
-                        <p className="text-gray-500 text-sm line-clamp-2 mb-2">
+                        <p className="text-gray-500 text-xs sm:text-sm line-clamp-2 mb-2">
                           {post.excerpt || generateExcerpt(post.content)}
                         </p>
-                        <p className="text-[11px] text-gray-400">
+                        <p className="text-[10px] sm:text-[11px] text-gray-400">
                           By{" "}
                           <span className="text-orange-700 font-semibold">{post.author}</span>
                           {" • "}
@@ -189,20 +190,20 @@ export default async function Home() {
             {/* More Stories */}
             {moreNews.length > 0 && (
               <section>
-                <div className="section-header section-header--gray">
-                  <h2>More Stories</h2>
+                <div className="section-header section-header--gray mb-4 sm:mb-6">
+                  <h2 className="text-xl sm:text-2xl font-bold">More Stories</h2>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   {moreNews.map((post) => (
                     <NewsCard key={post.slug} post={post} />
                   ))}
                 </div>
 
-                {/* Load more */}
-                <div className="text-center mt-8">
+                {/* Load more button */}
+                <div className="text-center mt-6 sm:mt-8">
                   <Link
                     href="/news"
-                    className="inline-block border-2 border-[#CC0000] text-[#CC0000] font-condensed font-black text-sm tracking-[2px] uppercase px-10 py-3 hover:bg-[#CC0000] hover:text-white transition-colors"
+                    className="inline-block border-2 border-[#CC0000] text-[#CC0000] font-condensed font-black text-xs sm:text-sm tracking-[2px] uppercase px-6 sm:px-10 py-2.5 sm:py-3 hover:bg-[#CC0000] hover:text-white transition-colors rounded-sm"
                   >
                     Load More Stories
                   </Link>
@@ -212,8 +213,8 @@ export default async function Home() {
 
           </div>
 
-          {/* SIDEBAR */}
-          <div className="lg:col-span-4">
+          {/* SIDEBAR (Hidden on mobile, visible on tablet/desktop) */}
+          <div className="hidden lg:block lg:col-span-4">
             <div className="sticky top-24">
               <Sidebar />
             </div>

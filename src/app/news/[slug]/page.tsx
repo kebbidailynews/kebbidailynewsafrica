@@ -1,4 +1,4 @@
-// Updated file saved - see globals.css for styling updates
+// app/news/[slug]/page.tsx
 import { getPostBySlug, getAllPosts, type NewsPost } from "@/lib/markdown";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
@@ -144,14 +144,14 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 pt-4 pb-14">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-3 sm:pt-4 pb-10 sm:pb-14">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 sm:gap-8">
 
           {/* ── MAIN ARTICLE ─────────────────────────────────── */}
           <article className="lg:col-span-8">
 
-            {/* Breadcrumb - Fox News style */}
-            <nav className="flex items-center gap-2 text-xs font-semibold text-gray-500 mb-4">
+            {/* Breadcrumb - Mobile friendly */}
+            <nav className="flex items-center gap-2 text-xs font-semibold text-gray-500 mb-3 sm:mb-4 flex-wrap">
               <Link href="/" className="hover:text-[#CC0000] transition-colors">Home</Link>
               <span className="text-gray-300">|</span>
               <Link
@@ -163,38 +163,38 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
               </Link>
             </nav>
 
-            {/* Category badge + headline - Fox News bold style */}
-            <div className="mb-5">
+            {/* Category badge + headline - Responsive typography */}
+            <div className="mb-4 sm:mb-5">
               <div
-                className="font-bold text-xs tracking-wider text-white px-3 py-1.5 uppercase inline-block mb-4 rounded-sm"
+                className="font-bold text-[10px] sm:text-xs tracking-wider text-white px-2.5 sm:px-3 py-1 sm:py-1.5 uppercase inline-block mb-3 sm:mb-4 rounded-sm"
                 style={{ backgroundColor: catColor }}
               >
                 {primaryTag.toUpperCase()}
               </div>
 
-              <h1 className="font-bold text-[2.75rem] md:text-5xl leading-[1.1] text-gray-900 mb-5 tracking-tight">
+              <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight sm:leading-[1.1] text-gray-900 mb-3 sm:mb-5 tracking-tight">
                 {post.title}
               </h1>
 
-              {/* Excerpt / deck - Fox News style */}
-              <p className="text-gray-700 text-xl leading-relaxed font-normal mb-5">
+              {/* Excerpt / deck - Responsive text size */}
+              <p className="text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed font-normal mb-3 sm:mb-5">
                 {post.summary || excerpt}
               </p>
             </div>
 
-            {/* Byline - Fox News compact style */}
-            <div className="flex flex-wrap items-center gap-3 pb-4 mb-5 border-b border-gray-200 text-sm">
-              <div className="flex items-center gap-2">
-                <span className="text-gray-500 text-xs">By</span>
+            {/* Byline - Responsive layout */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 pb-3 sm:pb-4 mb-4 sm:mb-5 border-b border-gray-200 text-xs sm:text-sm">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="text-gray-500 text-[10px] sm:text-xs">By</span>
                 <Link
                   href={`/author/${getAuthorSlug(post.author)}`}
-                  className="font-bold text-sm hover:underline text-[#003D7A] transition-colors"
+                  className="font-bold text-xs sm:text-sm hover:underline text-[#003D7A] transition-colors"
                 >
                   {post.author}
                 </Link>
               </div>
               <span className="text-gray-300">|</span>
-              <time className="text-gray-500 text-xs">
+              <time className="text-gray-500 text-[10px] sm:text-xs">
                 {new Date(post.date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -203,9 +203,9 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
               </time>
             </div>
 
-            {/* Hero image - BOXED FOX NEWS STYLE with standard dimensions */}
+            {/* Hero image - Responsive with proper aspect ratio */}
             {post.image && (
-              <div className="mb-8">
+              <div className="mb-6 sm:mb-8">
                 <div className="relative w-full bg-black" style={{ aspectRatio: '16/9' }}>
                   <Image
                     src={post.image}
@@ -214,55 +214,59 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
                     height={675}
                     className="w-full h-full object-cover"
                     priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1200px"
                     style={{ maxHeight: '540px' }}
                   />
                   {/* Fox News signature red bar at bottom */}
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#CC0000]" />
                 </div>
-                {/* Image caption area - Fox News style */}
-                <div className="bg-gray-50 px-4 py-2 border-l-4 border-[#CC0000]">
-                  <p className="text-xs text-gray-600 italic">
+                {/* Image caption - responsive padding */}
+                <div className="bg-gray-50 px-3 sm:px-4 py-1.5 sm:py-2 border-l-4 border-[#CC0000]">
+                  <p className="text-[10px] sm:text-xs text-gray-600 italic line-clamp-2">
                     {post.title}
                   </p>
                 </div>
               </div>
             )}
 
-            {/* Article body - Fox News typography */}
-            <div className="prose-news max-w-none">
+            {/* Article body - mobile-optimized typography */}
+            <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none 
+                          prose-headings:font-bold prose-headings:text-gray-900 
+                          prose-p:text-gray-700 prose-p:leading-relaxed
+                          prose-a:text-[#CC0000] prose-a:no-underline hover:prose-a:underline
+                          prose-img:rounded-lg prose-img:shadow-md">
               <MDXRemote source={post.content} />
             </div>
 
-            {/* Social share bar - Fox News style */}
-            <div className="mt-8 pt-6 pb-6 border-y border-gray-200">
+            {/* Social share bar - responsive */}
+            <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 pb-4 sm:pb-6 border-y border-gray-200">
               <div className="flex items-center gap-3">
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Share:</span>
+                <span className="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-wide">Share:</span>
                 <div className="flex gap-2">
-                  {/* Placeholder social buttons */}
-                  <button className="w-9 h-9 bg-[#1877F2] text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity">
-                    <span className="text-xs font-bold">f</span>
+                  <button className="w-8 h-8 sm:w-9 sm:h-9 bg-[#1877F2] text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity text-xs">
+                    f
                   </button>
-                  <button className="w-9 h-9 bg-black text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity">
-                    <span className="text-xs font-bold">𝕏</span>
+                  <button className="w-8 h-8 sm:w-9 sm:h-9 bg-black text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity text-xs font-bold">
+                    𝕏
                   </button>
-                  <button className="w-9 h-9 bg-[#0A66C2] text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity">
-                    <span className="text-xs font-bold">in</span>
+                  <button className="w-8 h-8 sm:w-9 sm:h-9 bg-[#0A66C2] text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity text-xs">
+                    in
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Tags - Fox News minimal style */}
+            {/* Tags - responsive wrap */}
             {post.tags.length > 0 && (
-              <div className="mt-6 flex flex-wrap items-center gap-2">
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+              <div className="mt-4 sm:mt-6 flex flex-wrap items-center gap-1.5 sm:gap-2">
+                <span className="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-wide">
                   Topics:
                 </span>
                 {post.tags.map((tag) => (
                   <Link
                     key={tag}
                     href={`/category/${tag.toLowerCase()}`}
-                    className="text-xs font-semibold text-[#003D7A] hover:underline uppercase tracking-wide"
+                    className="text-[10px] sm:text-xs font-semibold text-[#003D7A] hover:underline uppercase tracking-wide"
                   >
                     {tag}
                   </Link>
@@ -270,19 +274,19 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
               </div>
             )}
 
-            {/* Related stories - Fox News grid */}
+            {/* Related stories - responsive grid */}
             {relatedPosts.length > 0 && (
-              <div className="mt-12 pt-8 border-t-4 border-[#CC0000]">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900">More {primaryTag}</h2>
+              <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t-4 border-[#CC0000]">
+                <div className="flex items-center justify-between mb-4 sm:mb-6">
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">More {primaryTag}</h2>
                   <Link
                     href={`/category/${catSlug}`}
-                    className="text-xs font-bold text-[#003D7A] hover:underline uppercase tracking-wide"
+                    className="text-[10px] sm:text-xs font-bold text-[#003D7A] hover:underline uppercase tracking-wide"
                   >
                     See All →
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                   {relatedPosts.map((p) => (
                     <NewsCard key={p.slug} post={p} />
                   ))}
@@ -291,11 +295,11 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
             )}
           </article>
 
-          {/* ── SIDEBAR - FOX NEWS STYLE ──────────────────────── */}
-          <aside className="lg:col-span-4">
+          {/* ── SIDEBAR - Hidden on mobile, visible on tablet/desktop ── */}
+          <aside className="hidden lg:block lg:col-span-4">
             <div className="sticky top-24 space-y-6">
 
-              {/* Trending section - Fox News style */}
+              {/* Trending section */}
               {relatedPosts.length > 0 && (
                 <div className="border-t-4 border-[#CC0000] bg-white shadow-sm">
                   <div className="bg-gray-900 px-4 py-3">
@@ -329,7 +333,7 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
                 </div>
               )}
 
-              {/* Ad slot - Fox News style */}
+              {/* Ad slots */}
               <div className="bg-gray-100 border border-gray-200">
                 <div className="bg-gray-200 px-3 py-2 border-b border-gray-300">
                   <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
@@ -341,7 +345,7 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
                 </div>
               </div>
 
-              {/* Newsletter signup - Fox News style */}
+              {/* Newsletter signup */}
               <div className="border-t-4 border-[#CC0000] bg-gradient-to-b from-gray-50 to-white p-5 shadow-sm">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">
                   Newsletter

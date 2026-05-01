@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import NewsCard from "@/components/NewsCard";
+import ShareButtons from "@/components/ShareButtons";
 
 function safeSlug(slug: string): string {
   try { return decodeURIComponent(slug); } catch { return slug; }
@@ -239,21 +240,9 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
             </div>
 
             {/* Social share bar - responsive */}
+            {/* Social share bar */}
             <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 pb-4 sm:pb-6 border-y border-gray-200">
-              <div className="flex items-center gap-3">
-                <span className="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-wide">Share:</span>
-                <div className="flex gap-2">
-                  <button className="w-8 h-8 sm:w-9 sm:h-9 bg-[#1877F2] text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity text-xs">
-                    f
-                  </button>
-                  <button className="w-8 h-8 sm:w-9 sm:h-9 bg-black text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity text-xs font-bold">
-                    𝕏
-                  </button>
-                  <button className="w-8 h-8 sm:w-9 sm:h-9 bg-[#0A66C2] text-white rounded flex items-center justify-center hover:opacity-90 transition-opacity text-xs">
-                    in
-                  </button>
-                </div>
-              </div>
+              <ShareButtons url={articleUrl} title={post.title} />
             </div>
 
             {/* Tags - responsive wrap */}

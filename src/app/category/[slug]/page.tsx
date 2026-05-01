@@ -78,7 +78,9 @@ function getCategoryInfo(rawSlug: string) {
 
 // Match a post tag against the decoded slug — handles spaces, case, partial matches
 function tagMatchesSlug(tag: string, decoded: string): boolean {
+  if (!tag || !decoded) return false;
   const t = tag.toLowerCase().trim();
+  if (!t) return false;
   return t === decoded || t.includes(decoded) || decoded.includes(t);
 }
 
@@ -86,8 +88,13 @@ export async function generateStaticParams() {
   try {
     const posts = await getAllPosts();
     const tags = new Set<string>();
-    posts.forEach((post) => post.tags.forEach((tag) => tags.add(tag.toLowerCase().trim())));
-    // Encode tags so Next.js can match them properly
+    posts.forEach((post) =>
+      post.tags.forEach((tag) => {
+        const clean = tag.toLowerCase().trim();
+        // Guard: skip empty strings — they produce /category with no slug
+        if (clean.length > 0) tags.add(clean);
+      })
+    );
     return Array.from(tags).map((tag) => ({ slug: encodeURIComponent(tag) }));
   } catch {
     return Object.keys(CATEGORY_MAP).map((slug) => ({ slug }));

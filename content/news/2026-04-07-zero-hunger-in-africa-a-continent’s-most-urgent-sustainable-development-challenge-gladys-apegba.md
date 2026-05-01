@@ -1,6 +1,6 @@
 ---
-title: "Zero Hunger in Africa: A Continent’s Most Urgent Sustainable Development
-  Challenge - Gladys Apegba"
+title: Zero Hunger in Africa - A Continent’s Most Urgent Sustainable Development
+  Challenge - Gladys Apegba
 excerpt: "Of all 17 goals, none is more pressing for Africa than SDG 2: Zero Hunger."
 summary: Food insecurity is not merely a humanitarian crisis — it is a
   fundamental barrier to education, economic productivity, and human dignity.

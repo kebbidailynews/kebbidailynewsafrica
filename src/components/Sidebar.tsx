@@ -1,6 +1,7 @@
 // components/Sidebar.tsx
 import Link from "next/link";
 import { getAllPosts } from "@/lib/markdown";
+import NewsletterForm from "./NewsletterForm";
 
 interface SidebarProps {
   currentCategory?: string;
@@ -167,21 +168,14 @@ export default async function Sidebar({ currentCategory }: SidebarProps = {}) {
         </div>
       </div>
 
-      {/* Newsletter Signup - Mobile friendly */}
+      {/* Newsletter Signup - Using NewsletterForm component */}
       <div className="sidebar-widget bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-sm overflow-hidden">
         <div className="p-4 sm:p-5">
           <h3 className="text-white font-bold text-base sm:text-lg mb-2">Newsletter</h3>
           <p className="text-gray-300 text-[11px] sm:text-xs mb-3 leading-relaxed">
             Get the latest news from Kebbi State delivered to your inbox.
           </p>
-          <input
-            type="email"
-            placeholder="Your email address"
-            className="w-full px-3 py-2 text-xs sm:text-sm bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded mb-2 focus:outline-none focus:ring-2 focus:ring-[#CC0000]"
-          />
-          <button className="w-full bg-[#CC0000] text-white font-bold text-[11px] sm:text-xs py-2 rounded hover:bg-[#A30000] transition-colors uppercase tracking-wide">
-            Subscribe Now
-          </button>
+          <NewsletterForm />
           <p className="text-gray-400 text-[9px] sm:text-[10px] mt-2 text-center">
             No spam. Unsubscribe anytime.
           </p>

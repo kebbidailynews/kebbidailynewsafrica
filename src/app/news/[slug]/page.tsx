@@ -6,6 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import NewsCard from "@/components/NewsCard";
 import ShareButtons from "@/components/ShareButtons";
+import NewsletterForm from "@/components/NewsletterForm"; // 👈 Import the form
 
 function safeSlug(slug: string): string {
   try { return decodeURIComponent(slug); } catch { return slug; }
@@ -335,7 +336,7 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
                 </div>
               </div>
 
-              {/* Newsletter signup */}
+              {/* Newsletter signup - Using the real component */}
               <div className="border-t-4 border-[#CC0000] bg-gradient-to-b from-gray-50 to-white p-5 shadow-sm">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">
                   Newsletter
@@ -343,14 +344,7 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
                 <p className="text-xs text-gray-600 mb-4 leading-relaxed">
                   Get breaking news and daily headlines delivered to your email inbox.
                 </p>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full px-3 py-2 border border-gray-300 rounded text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-[#CC0000]"
-                />
-                <button className="w-full bg-[#CC0000] text-white font-bold text-sm py-2 rounded hover:bg-[#A30000] transition-colors uppercase tracking-wide">
-                  Subscribe
-                </button>
+                <NewsletterForm /> {/* 👈 Replaced static form */}
               </div>
 
               {/* Ad slot bottom */}

@@ -2,6 +2,7 @@
 import { getAllPosts } from "@/lib/markdown";
 import NewsCard from "@/components/NewsCard";
 import Sidebar from "@/components/Sidebar";
+import NewsletterForm from "@/components/NewsletterForm"; // 👈 Import the form
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -362,7 +363,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
                 </div>
               )}
 
-              {/* Newsletter */}
+              {/* Newsletter - Using the real component */}
               <div className="sidebar-widget border-t-4" style={{ borderColor: cat.color }}>
                 <div className="p-4">
                   <h3 className="font-condensed font-black text-base uppercase text-gray-900 mb-1">
@@ -371,17 +372,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
                   <p className="text-xs text-gray-500 mb-3 leading-relaxed">
                     Get the latest {cat.label.toLowerCase()} news delivered to your inbox.
                   </p>
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full px-3 py-2 border border-gray-200 text-sm mb-2 focus:outline-none focus:border-gray-400"
-                  />
-                  <button
-                    className="w-full text-white font-condensed font-black text-xs py-2.5 tracking-[2px] uppercase hover:opacity-90 transition-opacity"
-                    style={{ backgroundColor: cat.color }}
-                  >
-                    Subscribe
-                  </button>
+                  <NewsletterForm /> {/* 👈 Replaced static form */}
                 </div>
               </div>
 

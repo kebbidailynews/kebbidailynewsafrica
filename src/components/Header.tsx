@@ -26,7 +26,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-[#0A0A0A] text-white sticky top-0 z-50 shadow-2xl">
+    <header className="bg-[#0a1628] text-white sticky top-0 z-50 shadow-2xl">
       {/* Top Red Identity Bar */}
 
       {/* Main Header Row */}
@@ -99,7 +99,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="lg:hidden border-t border-gray-800 bg-[#0A0A0A]">
+        <div className="lg:hidden border-t border-gray-800 bg-[#0a1628]">
           <ul className="divide-y divide-gray-800">
             {NAV_ITEMS.map((item) => (
               <li key={item.name}>

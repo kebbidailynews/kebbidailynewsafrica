@@ -7,8 +7,8 @@
 :root {
   --red: #CC0000;
   --red-dark: #A30000;
-  --blue-fox: #003D7A;
-  --black: #0A0A0A;
+  --blue-fox: #003366;
+  --black: #0a1628;
   --off-white: #F5F5F5;
   --gray-fox: #333333;
   --font-condensed: var(--font-barlow-condensed), "Arial Narrow", "Helvetica Neue", sans-serif;
@@ -244,7 +244,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar-widget__head {
-  background: #1a1a1a;
+  background: #0a1628;
   color: white;
   font-family: var(--font-body);
   font-weight: 700;
@@ -326,7 +326,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ─── Footer - FOX NEWS DARK ──────────────────────────────────── */
 .kdn-footer {
-  background: #1a1a1a;
+  background: #0a1628;
   color: #999;
   font-family: var(--font-body);
 }

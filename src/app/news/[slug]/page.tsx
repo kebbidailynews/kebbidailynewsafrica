@@ -6,7 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import NewsCard from "@/components/NewsCard";
 import ShareButtons from "@/components/ShareButtons";
-import NewsletterForm from "@/components/NewsletterForm"; // 👈 Import the form
+import Sidebar from "@/components/Sidebar";
 
 function safeSlug(slug: string): string {
   try { return decodeURIComponent(slug); } catch { return slug; }
@@ -91,11 +91,11 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
 
   if (!post?.content?.trim()) notFound();
 
-  const excerpt      = post.excerpt || generateExcerpt(post.content);
+  const excerpt       = post.excerpt || generateExcerpt(post.content);
   const formattedDate = new Date(post.date).toISOString();
-  const catColor     = getCategoryColor(post.tags);
-  const catSlug      = getCategorySlug(post.tags);
-  const primaryTag   = post.tags[0] || "News";
+  const catColor      = getCategoryColor(post.tags);
+  const catSlug       = getCategorySlug(post.tags);
+  const primaryTag    = post.tags[0] || "News";
   const articleUrl    = `https://kebbidailynews.com/news/${decodedSlug}`;
 
   const imageUrl = post.image
@@ -138,7 +138,17 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
     relatedPosts = all
       .filter((p) => p.slug !== post!.slug && p.tags.some((t) => t.toLowerCase().includes(catSlug)))
       .slice(0, 3);
+
+    // Fallback: if no tag matches, just grab the 3 most recent posts
+    if (relatedPosts.length === 0) {
+      relatedPosts = all
+        .filter((p) => p.slug !== post!.slug)
+        .slice(0, 3);
+    }
   } catch { /* non-critical */ }
+
+  const featuredRelated = relatedPosts[0] ?? null;
+  const restRelated     = relatedPosts.slice(1);
 
   return (
     <>
@@ -153,7 +163,7 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
           {/* ── MAIN ARTICLE ─────────────────────────────────── */}
           <article className="lg:col-span-8">
 
-            {/* Breadcrumb - Mobile friendly */}
+            {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-xs font-semibold text-gray-500 mb-3 sm:mb-4 flex-wrap">
               <Link href="/" className="hover:text-[#CC0000] transition-colors">Home</Link>
               <span className="text-gray-300">|</span>
@@ -166,7 +176,7 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
               </Link>
             </nav>
 
-            {/* Category badge + headline - Responsive typography */}
+            {/* Category badge + headline */}
             <div className="mb-4 sm:mb-5">
               <div
                 className="font-bold text-[10px] sm:text-xs tracking-wider text-white px-2.5 sm:px-3 py-1 sm:py-1.5 uppercase inline-block mb-3 sm:mb-4 rounded-sm"
@@ -179,13 +189,12 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
                 {post.title}
               </h1>
 
-              {/* Excerpt / deck - Responsive text size */}
               <p className="text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed font-normal mb-3 sm:mb-5">
                 {post.summary || excerpt}
               </p>
             </div>
 
-            {/* Byline - Responsive layout */}
+            {/* Byline */}
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 pb-3 sm:pb-4 mb-4 sm:mb-5 border-b border-gray-200 text-xs sm:text-sm">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <span className="text-gray-500 text-[10px] sm:text-xs">By</span>
@@ -206,10 +215,10 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
               </time>
             </div>
 
-            {/* Hero image - Responsive with proper aspect ratio */}
+            {/* Hero image */}
             {post.image && (
               <div className="mb-6 sm:mb-8">
-                <div className="relative w-full bg-black" style={{ aspectRatio: '16/9' }}>
+                <div className="relative w-full bg-black" style={{ aspectRatio: "16/9" }}>
                   <Image
                     src={post.image}
                     alt={post.title}
@@ -218,12 +227,10 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
                     className="w-full h-full object-cover"
                     priority
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1200px"
-                    style={{ maxHeight: '540px' }}
+                    style={{ maxHeight: "540px" }}
                   />
-                  {/* Fox News signature red bar at bottom */}
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#CC0000]" />
                 </div>
-                {/* Image caption - responsive padding */}
                 <div className="bg-gray-50 px-3 sm:px-4 py-1.5 sm:py-2 border-l-4 border-[#CC0000]">
                   <p className="text-[10px] sm:text-xs text-gray-600 italic line-clamp-2">
                     {post.title}
@@ -232,22 +239,21 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
               </div>
             )}
 
-            {/* Article body - mobile-optimized typography */}
-            <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none 
-                          prose-headings:font-bold prose-headings:text-gray-900 
-                          prose-p:text-gray-700 prose-p:leading-relaxed
-                          prose-a:text-[#CC0000] prose-a:no-underline hover:prose-a:underline
-                          prose-img:rounded-lg prose-img:shadow-md">
+            {/* Article body */}
+            <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none
+                            prose-headings:font-bold prose-headings:text-gray-900
+                            prose-p:text-gray-700 prose-p:leading-relaxed
+                            prose-a:text-[#CC0000] prose-a:no-underline hover:prose-a:underline
+                            prose-img:rounded-lg prose-img:shadow-md">
               <MDXRemote source={post.content} />
             </div>
 
-            {/* Social share bar - responsive */}
             {/* Social share bar */}
             <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 pb-4 sm:pb-6 border-y border-gray-200">
               <ShareButtons url={articleUrl} title={post.title} />
             </div>
 
-            {/* Tags - responsive wrap */}
+            {/* Tags */}
             {post.tags.length > 0 && (
               <div className="mt-4 sm:mt-6 flex flex-wrap items-center gap-1.5 sm:gap-2">
                 <span className="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-wide">
@@ -265,99 +271,115 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
               </div>
             )}
 
-            {/* Related stories - responsive grid */}
+            {/* ── RELATED STORIES — category page style ─────── */}
             {relatedPosts.length > 0 && (
-              <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t-4 border-[#CC0000]">
-                <div className="flex items-center justify-between mb-4 sm:mb-6">
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">More {primaryTag}</h2>
+              <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t-4" style={{ borderColor: catColor }}>
+
+                {/* Section header */}
+                <div className="flex items-center justify-between mb-6">
+                  <h2
+                    className="font-condensed font-black text-2xl sm:text-3xl uppercase leading-none tracking-tight"
+                    style={{ color: catColor }}
+                  >
+                    More {primaryTag}
+                  </h2>
                   <Link
                     href={`/category/${catSlug}`}
-                    className="text-[10px] sm:text-xs font-bold text-[#003D7A] hover:underline uppercase tracking-wide"
+                    className="font-condensed font-black text-[9px] tracking-[2px] uppercase text-white px-4 py-1.5 hover:opacity-90 transition-opacity flex-shrink-0"
+                    style={{ backgroundColor: catColor }}
                   >
                     See All →
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                  {relatedPosts.map((p) => (
-                    <NewsCard key={p.slug} post={p} />
-                  ))}
-                </div>
+
+                {/* Featured related story */}
+                {featuredRelated && (
+                  <article className="bg-white border border-gray-200 overflow-hidden mb-6">
+                    {featuredRelated.image && (
+                      <div className="relative w-full bg-black" style={{ aspectRatio: "16/9" }}>
+                        <Link href={`/news/${featuredRelated.slug}`}>
+                          <Image
+                            src={featuredRelated.image}
+                            alt={featuredRelated.title}
+                            fill
+                            className="object-cover hover:opacity-90 transition-opacity"
+                            sizes="(max-width: 768px) 100vw, 800px"
+                          />
+                          <div
+                            className="absolute bottom-0 left-0 right-0 h-[3px]"
+                            style={{ backgroundColor: catColor }}
+                          />
+                        </Link>
+                        <div
+                          className="absolute top-3 left-3 font-condensed font-black text-[10px] tracking-[2px] uppercase text-white px-3 py-1"
+                          style={{ backgroundColor: catColor }}
+                        >
+                          Related
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="p-6 sm:p-8">
+                      <h3 className="font-condensed font-black text-2xl sm:text-3xl leading-tight text-gray-900 mb-3 hover:text-[#CC0000] transition-colors">
+                        <Link href={`/news/${featuredRelated.slug}`}>{featuredRelated.title}</Link>
+                      </h3>
+
+                      {(featuredRelated.excerpt || featuredRelated.content) && (
+                        <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-4">
+                          {featuredRelated.excerpt || generateExcerpt(featuredRelated.content)}
+                        </p>
+                      )}
+
+                      <div className="flex items-center gap-2 text-[11px] text-gray-400 border-t border-gray-100 pt-4">
+                        <span>By</span>
+                        <span className="font-bold" style={{ color: catColor }}>
+                          {featuredRelated.author}
+                        </span>
+                        <span className="text-gray-200">|</span>
+                        <time>
+                          {new Date(featuredRelated.date).toLocaleDateString("en-US", {
+                            month: "long", day: "numeric", year: "numeric",
+                          })}
+                        </time>
+                        <Link
+                          href={`/news/${featuredRelated.slug}`}
+                          className="ml-auto font-condensed font-black text-[9px] tracking-[2px] uppercase text-white px-4 py-1.5 hover:opacity-90 transition-opacity"
+                          style={{ backgroundColor: catColor }}
+                        >
+                          Read More →
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                )}
+
+                {/* Remaining 2 stories in a grid */}
+                {restRelated.length > 0 && (
+                  <div>
+                    <div className="section-header mb-4" style={{ borderColor: catColor }}>
+                      <h3
+                        className="font-condensed font-black text-base uppercase"
+                        style={{ color: catColor }}
+                      >
+                        Also in {primaryTag}
+                      </h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      {restRelated.map((p) => (
+                        <NewsCard key={p.slug} post={p} variant="large" />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
               </div>
             )}
           </article>
 
-          {/* ── SIDEBAR - Hidden on mobile, visible on tablet/desktop ── */}
+          {/* ── SIDEBAR ──────────────────────────────────────── */}
           <aside className="hidden lg:block lg:col-span-4">
-            <div className="sticky top-24 space-y-6">
-
-              {/* Trending section */}
-              {relatedPosts.length > 0 && (
-                <div className="border-t-4 border-[#CC0000] bg-white shadow-sm">
-                  <div className="bg-gray-900 px-4 py-3">
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                      Trending in {primaryTag}
-                    </h3>
-                  </div>
-                  <div className="divide-y divide-gray-100">
-                    {relatedPosts.map((p, i) => (
-                      <div key={p.slug} className="flex items-start gap-3 p-4 hover:bg-gray-50 transition-colors">
-                        <span className="flex-shrink-0 w-7 h-7 bg-[#CC0000] text-white font-bold text-sm flex items-center justify-center rounded">
-                          {i + 1}
-                        </span>
-                        <Link
-                          href={`/news/${p.slug}`}
-                          className="text-sm font-bold text-gray-900 leading-tight hover:text-[#CC0000] transition-colors line-clamp-3"
-                        >
-                          {p.title}
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
-                    <Link
-                      href={`/category/${catSlug}`}
-                      className="text-xs font-bold text-[#003D7A] hover:underline uppercase tracking-wide"
-                    >
-                      View All {primaryTag} →
-                    </Link>
-                  </div>
-                </div>
-              )}
-
-              {/* Ad slots */}
-              <div className="bg-gray-100 border border-gray-200">
-                <div className="bg-gray-200 px-3 py-2 border-b border-gray-300">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
-                    Advertisement
-                  </span>
-                </div>
-                <div className="flex items-center justify-center h-[250px] text-gray-400 text-xs font-semibold">
-                  300 × 250
-                </div>
-              </div>
-
-              {/* Newsletter signup - Using the real component */}
-              <div className="border-t-4 border-[#CC0000] bg-gradient-to-b from-gray-50 to-white p-5 shadow-sm">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  Newsletter
-                </h3>
-                <p className="text-xs text-gray-600 mb-4 leading-relaxed">
-                  Get breaking news and daily headlines delivered to your email inbox.
-                </p>
-                <NewsletterForm /> {/* 👈 Replaced static form */}
-              </div>
-
-              {/* Ad slot bottom */}
-              <div className="bg-gray-100 border border-gray-200">
-                <div className="bg-gray-200 px-3 py-2 border-b border-gray-300">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
-                    Advertisement
-                  </span>
-                </div>
-                <div className="flex items-center justify-center h-[600px] text-gray-400 text-xs font-semibold">
-                  300 × 600
-                </div>
-              </div>
+            <div className="sticky top-24">
+              <Sidebar currentCategory={catSlug} />
             </div>
           </aside>
 

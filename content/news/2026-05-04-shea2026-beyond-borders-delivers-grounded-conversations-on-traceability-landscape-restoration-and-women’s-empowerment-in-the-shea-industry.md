@@ -11,6 +11,7 @@ date: 2026-05-04T04:43:27.158Z
 draft: false
 tags:
   - Shea2026 Beyond Borders
+  - economy
   - Landscape Restoration
   - Women’s Empowerment in the Shea Industry
 image: /uploads/global-shea.jpg

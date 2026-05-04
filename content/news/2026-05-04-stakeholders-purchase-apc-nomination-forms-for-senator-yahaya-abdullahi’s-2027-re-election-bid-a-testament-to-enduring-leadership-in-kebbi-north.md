@@ -12,6 +12,7 @@ draft: false
 tags:
   - Kebbi North
   - Senator Yahaya Abdullahi
+  - politics
   - All Progressives Congress (APC) Expression of Interest and Nomination Forms
 image: /uploads/sen-yahaya-abdullahi.jpg
 content: >-

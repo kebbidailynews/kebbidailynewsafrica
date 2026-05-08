@@ -1,3 +1,12 @@
+# _redirects
+# Place this file in your public/ directory
+# Netlify processes redirects from top to bottom
+
+# Force HTTPS and remove www (all variations)
+# These handle the exact URLs Google is reporting as problematic
+http://www.kebbidailynews.com/* https://kebbidailynews.com/:splat 301!
+https://www.kebbidailynews.com/* https://kebbidailynews.com/:splat 301!
 http://kebbidailynews.com/* https://kebbidailynews.com/:splat 301!
 
+# Admin route
 /admin /admin/index.html 200

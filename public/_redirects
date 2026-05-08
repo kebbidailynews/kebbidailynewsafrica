@@ -1,5 +1,5 @@
-http://www.kebbidailynews.com/* https://kebbidailynews.com/:splat 301!
-https://www.kebbidailynews.com/* https://kebbidailynews.com/:splat 301!
-http://kebbidailynews.com/* https://kebbidailynews.com/:splat 301!
+https://www.kebbidailynews.com/*  https://kebbidailynews.com/:splat  301!
+http://www.kebbidailynews.com/*   https://kebbidailynews.com/:splat  301!
+http://kebbidailynews.com/*       https://kebbidailynews.com/:splat  301!
 
-/admin    /admin/index.html  200
+/admin  /admin/index.html  200

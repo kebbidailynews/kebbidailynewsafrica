@@ -1,23 +1,4 @@
-# Force all traffic to https://www
-[[redirects]]
-  from = "http://kebbidailynews.com/*"
-  to = "https://www.kebbidailynews.com/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "http://www.kebbidailynews.com/*"
-  to = "https://www.kebbidailynews.com/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://kebbidailynews.com/*"
-  to = "https://www.kebbidailynews.com/:splat"
-  status = 301
-  force = true
-
-# Keep your admin redirect
+# Keep only your admin redirect
 [[redirects]]
   from = "/admin"
   to = "/admin/index.html"

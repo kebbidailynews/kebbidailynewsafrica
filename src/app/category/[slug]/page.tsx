@@ -2,7 +2,7 @@
 import { getAllPosts } from "@/lib/markdown";
 import NewsCard from "@/components/NewsCard";
 import Sidebar from "@/components/Sidebar";
-import NewsletterForm from "@/components/NewsletterForm"; // 👈 Import the form
+import NewsletterForm from "@/components/NewsletterForm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -105,7 +105,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const decoded = decodeSlug(params.slug);
   const cat = getCategoryInfo(params.slug);
-  const baseUrl = "https://kebbidailynews.com";
+  const baseUrl = "https://www.kebbidailynews.com"; // ✅ UPDATED
 
   try {
     const posts = await getAllPosts();
@@ -166,13 +166,13 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     "@type": "CollectionPage",
     name: `${cat.label} News - Kebbi Daily News`,
     description: cat.description,
-    url: `https://kebbidailynews.com/category/${encodeURIComponent(decoded)}`,
+    url: `https://www.kebbidailynews.com/category/${encodeURIComponent(decoded)}`, // ✅ UPDATED
     inLanguage: "en-NG",
-    isPartOf: { "@type": "WebSite", name: "Kebbi Daily News", url: "https://kebbidailynews.com" },
+    isPartOf: { "@type": "WebSite", name: "Kebbi Daily News", url: "https://www.kebbidailynews.com" }, // ✅ UPDATED
     publisher: {
       "@type": "NewsMediaOrganization",
       name: "Kebbi Daily News",
-      url: "https://kebbidailynews.com",
+      url: "https://www.kebbidailynews.com", // ✅ UPDATED
       foundingDate: "2024",
       areaServed: "Kebbi State, Nigeria",
     },
@@ -181,7 +181,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
       itemListElement: filtered.slice(0, 10).map((post, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `https://kebbidailynews.com/news/${post.slug}`,
+        url: `https://www.kebbidailynews.com/news/${post.slug}`, // ✅ UPDATED
         name: post.title,
         description: post.excerpt || generateExcerpt(post.content),
         datePublished: new Date(post.date).toISOString(),
@@ -191,8 +191,8 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://kebbidailynews.com" },
-        { "@type": "ListItem", position: 2, name: cat.label, item: `https://kebbidailynews.com/category/${encodeURIComponent(decoded)}` },
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.kebbidailynews.com" }, // ✅ UPDATED
+        { "@type": "ListItem", position: 2, name: cat.label, item: `https://www.kebbidailynews.com/category/${encodeURIComponent(decoded)}` }, // ✅ UPDATED
       ],
     },
   };
@@ -372,7 +372,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
                   <p className="text-xs text-gray-500 mb-3 leading-relaxed">
                     Get the latest {cat.label.toLowerCase()} news delivered to your inbox.
                   </p>
-                  <NewsletterForm /> {/* 👈 Replaced static form */}
+                  <NewsletterForm />
                 </div>
               </div>
 

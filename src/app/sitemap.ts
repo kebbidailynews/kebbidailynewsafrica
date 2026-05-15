@@ -13,7 +13,7 @@ const CATEGORIES = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://kebbidailynews.com";
+  const baseUrl = "https://www.kebbidailynews.com"; // ✅ UPDATED
   const allPosts = await getAllPosts();
   
   // Article URLs

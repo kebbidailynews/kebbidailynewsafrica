@@ -11,6 +11,10 @@ const nextConfig = {
         hostname: 'kebbidailynews.com',
       },
       {
+        protocol: 'https',
+        hostname: 'www.kebbidailynews.com', // Add this
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '3000',
@@ -26,6 +30,23 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
+
+  // Add this redirects section
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'kebbidailynews.com',
+          },
+        ],
+        destination: 'https://www.kebbidailynews.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
 
   async headers() {
     return [

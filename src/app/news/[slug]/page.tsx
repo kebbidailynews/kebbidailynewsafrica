@@ -8,6 +8,28 @@ import NewsCard from "@/components/NewsCard";
 import ShareButtons from "@/components/ShareButtons";
 import Sidebar from "@/components/Sidebar";
 
+// ── Single source of truth for the canonical domain ──────────────
+const BASE_URL = "https://kebbidailynews.com";
+
+// ── SSG: pre-build every article at deploy time ──────────────────
+// This switches /news/[slug] from ƒ Dynamic → ● SSG so Googlebot
+// gets full HTML on the first request instead of a blank page.
+export async function generateStaticParams() {
+  try {
+    const posts = await getAllPosts();
+    return posts.map((post) => ({
+      slug: encodeURIComponent(post.slug),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+// Only serve slugs that were pre-built — anything else → 404.
+// Remove this line if you want unknown slugs to fall back to SSR.
+export const dynamicParams = false;
+
+// ── Helpers ───────────────────────────────────────────────────────
 function safeSlug(slug: string): string {
   try { return decodeURIComponent(slug); } catch { return slug; }
 }
@@ -47,39 +69,36 @@ function getCategorySlug(tags: string[]): string {
   return tag;
 }
 
+function buildImageUrl(image: string | undefined | null): string | null {
+  if (!image) return null;
+  if (image.startsWith("http")) return image;
+  return `${BASE_URL}/${image.replace(/^\/+/, "")}`;
+}
+
+// ── Metadata (OG + Twitter cards for WhatsApp/social previews) ───
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const decodedSlug = safeSlug(params.slug);
   try {
     const post = await getPostBySlug(decodedSlug);
-    const excerpt = post.excerpt || generateExcerpt(post.content);
-
-    // Build absolute image URL safely
-    const imageUrl = post.image
-      ? post.image.startsWith("http")
-        ? post.image
-        : `https://kebbidailynews.com/${post.image.replace(/^\/+/, "")}`
-      : null;
+    const excerpt  = post.excerpt || generateExcerpt(post.content);
+    const imageUrl = buildImageUrl(post.image);
 
     return {
       title: post.title,
       description: excerpt,
+      alternates: {
+        canonical: `${BASE_URL}/news/${decodedSlug}`,
+      },
       openGraph: {
         title: post.title,
         description: excerpt,
-        url: `https://kebbidailynews.com/news/${decodedSlug}`,
+        url: `${BASE_URL}/news/${decodedSlug}`,
         siteName: "Kebbi Daily News",
         type: "article",
         publishedTime: new Date(post.date).toISOString(),
         authors: [post.author],
         images: imageUrl
-          ? [
-              {
-                url: imageUrl,
-                width: 1200,
-                height: 630,
-                alt: post.title,
-              },
-            ]
+          ? [{ url: imageUrl, width: 1200, height: 630, alt: post.title }]
           : [],
       },
       twitter: {
@@ -94,6 +113,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
+// ── Page ──────────────────────────────────────────────────────────
 export default async function NewsArticlePage({ params }: { params: { slug: string } }) {
   const decodedSlug = safeSlug(params.slug);
 
@@ -112,20 +132,16 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
   const catColor      = getCategoryColor(post.tags);
   const catSlug       = getCategorySlug(post.tags);
   const primaryTag    = post.tags[0] || "News";
-  const articleUrl    = `https://kebbidailynews.com/news/${decodedSlug}`;
+  const articleUrl    = `${BASE_URL}/news/${decodedSlug}`;
+  const imageUrl      = buildImageUrl(post.image) ?? "";
 
-  const imageUrl = post.image
-    ? (post.image.startsWith("http")
-        ? post.image
-        : `https://kebbidailynews.com${post.image.startsWith("/") ? "" : "/"}${post.image}`)
-    : "";
-
+  // ── Article structured data (Google News rich results) ──────────
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://kebbidailynews.com/news/${decodedSlug}`,
+      "@id": articleUrl,
     },
     headline: post.title,
     image: imageUrl ? [imageUrl] : [],
@@ -134,20 +150,23 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
     author: {
       "@type": "Person",
       name: post.author,
-      url: `https://kebbidailynews.com/author/${getAuthorSlug(post.author)}`,
+      url: `${BASE_URL}/author/${getAuthorSlug(post.author)}`,
     },
     publisher: {
       "@type": "NewsMediaOrganization",
       name: "Kebbi Daily News",
+      url: BASE_URL,
       logo: {
         "@type": "ImageObject",
-        url: "https://kebbidailynews.com/favicon-32x32.png",
+        url: `${BASE_URL}/logo.png`,
+        width: 512,
+        height: 512,
       },
     },
     description: excerpt,
   };
 
-  // Related posts (same category, exclude current)
+  // ── Related posts (same category, exclude current) ───────────────
   let relatedPosts: NewsPost[] = [];
   try {
     const all = await getAllPosts();
@@ -155,7 +174,6 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
       .filter((p) => p.slug !== post!.slug && p.tags.some((t) => t.toLowerCase().includes(catSlug)))
       .slice(0, 3);
 
-    // Fallback: if no tag matches, just grab the 3 most recent posts
     if (relatedPosts.length === 0) {
       relatedPosts = all
         .filter((p) => p.slug !== post!.slug)
@@ -222,7 +240,7 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
                 </Link>
               </div>
               <span className="text-gray-300">|</span>
-              <time className="text-gray-500 text-[10px] sm:text-xs">
+              <time className="text-gray-500 text-[10px] sm:text-xs" dateTime={formattedDate}>
                 {new Date(post.date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -287,7 +305,7 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
               </div>
             )}
 
-            {/* ── RELATED STORIES — category page style ─────── */}
+            {/* ── RELATED STORIES ───────────────────────────── */}
             {relatedPosts.length > 0 && (
               <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t-4" style={{ borderColor: catColor }}>
 

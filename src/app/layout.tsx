@@ -72,6 +72,22 @@ export const metadata: Metadata = {
     },
   },
 
+  // ── Icons / Favicons ──────────────────────────────────────────
+  // Next.js uses this to generate <link> tags in <head>.
+  // logo.png (512×512) is the high-res icon Google uses for the
+  // Knowledge Panel and rich results.
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/logo.png",          sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+  },
+
   // ── Open Graph ────────────────────────────────────────────────
   openGraph: {
     type: "website",
@@ -95,8 +111,8 @@ export const metadata: Metadata = {
   // ── Twitter / X ───────────────────────────────────────────────
   twitter: {
     card: "summary_large_image",
-    site: "@KebbDailyNews",
-    creator: "@KebbDailyNews",
+    site: "@kebbidailynews",
+    creator: "@kebbidailynews",
     title: "Kebbi Daily News — Breaking News from Kebbi State",
     description:
       "Breaking news, politics, security and local stories from Kebbi State, Nigeria.",
@@ -118,15 +134,27 @@ export const metadata: Metadata = {
     "geo.placename": "Birnin Kebbi, Kebbi State, Nigeria",
     "geo.position": "12.4539;4.1975",
     ICBM: "12.4539, 4.1975",
-    "news_keywords":
+    news_keywords:
       "Kebbi, Kebbi State, Birnin Kebbi, Nigeria, breaking news, politics, security",
   },
 };
 
 // ── Website + NewsMediaOrganization Schema ─────────────────────
+//
+// Feeds Google's Knowledge Graph (logo + social links panel in search).
+// Also registers the Sitelinks Search Box.
+//
+// Requirements for the Knowledge Panel to appear:
+//   1. Each sameAs URL must list kebbidailynews.com in that profile's
+//      website/bio field on the platform.
+//   2. /public/logo.png must be reachable at https://kebbidailynews.com/logo.png
+//   3. Re-request indexing of the homepage in Google Search Console.
+//   4. Validate at: https://search.google.com/test/rich-results
+//
 const websiteSchema = {
   "@context": "https://schema.org",
   "@graph": [
+    // ── 1. WebSite — Sitelinks Search Box ────────────────────────
     {
       "@type": "WebSite",
       "@id": `${BASE_URL}/#website`,
@@ -138,32 +166,56 @@ const websiteSchema = {
         "@type": "SearchAction",
         target: {
           "@type": "EntryPoint",
+          // Ensure /search?q= returns real results or Google ignores this.
           urlTemplate: `${BASE_URL}/search?q={search_term_string}`,
         },
         "query-input": "required name=search_term_string",
       },
     },
+
+    // ── 2. NewsMediaOrganization — Knowledge Panel ───────────────
     {
       "@type": "NewsMediaOrganization",
       "@id": `${BASE_URL}/#organization`,
       name: "Kebbi Daily News",
+      alternateName: "KDN",
       url: BASE_URL,
+
+      // logo.png: 512×512px square — used by Google in the Knowledge Panel
       logo: {
         "@type": "ImageObject",
-        url: `${BASE_URL}/favicon-32x32.png`,
-        width: 32,
-        height: 32,
+        url: `${BASE_URL}/logo.png`,
+        width: 512,
+        height: 512,
       },
+
+      // Larger hero image for rich results
+      image: {
+        "@type": "ImageObject",
+        url: `${BASE_URL}/og-image.jpg`,
+        width: 1200,
+        height: 630,
+      },
+
+      // Each profile below must link back to kebbidailynews.com
+      // in its bio/about/website field for Google to connect them.
       sameAs: [
-        "https://twitter.com/KebbDailyNews",
-        "https://facebook.com/KebbDailyNews",
+        "https://www.facebook.com/kebbidailynews",
+        "https://twitter.com/kebbidailynews",
+        "https://www.instagram.com/kebbidailynews",
+        "https://www.youtube.com/@kebbidailynews",
+        "https://www.linkedin.com/company/kebbidailynews",
+        "https://www.tiktok.com/@kebbidailynews",
       ],
+
       foundingDate: "2024",
+
       areaServed: {
         "@type": "AdministrativeArea",
         name: "Kebbi State",
         containedInPlace: { "@type": "Country", name: "Nigeria" },
       },
+
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "editorial",
@@ -182,10 +234,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* ── Google AdSense ── */}
         <meta name="google-adsense-account" content="ca-pub-8458799741626167" />
 
-        {/* ── Favicons ── */}
+        {/* ── Favicons (also declared in metadata.icons above,
+               kept here as fallback for older crawlers) ── */}
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32"  href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16"  href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/logo.png" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="manifest" href="/site.webmanifest" />
 
@@ -193,15 +247,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#CC0000" />
         <meta name="msapplication-TileColor" content="#CC0000" />
 
-        {/* ── Viewport (explicit for news sites) ── */}
+        {/* ── Viewport ── */}
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
 
-        {/* ── DNS Prefetch (speed) ── */}
+        {/* ── DNS Prefetch ── */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//pagead2.googlesyndication.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* ── News Sitemap (submitted to Google Search Console) ── */}
+        {/* ── News Sitemap ── */}
         <link
           rel="sitemap"
           type="application/xml"
@@ -209,7 +263,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="/sitemap-news.xml"
         />
 
-        {/* ── Website + Org Schema ── */}
+        {/* ── Structured Data ── */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}

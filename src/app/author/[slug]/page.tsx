@@ -1,8 +1,10 @@
 // app/author/[slug]/page.tsx
-import { getPostsByAuthor } from "@/lib/markdown";
+import { getPostsByAuthor, getAllPosts } from "@/lib/markdown";
 import NewsCard from "@/components/NewsCard";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+
+const BASE_URL = "https://kebbidailynews.com";
 
 // ==============================
 // Author Type
@@ -35,6 +37,74 @@ const AUTHOR_INFO: Record<string, Author> = {
     education: "Computer Science",
   },
 };
+
+// ==============================
+// SSG: pre-build every author page at deploy time
+// Switches /author/[slug] from ƒ Dynamic → ● SSG
+// ==============================
+export async function generateStaticParams() {
+  try {
+    const posts = await getAllPosts();
+    const slugs = new Set<string>();
+
+    // Collect slugs from all post authors
+    posts.forEach((post) => {
+      const slug = post.author
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-");
+      if (slug) slugs.add(slug);
+    });
+
+    // Also include any authors defined in AUTHOR_INFO
+    // (even if they haven't published yet)
+    Object.keys(AUTHOR_INFO).forEach((slug) => slugs.add(slug));
+
+    return Array.from(slugs).map((slug) => ({ slug }));
+  } catch {
+    return Object.keys(AUTHOR_INFO).map((slug) => ({ slug }));
+  }
+}
+
+// Unknown slugs → 404 instead of trying to SSR
+export const dynamicParams = false;
+
+// ==============================
+// Metadata
+// ==============================
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const authorSlug = params.slug.toLowerCase().trim();
+  const author = AUTHOR_INFO[authorSlug];
+  const displayName = author?.name || formatName(authorSlug);
+  const role = author?.role || "Contributor";
+  const bio = author?.bio || getDefaultBio(displayName);
+  const imageUrl = author?.image ? `${BASE_URL}${author.image}` : null;
+
+  return {
+    title: `${displayName} — ${role} | Kebbi Daily News`,
+    description: bio,
+    alternates: {
+      canonical: `${BASE_URL}/author/${authorSlug}`,
+    },
+    openGraph: {
+      title: `${displayName} | Kebbi Daily News`,
+      description: bio,
+      url: `${BASE_URL}/author/${authorSlug}`,
+      siteName: "Kebbi Daily News",
+      type: "profile",
+      images: imageUrl
+        ? [{ url: imageUrl, width: 210, height: 210, alt: displayName }]
+        : [],
+    },
+    twitter: {
+      card: "summary",
+      title: `${displayName} | Kebbi Daily News`,
+      description: bio,
+      images: imageUrl ? [imageUrl] : [],
+    },
+  };
+}
 
 // ==============================
 // Helpers
@@ -96,34 +166,22 @@ export default async function AuthorPage({
     "@context": "https://schema.org",
     "@type": "Person",
     name: displayName,
-    url: `https://kebbidailynews.com/author/${authorSlug}`,
-    image: author?.image
-      ? `https://kebbidailynews.com${author.image}`
-      : undefined,
+    url: `${BASE_URL}/author/${authorSlug}`,
+    image: author?.image ? `${BASE_URL}${author.image}` : undefined,
     description: bio,
     jobTitle: role,
     worksFor: {
       "@type": "NewsMediaOrganization",
       name: "Kebbi Daily News",
-      url: "https://kebbidailynews.com",
+      url: BASE_URL,
     },
     ...(sameAs.length && { sameAs }),
-
-    // 🔥 E-E-A-T Enhancers
-    ...(author?.expertise && {
-      knowsAbout: author.expertise,
-    }),
+    ...(author?.expertise && { knowsAbout: author.expertise }),
     ...(author?.location && {
-      homeLocation: {
-        "@type": "Place",
-        name: author.location,
-      },
+      homeLocation: { "@type": "Place", name: author.location },
     }),
     ...(author?.education && {
-      alumniOf: {
-        "@type": "CollegeOrUniversity",
-        name: author.education,
-      },
+      alumniOf: { "@type": "CollegeOrUniversity", name: author.education },
     }),
   };
 
@@ -132,9 +190,7 @@ export default async function AuthorPage({
       {/* Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(personSchema),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
 
       <div className="max-w-5xl mx-auto px-4 py-12">
@@ -142,7 +198,7 @@ export default async function AuthorPage({
             AUTHOR HEADER
         ============================== */}
         <div className="flex flex-col md:flex-row gap-10 items-center md:items-start bg-white border border-gray-100 rounded-3xl p-10 mb-16 shadow-sm">
-          
+
           {/* Avatar */}
           <div className="flex-shrink-0">
             {author?.image ? (
@@ -181,6 +237,7 @@ export default async function AuthorPage({
                 <a
                   href={author.twitter}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-blue-500 font-medium hover:underline"
                 >
                   Twitter
@@ -190,6 +247,7 @@ export default async function AuthorPage({
                 <a
                   href={author.linkedin}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-blue-700 font-medium hover:underline"
                 >
                   LinkedIn
@@ -213,9 +271,7 @@ export default async function AuthorPage({
 
             <div className="mt-4 inline-flex items-center gap-2 bg-gray-100 px-6 py-3 rounded-full text-sm text-gray-600 font-medium">
               <span>{posts.length}</span>
-              <span>
-                article{posts.length !== 1 ? "s" : ""} published
-              </span>
+              <span>article{posts.length !== 1 ? "s" : ""} published</span>
             </div>
           </div>
         </div>

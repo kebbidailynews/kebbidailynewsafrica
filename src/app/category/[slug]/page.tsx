@@ -52,6 +52,9 @@ const CATEGORY_MAP: Record<string, { label: string; color: string; description: 
   },
 };
 
+// Single source of truth — must match layout.tsx and next.config.js
+const BASE_URL = "https://kebbidailynews.com";
+
 // Decode URL slug (handles %20, %E2%80%99, etc.) and normalise to lowercase
 function decodeSlug(raw: string): string {
   try {
@@ -105,7 +108,6 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const decoded = decodeSlug(params.slug);
   const cat = getCategoryInfo(params.slug);
-  const baseUrl = "https://www.kebbidailynews.com"; // ✅ UPDATED
 
   try {
     const posts = await getAllPosts();
@@ -116,21 +118,21 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title: `${cat.label} News — Latest Updates from Kebbi State | Kebbi Daily News`,
       description: cat.description,
       keywords: cat.keywords,
-      alternates: { canonical: `${baseUrl}/category/${encodeURIComponent(decoded)}` },
+      alternates: { canonical: `${BASE_URL}/category/${encodeURIComponent(decoded)}` },
       openGraph: {
         title: `${cat.label} News — Kebbi Daily News`,
         description: cat.description,
-        url: `${baseUrl}/category/${encodeURIComponent(decoded)}`,
+        url: `${BASE_URL}/category/${encodeURIComponent(decoded)}`,
         siteName: "Kebbi Daily News",
         type: "website",
         locale: "en_NG",
-        images: [{ url: `${baseUrl}/og-image.jpg`, width: 1200, height: 630, alt: `${cat.label} News` }],
+        images: [{ url: `${BASE_URL}/og-image.jpg`, width: 1200, height: 630, alt: `${cat.label} News — Kebbi Daily News` }],
       },
       twitter: {
         card: "summary_large_image",
         title: `${cat.label} News — Kebbi Daily News`,
         description: cat.description,
-        images: [`${baseUrl}/og-image.jpg`],
+        images: [`${BASE_URL}/og-image.jpg`],
       },
       other: {
         "DC.date.issued": latestDate.toISOString().split("T")[0],
@@ -166,13 +168,17 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     "@type": "CollectionPage",
     name: `${cat.label} News - Kebbi Daily News`,
     description: cat.description,
-    url: `https://www.kebbidailynews.com/category/${encodeURIComponent(decoded)}`, // ✅ UPDATED
+    url: `${BASE_URL}/category/${encodeURIComponent(decoded)}`,
     inLanguage: "en-NG",
-    isPartOf: { "@type": "WebSite", name: "Kebbi Daily News", url: "https://www.kebbidailynews.com" }, // ✅ UPDATED
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Kebbi Daily News",
+      url: BASE_URL,
+    },
     publisher: {
       "@type": "NewsMediaOrganization",
       name: "Kebbi Daily News",
-      url: "https://www.kebbidailynews.com", // ✅ UPDATED
+      url: BASE_URL,
       foundingDate: "2024",
       areaServed: "Kebbi State, Nigeria",
     },
@@ -181,7 +187,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
       itemListElement: filtered.slice(0, 10).map((post, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `https://www.kebbidailynews.com/news/${post.slug}`, // ✅ UPDATED
+        url: `${BASE_URL}/news/${post.slug}`,
         name: post.title,
         description: post.excerpt || generateExcerpt(post.content),
         datePublished: new Date(post.date).toISOString(),
@@ -191,8 +197,8 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.kebbidailynews.com" }, // ✅ UPDATED
-        { "@type": "ListItem", position: 2, name: cat.label, item: `https://www.kebbidailynews.com/category/${encodeURIComponent(decoded)}` }, // ✅ UPDATED
+        { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
+        { "@type": "ListItem", position: 2, name: cat.label, item: `${BASE_URL}/category/${encodeURIComponent(decoded)}` },
       ],
     },
   };
@@ -363,7 +369,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
                 </div>
               )}
 
-              {/* Newsletter - Using the real component */}
+              {/* Newsletter */}
               <div className="sidebar-widget border-t-4" style={{ borderColor: cat.color }}>
                 <div className="p-4">
                   <h3 className="font-condensed font-black text-base uppercase text-gray-900 mb-1">

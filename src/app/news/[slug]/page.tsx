@@ -52,25 +52,41 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   try {
     const post = await getPostBySlug(decodedSlug);
     const excerpt = post.excerpt || generateExcerpt(post.content);
-    const imageUrl = post.image?.startsWith("http")
-      ? post.image
-      : `https://kebbidailynews.com${post.image?.startsWith("/") ? "" : "/"}${post.image}`;
+
+    // Build absolute image URL safely
+    const imageUrl = post.image
+      ? post.image.startsWith("http")
+        ? post.image
+        : `https://kebbidailynews.com/${post.image.replace(/^\/+/, "")}`
+      : null;
+
     return {
       title: post.title,
       description: excerpt,
       openGraph: {
         title: post.title,
         description: excerpt,
-        images: post.image ? [{ url: imageUrl }] : [],
+        url: `https://kebbidailynews.com/news/${decodedSlug}`,
+        siteName: "Kebbi Daily News",
         type: "article",
         publishedTime: new Date(post.date).toISOString(),
         authors: [post.author],
+        images: imageUrl
+          ? [
+              {
+                url: imageUrl,
+                width: 1200,
+                height: 630,
+                alt: post.title,
+              },
+            ]
+          : [],
       },
       twitter: {
         card: "summary_large_image",
         title: post.title,
         description: excerpt,
-        images: post.image ? [imageUrl] : [],
+        images: imageUrl ? [imageUrl] : [],
       },
     };
   } catch {

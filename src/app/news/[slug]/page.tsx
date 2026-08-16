@@ -139,31 +139,85 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
+
+    // ── Core identity ────────────────────────────────────────────
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": articleUrl,
     },
-    headline: post.title,
-    image: imageUrl ? [imageUrl] : [],
+    headline:      post.title,
+    description:   excerpt,
+    url:           articleUrl,
     datePublished: formattedDate,
-    dateModified: formattedDate,
+    dateModified:  formattedDate,
+    inLanguage:    "en-NG",
+
+    // ── Image — required for Top Stories eligibility ─────────────
+    image: imageUrl
+      ? [
+          {
+            "@type":  "ImageObject",
+            url:      imageUrl,
+            width:    1200,
+            height:   630,
+          },
+        ]
+      : [],
+
+    // ── Author ───────────────────────────────────────────────────
     author: {
       "@type": "Person",
-      name: post.author,
-      url: `${BASE_URL}/author/${getAuthorSlug(post.author)}`,
+      name:    post.author,
+      url:     `${BASE_URL}/author/${getAuthorSlug(post.author)}`,
     },
+
+    // ── Publisher ────────────────────────────────────────────────
     publisher: {
       "@type": "NewsMediaOrganization",
-      name: "Kebbi Daily News",
-      url: BASE_URL,
+      name:    "Kebbi Daily News",
+      url:     BASE_URL,
       logo: {
-        "@type": "ImageObject",
-        url: `${BASE_URL}/logo.png`,
-        width: 512,
-        height: 512,
+        "@type":  "ImageObject",
+        url:      `${BASE_URL}/logo.png`,
+        width:    512,
+        height:   512,
       },
+      sameAs: [
+        "https://www.facebook.com/kebbidailynews",
+        "https://twitter.com/kebbidailynews",
+        "https://www.instagram.com/kebbidailynews",
+        "https://www.youtube.com/@kebbidailynews",
+      ],
     },
-    description: excerpt,
+
+    // ── Article section + keywords ───────────────────────────────
+    articleSection: primaryTag,
+    keywords: ["Kebbi State", "Kebbi Daily News", primaryTag, ...post.tags].join(", "),
+
+    // ── Breadcrumb — boosts Top Stories placement ────────────────
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type":    "ListItem",
+          position:   1,
+          name:       "Home",
+          item:       BASE_URL,
+        },
+        {
+          "@type":    "ListItem",
+          position:   2,
+          name:       primaryTag,
+          item:       `${BASE_URL}/category/${catSlug}`,
+        },
+        {
+          "@type":    "ListItem",
+          position:   3,
+          name:       post.title,
+          item:       articleUrl,
+        },
+      ],
+    },
   };
 
   // ── Related posts (same category, exclude current) ───────────────
@@ -204,22 +258,24 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
               <Link
                 href={`/category/${catSlug}`}
                 className="hover:text-[#CC0000] transition-colors uppercase"
-                style={{ color: catColor }}
               >
                 {primaryTag}
               </Link>
+              <span className="text-gray-300">|</span>
+              <span className="text-gray-400 line-clamp-1">{post.title}</span>
             </nav>
 
             {/* Category badge + headline */}
-            <div className="mb-4 sm:mb-5">
-              <div
-                className="font-bold text-[10px] sm:text-xs tracking-wider text-white px-2.5 sm:px-3 py-1 sm:py-1.5 uppercase inline-block mb-3 sm:mb-4 rounded-sm"
+            <div className="mb-4 sm:mb-6">
+              <Link
+                href={`/category/${catSlug}`}
+                className="inline-block font-condensed font-black text-[10px] sm:text-xs tracking-[2px] uppercase text-white px-3 py-1 mb-3 hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: catColor }}
               >
-                {primaryTag.toUpperCase()}
-              </div>
+                {primaryTag}
+              </Link>
 
-              <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight sm:leading-[1.1] text-gray-900 mb-3 sm:mb-5 tracking-tight">
+              <h1 className="font-condensed font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight text-gray-900 mb-3 sm:mb-4">
                 {post.title}
               </h1>
 

@@ -1,87 +1,87 @@
 ---
-title: NAPTIP Rescues Five Underage Children from Traffickers in Kebbi
-excerpt: For the five children themselves, the experience is likely to leave
-  lasting psychological and emotional marks.
-summary: "Coverage of the NAPTIP rescue on social media has been relatively
-  measured but consistently supportive of the intervention. One widely
-  circulated post summarised the essential facts: five children from Kebbi had
-  been rescued from suspected traffickers who were allegedly taking them under
-  the guise of securing better education, suspects had been arrested, and the
-  children had been reunited with their parents. The post used relevant hashtags
-  that helped the information travel beyond the immediate Kebbi audience."
+title: "NEMA Warns: 12 Kebbi LGAs Risk Severe Flooding as River Niger Peaks in
+  September"
+excerpt: Representing the Director-General of NEMA, Hajiya Zubaida Umar, the
+  Director of the North-West Zonal Directorate, Aliyu Shehu Kafindongi, told
+  participants that the River Niger is expected to overflow its banks during the
+  peak period.
+summary: "The Executive Secretary of the Kebbi State Emergency Management
+  Agency, Abubakar Abdullahi, told the gathering that the state government had
+  already put measures in place to respond to the predicted flooding. "
 author: Kebbi Daily News
-date: 2026-08-17T16:29:47.404Z
+date: 2026-08-17T16:34:01.791Z
 draft: false
 tags:
-  - Opinion
-image: /uploads/screenshot-2026-08-17-at-17.33.28.png
+  - agriculture
+  - health
+  - opinion
+image: /uploads/screenshot-2026-08-17-at-17.37.24.png
 content: >-
-  The Kebbi State Command of the National Agency for the Prohibition of
-  Trafficking in Persons has successfully rescued five underage children from
-  suspected human traffickers who were allegedly preparing to transport them to
-  Edo State under the false promise of enrolment in modern schools. The
-  operation, which culminated in the formal handover of the children to their
-  parents at Government House in Birnin Kebbi, has been hailed as an important
-  intervention in the ongoing struggle against child trafficking in the
-  Northwest.
+  The National Emergency Management Agency has issued a clear and urgent warning
+  that September 2026 will mark the peak of the flood season in Kebbi State,
+  with projections indicating severe flooding across twelve local government
+  areas. The agency’s assessment, delivered at a stakeholders’ engagement on the
+  National Disaster Preparedness and Response Campaign held in Birnin Kebbi, has
+  placed the state on high alert and prompted renewed calls for coordinated
+  action by government, communities and development partners.
 
 
-  According to the Kebbi State Commandant of NAPTIP, Misbau IyaKaura, the children were taken from their parents in Dankowagu and Zuru Local Government Areas of the state. The traffickers, exploiting the desire of rural families for better educational opportunities for their children, had convinced the parents that the young ones would be placed in proper schools. Instead, the children were moved toward Gusau in neighbouring Zamfara State, from where they were to be transported further to Edo. It was during this movement that the convoy was intercepted and the children recovered.
+  Representing the Director-General of NEMA, Hajiya Zubaida Umar, the Director of the North-West Zonal Directorate, Aliyu Shehu Kafindongi, told participants that the River Niger is expected to overflow its banks during the peak period. The resulting inundation, he explained, is likely to affect farmlands, riverside settlements and critical infrastructure across a wide swathe of the state. Elevated water levels are projected to persist into October and November, meaning that the impact of the flooding could be prolonged rather than limited to a single catastrophic peak.
 
 
-  Five suspects were arrested in connection with the incident, while one additional suspect remains at large. The commandant stated that investigations are continuing and that the arrested individuals will face prosecution in accordance with the law. The children have since been reunited with their families, bringing an end to what must have been a period of intense anxiety for the parents who had entrusted their offspring to strangers on the strength of false assurances.
+  The twelve local government areas identified as particularly vulnerable are Argungu, Augie, Bagudo, Birnin Kebbi, Dandi, Fakai, Koko/Besse, Maiyama, Ngaski, Shanga, Zuru and Yauri. These areas either lie along the main course of the River Niger and its major tributaries or occupy low-lying terrain that has historically been susceptible to seasonal inundation. For communities that depend on flood-recession agriculture, the annual rise of the river is both a blessing and a threat; the same waters that deposit fertile silt can, when they rise too high or too fast, destroy homes, wash away roads and displace entire villages.
 
 
-  Beyond the immediate rescue, Commandant IyaKaura disclosed that the Kebbi Command is currently caring for twenty-three deportees from various African countries, including Morocco, Egypt and Tunisia. These individuals, many of whom are believed to have been victims of trafficking or irregular migration, require proper rehabilitation before they can be safely reintegrated into society. The commandant used the occasion of the handover ceremony to appeal to the state government for the provision of suitable accommodation within the command’s premises so that rescued victims can be properly housed while investigations and rehabilitation processes are completed.
+  NEMA used the stakeholders’ engagement to call on a broad range of actors to support the amplification of early warning messages. Traditional institutions, religious organisations, women and youth groups, the media and the private sector were all urged to play their part in ensuring that information about the expected flooding reaches the most vulnerable households in time for them to take protective action. The agency’s message was clear: preparedness is a shared responsibility, and the effectiveness of the response will depend on the quality of collaboration among all stakeholders.
 
 
-  Responding on behalf of Governor Nasir Idris, the then Deputy Governor, Umar Abubakar Tafida, issued a strong warning to parents across the state. He cautioned against the practice of allowing strangers to take children away under the guise of providing better educational opportunities. Parents, he emphasised, have a fundamental responsibility to protect their children and should not hand them over to people whose identities, intentions and destinations are unknown. The deputy governor went further to state that the state government would not hesitate to take action against parents who deliberately allow their children to be taken to unknown destinations.
+  The Executive Secretary of the Kebbi State Emergency Management Agency, Abubakar Abdullahi, told the gathering that the state government had already put measures in place to respond to the predicted flooding. SEMA has been working to strengthen local emergency management committees, improve early-warning systems and pre-position relief materials in high-risk areas. The engagement in Birnin Kebbi was framed as an opportunity to renew collective resolve and to ensure that every relevant institution understands its role in the weeks and months ahead.
 
 
-  The warning reflects a painful reality that has become familiar to anti-trafficking agencies across Nigeria. In many rural and semi-urban communities, the combination of poverty, limited access to quality education and the aspiration for a better future for children creates openings that traffickers are quick to exploit. Promises of modern schools, apprenticeships or employment in distant cities are used to persuade parents to release their children into the custody of intermediaries who then move the young people into networks of exploitation. The Kebbi cases fit this pattern closely: the children were taken from communities in Dankowagu and Zuru with the explicit claim that they would receive an education that their home areas could not provide.
+  In a related development that has provided a measure of reassurance, the Director-General of NEMA has publicly described Governor Nasir Idris as a frontline leader in disaster response. During an advocacy visit by media aides to the Kebbi State Government, Hajiya Zubaida Umar praised the governor’s swift response to emergencies and his commitment to transformative development. She noted that the remarkable developments recorded in Kebbi under the current administration were evident and not based on hearsay, adding that she had personally witnessed some of the achievements during her visits to the state.
 
 
-  The interception of the group in Gusau underscores both the cross-border nature of trafficking routes within Nigeria and the importance of inter-state cooperation among security and anti-trafficking agencies. Traffickers frequently move victims through multiple states in order to obscure their trail and to take advantage of gaps in coordination. The fact that the children were recovered before they reached their intended destination in Edo is a testament to the effectiveness of the intelligence and operational work that led to the interception.
+  The NEMA Director-General specifically recalled an incident during one of her earlier visits when a security challenge arose and Governor Idris took immediate action. She described him as extremely proactive in responding to emerging challenges. She also commended the administration’s efforts in the education sector, including the employment of two thousand teachers, the provision of buses to tertiary institutions, and the achievements of Kebbi students who developed a local flood early-warning system and subsequently won several awards. The provision of solar street lighting, which has improved night-time movement and security, was likewise noted as evidence of the state’s attention to public safety and infrastructure.
 
 
-  For the five children themselves, the experience is likely to leave lasting psychological and emotional marks. Even when physical harm has been avoided, the sudden separation from family, the uncertainty of the journey and the eventual realisation that they had been deceived can produce trauma that requires careful support. NAPTIP and partner organisations routinely emphasise the need for psychosocial care alongside the legal processes that follow a rescue. The state government’s involvement in the formal handover at Government House signals a recognition that the welfare of the children remains a shared responsibility after the immediate danger has passed.
+  Hajiya Umar further observed that the governor’s responsiveness had strengthened collaboration between the state government and NEMA. She recalled suggesting the establishment of a more permanent NEMA presence in Kebbi and noted that the governor had acted promptly on the recommendation. The Director-General also praised the state’s disaster preparedness and response capacity in relation to flooding caused by the Rima and Niger rivers, noting that the government had consistently responded to seasonal climate predictions and annual flood outlooks.
 
 
-  The broader context of child trafficking in Nigeria remains deeply troubling. National and international reports continue to document the movement of children for purposes of forced labour, domestic servitude, sexual exploitation and other forms of abuse. The Northwest, including Kebbi, has not been immune. Rural poverty, the residual effects of insecurity, and the limited reach of formal education systems in some communities all contribute to the vulnerability of children. Anti-trafficking agencies, traditional rulers, religious leaders and community associations have repeatedly called for greater vigilance and for the strengthening of protective systems at the local level.
+  For ordinary residents of the twelve listed local government areas, the NEMA warning is both a call to vigilance and a reminder of past experiences. Many communities still carry the memory of previous flood seasons in which homes were submerged, harvests were lost and families were forced to seek temporary shelter on higher ground. The difference this year, officials hope, will be the quality of advance preparation and the speed with which early warnings are translated into concrete protective measures at the household and community levels.
 
 
-  Education itself remains both a protective factor and a point of vulnerability. When families believe that formal schooling is the pathway out of poverty, they become susceptible to those who claim to offer access to better schools in distant places. Strengthening local educational infrastructure, ensuring that schools are functional and that teachers are present, and creating realistic pathways for further education within the state are therefore essential components of any long-term strategy against child trafficking. The current administration’s investments in education, including the employment of large numbers of teachers and the provision of buses to tertiary institutions, form part of that broader effort.
+  Agricultural stakeholders are particularly concerned about the potential impact on rice and other crops that form the backbone of Kebbi’s economy. The state has long been recognised as a major rice-producing area, and large numbers of farmers depend on the fertile flood plains for their livelihoods. While controlled flooding can enhance soil fertility, uncontrolled or excessive inundation can destroy standing crops and delay the planting of subsequent seasons. Extension services and farmer associations are therefore being encouraged to work closely with SEMA and local authorities to ensure that planting schedules and storage arrangements take the flood outlook into account.
 
 
-  The appeal by the NAPTIP commandant for better accommodation facilities points to a practical challenge that many anti-trafficking commands face across the country. Rescued victims often require temporary shelter while their cases are investigated and while arrangements are made for their safe return or reintegration. Without adequate and secure premises, agencies are forced to improvise, sometimes placing victims in conditions that are less than ideal. The request for state support in this area is therefore both reasonable and urgent.
+  Infrastructure managers face a parallel set of challenges. Roads, bridges, schools and health facilities located in low-lying areas are at risk of damage or temporary isolation. The state government has in recent years invested in urban renewal, street lighting and road construction, but the annual flood season continues to test the resilience of these assets. Pre-flood inspections, the clearing of drainage channels and the reinforcement of vulnerable structures are among the measures that local governments and relevant ministries have been urged to prioritise in the coming weeks.
 
 
-  As the five children return to their families and the legal processes against the suspects move forward, the episode offers an opportunity for public education. Communities in Dankowagu, Zuru and other parts of the state need to hear, repeatedly and clearly, that no stranger should be trusted with the custody of a child on the basis of unverified promises. Traditional and religious leaders, school authorities and local government officials all have a role to play in reinforcing this message. The state government’s warning that parents who deliberately facilitate such movements may themselves face consequences is intended to strengthen that deterrent effect.
+  Community-level preparedness remains the critical last mile of the response. Traditional rulers and religious leaders, who command significant moral authority in Kebbi’s towns and villages, have been asked to use their platforms to disseminate early warning information and to encourage residents to move to safer locations when necessary. Women and youth groups are being mobilised to support vulnerable households, particularly the elderly, persons with disabilities and families with young children. The media, both traditional and social, has a continuing role in ensuring that accurate information reaches the widest possible audience.
 
 
-  Looking ahead, the Kebbi Command of NAPTIP will continue to operate in an environment where the demand for cheap labour and the supply of vulnerable children remain stubbornly high. Success will depend on sustained intelligence work, effective inter-agency collaboration, adequate resources for victim support, and the active partnership of communities that understand the risks and are prepared to report suspicious activity. The rescue of the five children is a welcome success, but it is also a reminder of how many other children may still be at risk.
+  Looking beyond the immediate season, the NEMA warning and the subsequent commendation of the state’s leadership point to a longer-term agenda of building resilience. Investments in early-warning systems, including the student-developed flood alert technology that has already attracted national recognition, represent an important step toward reducing the element of surprise that has historically amplified the impact of floods. The installation of river gauges and the development of safe evacuation maps by partners such as the Nigerian Red Cross further illustrate the multi-layered approach that is gradually taking shape.
 
 
-  Parents across Kebbi are urged to verify any offer of schooling or employment for their children with local authorities and school administrators before agreeing to any arrangement. Community vigilance, combined with the continued work of NAPTIP and the police, remains the most effective defence against those who would exploit the hopes of families for the future of their children.
+  As September approaches, the people of Kebbi will be watching the River Niger with a mixture of hope and apprehension. The same waters that have sustained communities for generations now carry the potential for significant disruption. The quality of the response will depend on the continued collaboration of NEMA, SEMA, the state government, local authorities, traditional institutions and ordinary citizens. If the early warnings are heeded and the preparedness measures are fully implemented, the 2026 flood season may yet be remembered as a period when anticipatory action limited the damage and protected lives and livelihoods.
 
 
-  Kebbi Daily News congratulates NAPTIP and the security agencies involved in the operation. We urge parents across the state to exercise extreme caution and to prioritise the safety of their children above any promise of distant opportunity. The best education a child can receive begins with the protection of that child’s fundamental right to remain safe within a caring family and community.
+  Residents are advised to stay alert to official updates, clear drainage channels around their homes, secure important documents and belongings, and identify safe higher ground in advance. Local emergency committees should ensure that vulnerable persons are known and that evacuation routes remain clear. The coming weeks will test the preparedness systems that have been put in place; the goal must be that when the waters rise, the people of Kebbi are ready.
 
 
   What People Are Saying
 
 
-  Coverage of the NAPTIP rescue on X has been relatively measured but consistently supportive of the intervention. One widely circulated post summarised the essential facts: five children from Kebbi had been rescued from suspected traffickers who were allegedly taking them under the guise of securing better education, suspects had been arrested, and the children had been reunited with their parents. The post used relevant hashtags that helped the information travel beyond the immediate Kebbi audience.
+  Online conversation about the flood outlook in Kebbi has been dominated by messages of preparedness rather than panic. Posts circulating on X have focused on the NEMA warning itself, the list of vulnerable local government areas, and the parallel commendation of Governor Idris by the agency’s Director-General. Users sharing the DG’s remarks have highlighted her description of the governor as a proactive leader who responds swiftly to emergencies and who has driven visible development in infrastructure, education and public safety. These posts have helped to frame the flood warning within a broader narrative of a state government that is already engaged with disaster risk reduction.
 
 
-  Users who engaged with the story expressed relief that the children had been recovered before further harm could be done. Several comments emphasised the importance of parental vigilance and echoed the warning issued by the deputy governor on behalf of the state government. There was a clear consensus that no parent should hand a child over to an unfamiliar person on the strength of promises alone, regardless of how attractive those promises might appear.
+  Partners involved in community resilience work have also used the platform to draw attention to practical measures already under way. The Nigerian Red Cross Society and its collaborators have shared images and descriptions of river gauges and safe evacuation maps installed across Kebbi. These posts emphasise that flood preparedness begins long before the water rises and that the combination of technical tools, local knowledge and institutional collaboration is essential for protecting lives and livelihoods. The visibility of such initiatives on social media has reinforced the message that the state is not starting from zero.
 
 
-  A secondary strand of conversation linked the specific rescue to wider concerns about child vulnerability in the Northwest. Some users pointed to data on multidimensional poverty, stunting and out-of-school rates among children in states including Kebbi, arguing that structural deprivation creates the conditions in which trafficking networks can operate. These contributions framed the NAPTIP success as necessary but insufficient, and called for deeper investments in education, social protection and rural development as longer-term preventive measures.
+  Among residents of the twelve listed local government areas, the tone of online commentary has been pragmatic. Users have recalled previous flood seasons, noted the importance of clearing drains and moving valuables to higher ground, and urged neighbours to take the NEMA advisory seriously. Some have called for more frequent updates from SEMA as the peak period approaches, while others have expressed confidence that the combination of early warning and government preparedness will reduce the scale of disruption compared with previous years.
 
 
-  Within Kebbi itself, local voices used the platform to urge community leaders and ordinary residents to remain alert. Posts encouraged people to report any suspicious movement of children or any individual who appears to be recruiting young people with offers of schooling or work in distant places. The formal handover ceremony at Government House was noted by some as a positive demonstration of official concern for the welfare of the rescued children.
+  National commentators following the story have pointed to Kebbi as an example of a state that is attempting to institutionalise disaster preparedness rather than relying solely on reactive relief. The recognition accorded to the student-developed early-warning system and the prompt response of the governor to NEMA’s suggestions have been cited as positive indicators. At the same time, observers have cautioned that the real test will come when the river actually rises, and that the effectiveness of the preparedness measures will be judged by the number of lives and assets protected.
 
 
-  As the legal processes against the arrested suspects proceed, further details may emerge that will shape the next phase of public discussion. For the moment, the dominant sentiment remains one of gratitude for the rescue and of renewed determination to protect the children of Kebbi from those who would exploit their families’ hopes. Kebbi Daily News will continue to follow the case and to support public education efforts that strengthen community resistance to trafficking.
+  As the conversation continues, the dominant message from both official and citizen voices remains one of vigilance and cooperation. The flood outlook is serious, the vulnerable areas are clearly identified, and the institutions responsible for response have signalled their readiness. What remains is the sustained effort of communities to translate warning into action.
 ---

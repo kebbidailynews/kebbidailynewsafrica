@@ -10,6 +10,10 @@ summary: Dr. Salihu Muhammad Danjimma, Chairman of the Committee, assured party
 author: Kebbi Daily News
 date: 2026-08-19T05:39:31.150Z
 draft: false
+tags:
+  - politics
+  - economy
+  - opinion
 image: /uploads/5.jpeg
 content: >-
   The African Democratic Congress has completed its Substitution Primary and

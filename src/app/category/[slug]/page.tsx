@@ -109,6 +109,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const decoded = decodeSlug(params.slug);
   const cat = getCategoryInfo(params.slug);
 
+  // ── FIX: canonical must point to THIS category page, not the homepage.
+  // The root layout.tsx was setting alternates.canonical = BASE_URL globally,
+  // which caused every category page to emit the homepage as its canonical.
+  // Google saw that and refused to index /category/* URLs (GSC "Redirect error").
+  // Each page must declare its own canonical — that's what this block does.
+  const canonicalUrl = `${BASE_URL}/category/${decoded}`;
+
   try {
     const posts = await getAllPosts();
     const filtered = posts.filter((p) => p.tags.some((t) => tagMatchesSlug(t, decoded)));
@@ -118,11 +125,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title: `${cat.label} News — Latest Updates from Kebbi State | Kebbi Daily News`,
       description: cat.description,
       keywords: cat.keywords,
-      alternates: { canonical: `${BASE_URL}/category/${encodeURIComponent(decoded)}` },
+      alternates: { canonical: canonicalUrl },        // ← FIXED (was encodeURIComponent(decoded), now plain decoded)
       openGraph: {
         title: `${cat.label} News — Kebbi Daily News`,
         description: cat.description,
-        url: `${BASE_URL}/category/${encodeURIComponent(decoded)}`,
+        url: canonicalUrl,                             // ← FIXED: matches canonical exactly
         siteName: "Kebbi Daily News",
         type: "website",
         locale: "en_NG",
@@ -140,7 +147,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       },
     };
   } catch {
-    return { title: `${cat.label} — Kebbi Daily News`, description: cat.description };
+    return {
+      title: `${cat.label} — Kebbi Daily News`,
+      description: cat.description,
+      alternates: { canonical: canonicalUrl },         // ← FIXED: include even in error fallback
+    };
   }
 }
 
@@ -168,7 +179,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     "@type": "CollectionPage",
     name: `${cat.label} News - Kebbi Daily News`,
     description: cat.description,
-    url: `${BASE_URL}/category/${encodeURIComponent(decoded)}`,
+    url: `${BASE_URL}/category/${decoded}`,            // ← FIXED: plain decoded, not re-encoded
     inLanguage: "en-NG",
     isPartOf: {
       "@type": "WebSite",
@@ -198,7 +209,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
-        { "@type": "ListItem", position: 2, name: cat.label, item: `${BASE_URL}/category/${encodeURIComponent(decoded)}` },
+        { "@type": "ListItem", position: 2, name: cat.label, item: `${BASE_URL}/category/${decoded}` },
       ],
     },
   };

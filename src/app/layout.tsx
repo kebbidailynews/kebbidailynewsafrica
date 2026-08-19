@@ -38,6 +38,7 @@ export const metadata: Metadata = {
   // ── Keywords ──────────────────────────────────────────────────
   keywords: [
     "Kebbi news",
+    "Kebbi news today",
     "Kebbi State news",
     "Birnin Kebbi",
     "Nigeria breaking news",
@@ -55,9 +56,13 @@ export const metadata: Metadata = {
   publisher: "Kebbi Daily News",
 
   // ── Canonical / Alternate ─────────────────────────────────────
-  alternates: {
-    canonical: BASE_URL,
-  },
+  // REMOVED: alternates.canonical must NOT be set in the root layout.
+  // When set here, Next.js inherits it on every child route that doesn't
+  // override it — so /category/security, /category/politics etc. all
+  // emitted <link rel="canonical" href="https://kebbidailynews.com"> (the
+  // homepage), causing Google to ignore those URLs (GSC "Redirect error").
+  // The homepage canonical is now set in app/page.tsx instead.
+  // Every other route sets its own canonical in its own generateMetadata().
 
   // ── Robots ───────────────────────────────────────────────────
   robots: {

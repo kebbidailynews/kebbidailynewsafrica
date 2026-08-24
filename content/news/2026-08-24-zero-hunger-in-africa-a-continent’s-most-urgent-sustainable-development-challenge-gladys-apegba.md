@@ -1,7 +1,9 @@
 ---
 title: "Zero Hunger in Africa: Most Urgent Sustainable Development Challenge in
   Africa by Gladys Apegba"
-excerpt: "Of all 17 goals, none is more pressing for Africa than SDG 2: Zero Hunger."
+excerpt: "Of all 17 goals, none is more pressing for Africa than SDG 2: Zero
+  Hunger. Food is not merely sustenance — it is the foundation of human
+  wellbeing. "
 summary: >
   Food insecurity is not merely a humanitarian crisis — it is a fundamental
   barrier to education, economic productivity, and human dignity. Solving it is

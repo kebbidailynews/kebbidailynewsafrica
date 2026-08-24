@@ -10,8 +10,9 @@ author: Gladys Apegba
 date: 2026-04-07T15:55:40.509Z
 draft: false
 tags:
-  - Gladys Apegba
-  - ZeroHungerAfrica
+  - heath
+  - economy
+  - opinion
 image: /uploads/zero_hunger_in_africa_gladys_apegba.jpg
 content: >-
   The Sustainable Development Goals (SDGs) represent a landmark global

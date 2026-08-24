@@ -18,16 +18,16 @@ export async function generateStaticParams() {
   try {
     const posts = await getAllPosts();
     return posts.map((post) => ({
-      slug: encodeURIComponent(post.slug),
+      slug: post.slug, // Do NOT encodeURIComponent — Next.js handles encoding internally
     }));
   } catch {
     return [];
   }
 }
 
-// Only serve slugs that were pre-built — anything else → 404.
-// Remove this line if you want unknown slugs to fall back to SSR.
-export const dynamicParams = false;
+// Allow slugs not pre-built at deploy time to SSR on demand (safety net for
+// any edge-case slugs like curly apostrophes that might not match exactly).
+export const dynamicParams = true;
 
 // ── Helpers ───────────────────────────────────────────────────────
 function safeSlug(slug: string): string {
@@ -337,6 +337,38 @@ export default async function NewsArticlePage({ params }: { params: { slug: stri
                             prose-img:rounded-lg prose-img:shadow-md">
               <MDXRemote source={post.content} />
             </div>
+
+            {/* ── Mid-article related teaser ──────────────────── */}
+            {relatedPosts[1] && (
+              <Link
+                href={`/news/${relatedPosts[1].slug}`}
+                className="group flex items-center gap-3 my-6 sm:my-8 p-3 border-l-4 bg-gray-50 hover:bg-gray-100 transition-colors no-underline"
+                style={{ borderColor: catColor }}
+              >
+                {relatedPosts[1].image && (
+                  <div className="relative w-16 h-16 flex-shrink-0 overflow-hidden bg-gray-200">
+                    <Image
+                      src={relatedPosts[1].image}
+                      alt={relatedPosts[1].title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="64px"
+                    />
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <p
+                    className="font-condensed font-black text-[9px] tracking-[2px] uppercase mb-1"
+                    style={{ color: catColor }}
+                  >
+                    Related
+                  </p>
+                  <p className="font-condensed font-bold text-sm sm:text-base leading-snug text-gray-900 group-hover:text-[#CC0000] transition-colors line-clamp-2">
+                    {relatedPosts[1].title}
+                  </p>
+                </div>
+              </Link>
+            )}
 
             {/* Social share bar */}
             <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 pb-4 sm:pb-6 border-y border-gray-200">

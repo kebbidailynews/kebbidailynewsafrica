@@ -89,31 +89,30 @@ function tagMatchesSlug(tag: string, decoded: string): boolean {
 }
 
 export async function generateStaticParams() {
+  // Always seed with known categories so they're guaranteed to be pre-rendered
+  const knownSlugs = new Set<string>(Object.keys(CATEGORY_MAP));
   try {
     const posts = await getAllPosts();
-    const tags = new Set<string>();
     posts.forEach((post) =>
       post.tags.forEach((tag) => {
         const clean = tag.toLowerCase().trim();
         // Guard: skip empty strings — they produce /category with no slug
-        if (clean.length > 0) tags.add(clean);
+        if (clean.length > 0) knownSlugs.add(clean);
       })
     );
-    return Array.from(tags).map((tag) => ({ slug: encodeURIComponent(tag) }));
   } catch {
-    return Object.keys(CATEGORY_MAP).map((slug) => ({ slug }));
+    // Fall through — knownSlugs already has the CATEGORY_MAP keys
   }
+  return Array.from(knownSlugs).map((tag) => ({ slug: encodeURIComponent(tag) }));
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const decoded = decodeSlug(params.slug);
   const cat = getCategoryInfo(params.slug);
 
-  // ── FIX: canonical must point to THIS category page, not the homepage.
-  // The root layout.tsx was setting alternates.canonical = BASE_URL globally,
-  // which caused every category page to emit the homepage as its canonical.
-  // Google saw that and refused to index /category/* URLs (GSC "Redirect error").
-  // Each page must declare its own canonical — that's what this block does.
+  // Each category page declares its own canonical — never the homepage.
+  // A global Link header in next.config.js was previously overriding this
+  // with the homepage URL, causing GSC "Redirect error" on all /category/* pages.
   const canonicalUrl = `${BASE_URL}/category/${decoded}`;
 
   try {
@@ -125,11 +124,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title: `${cat.label} News — Latest Updates from Kebbi State | Kebbi Daily News`,
       description: cat.description,
       keywords: cat.keywords,
-      alternates: { canonical: canonicalUrl },        // ← FIXED (was encodeURIComponent(decoded), now plain decoded)
+      alternates: { canonical: canonicalUrl },
       openGraph: {
         title: `${cat.label} News — Kebbi Daily News`,
         description: cat.description,
-        url: canonicalUrl,                             // ← FIXED: matches canonical exactly
+        url: canonicalUrl,
         siteName: "Kebbi Daily News",
         type: "website",
         locale: "en_NG",
@@ -150,7 +149,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return {
       title: `${cat.label} — Kebbi Daily News`,
       description: cat.description,
-      alternates: { canonical: canonicalUrl },         // ← FIXED: include even in error fallback
+      alternates: { canonical: canonicalUrl },
     };
   }
 }
@@ -169,7 +168,10 @@ export default async function CategoryPage({ params }: { params: { slug: string 
   const allPosts = await getAllPosts();
   const filtered = allPosts.filter((p) => p.tags.some((t) => tagMatchesSlug(t, decoded)));
 
-  if (filtered.length === 0) notFound();
+  // For known categories return an empty-state page (200) rather than 404/redirect,
+  // so Google can index the URL even before posts exist in that category.
+  const isKnownCategory = !!CATEGORY_MAP[decoded];
+  if (filtered.length === 0 && !isKnownCategory) notFound();
 
   const featured = filtered[0];
   const rest = filtered.slice(1);
@@ -179,7 +181,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     "@type": "CollectionPage",
     name: `${cat.label} News - Kebbi Daily News`,
     description: cat.description,
-    url: `${BASE_URL}/category/${decoded}`,            // ← FIXED: plain decoded, not re-encoded
+    url: `${BASE_URL}/category/${decoded}`,
     inLanguage: "en-NG",
     isPartOf: {
       "@type": "WebSite",
@@ -266,143 +268,155 @@ export default async function CategoryPage({ params }: { params: { slug: string 
           )}
         </div>
 
+        {/* Empty state for known categories with no posts yet */}
+        {filtered.length === 0 && isKnownCategory && (
+          <div className="text-center py-24 text-gray-400">
+            <p className="font-condensed font-black text-xl uppercase tracking-wide mb-2">
+              No stories yet
+            </p>
+            <p className="text-sm">Check back soon for the latest {cat.label.toLowerCase()} coverage.</p>
+          </div>
+        )}
+
         {/* Main grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {filtered.length > 0 && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-          {/* Content */}
-          <div className="lg:col-span-8">
+            {/* Content */}
+            <div className="lg:col-span-8">
 
-            {/* Featured story */}
-            {featured && (
-              <div className="mb-10">
-                <article className="bg-white border border-gray-200 overflow-hidden">
-                  {featured.image && (
-                    <div className="relative w-full bg-black" style={{ aspectRatio: "16/9" }}>
-                      <Link href={`/news/${featured.slug}`}>
-                        <Image
-                          src={featured.image}
-                          alt={featured.title}
-                          fill
-                          className="object-cover hover:opacity-90 transition-opacity"
-                          sizes="(max-width: 768px) 100vw, 800px"
-                          priority
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 h-[3px]" style={{ backgroundColor: cat.color }} />
-                      </Link>
-                      {/* Category pill on image */}
-                      <div
-                        className="absolute top-3 left-3 font-condensed font-black text-[10px] tracking-[2px] uppercase text-white px-3 py-1"
-                        style={{ backgroundColor: cat.color }}
-                      >
-                        Featured
+              {/* Featured story */}
+              {featured && (
+                <div className="mb-10">
+                  <article className="bg-white border border-gray-200 overflow-hidden">
+                    {featured.image && (
+                      <div className="relative w-full bg-black" style={{ aspectRatio: "16/9" }}>
+                        <Link href={`/news/${featured.slug}`}>
+                          <Image
+                            src={featured.image}
+                            alt={featured.title}
+                            fill
+                            className="object-cover hover:opacity-90 transition-opacity"
+                            sizes="(max-width: 768px) 100vw, 800px"
+                            priority
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 h-[3px]" style={{ backgroundColor: cat.color }} />
+                        </Link>
+                        {/* Category pill on image */}
+                        <div
+                          className="absolute top-3 left-3 font-condensed font-black text-[10px] tracking-[2px] uppercase text-white px-3 py-1"
+                          style={{ backgroundColor: cat.color }}
+                        >
+                          Featured
+                        </div>
                       </div>
-                    </div>
-                  )}
-
-                  <div className="p-6 sm:p-8">
-                    <h2 className="font-condensed font-black text-2xl sm:text-3xl leading-tight text-gray-900 mb-3 hover:text-[#CC0000] transition-colors">
-                      <Link href={`/news/${featured.slug}`}>{featured.title}</Link>
-                    </h2>
-
-                    {(featured.excerpt || featured.content) && (
-                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-4">
-                        {featured.excerpt || generateExcerpt(featured.content)}
-                      </p>
                     )}
 
-                    <div className="flex items-center gap-2 text-[11px] text-gray-400 border-t border-gray-100 pt-4">
-                      <span>By</span>
-                      <span className="font-bold" style={{ color: cat.color }}>{featured.author}</span>
-                      <span className="text-gray-200">|</span>
-                      <time>{new Date(featured.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</time>
-                      <Link
-                        href={`/news/${featured.slug}`}
-                        className="ml-auto font-condensed font-black text-[9px] tracking-[2px] uppercase text-white px-4 py-1.5 hover:opacity-90 transition-opacity"
-                        style={{ backgroundColor: cat.color }}
-                      >
-                        Read More →
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            )}
+                    <div className="p-6 sm:p-8">
+                      <h2 className="font-condensed font-black text-2xl sm:text-3xl leading-tight text-gray-900 mb-3 hover:text-[#CC0000] transition-colors">
+                        <Link href={`/news/${featured.slug}`}>{featured.title}</Link>
+                      </h2>
 
-            {/* Rest of stories */}
-            {rest.length > 0 && (
-              <div>
-                <div className="section-header" style={{ borderColor: cat.color }}>
-                  <h2 className="font-condensed font-black text-xl uppercase" style={{ color: cat.color }}>
-                    More {cat.label} Stories
-                  </h2>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {rest.map((post) => (
-                    <NewsCard key={post.slug} post={post} variant="large" />
-                  ))}
-                </div>
-              </div>
-            )}
+                      {(featured.excerpt || featured.content) && (
+                        <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-4">
+                          {featured.excerpt || generateExcerpt(featured.content)}
+                        </p>
+                      )}
 
-            {filtered.length > 12 && (
-              <p className="text-center text-gray-400 font-condensed text-xs tracking-wide mt-10 pt-6 border-t border-gray-100 uppercase">
-                Showing all {filtered.length} stories • Check back daily for updates
-              </p>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-4">
-            <div className="sticky top-24 space-y-5">
-
-              {/* Trending in category */}
-              {rest.length > 0 && (
-                <div className="sidebar-widget">
-                  <div
-                    className="font-condensed font-black text-[10px] tracking-[2px] uppercase text-white px-3 py-2.5"
-                    style={{ backgroundColor: cat.color }}
-                  >
-                    Trending in {cat.label}
-                  </div>
-                  <div className="divide-y divide-gray-100">
-                    {rest.slice(0, 5).map((p, i) => (
-                      <div key={p.slug} className="flex items-start gap-3 p-3 hover:bg-gray-50 transition-colors">
-                        <span className="trending-num">{i + 1}</span>
+                      <div className="flex items-center gap-2 text-[11px] text-gray-400 border-t border-gray-100 pt-4">
+                        <span>By</span>
+                        <span className="font-bold" style={{ color: cat.color }}>{featured.author}</span>
+                        <span className="text-gray-200">|</span>
+                        <time>{new Date(featured.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</time>
                         <Link
-                          href={`/news/${p.slug}`}
-                          className="text-[13px] font-semibold text-gray-800 leading-snug hover:text-[#CC0000] transition-colors line-clamp-3"
+                          href={`/news/${featured.slug}`}
+                          className="ml-auto font-condensed font-black text-[9px] tracking-[2px] uppercase text-white px-4 py-1.5 hover:opacity-90 transition-opacity"
+                          style={{ backgroundColor: cat.color }}
                         >
-                          {p.title}
+                          Read More →
                         </Link>
                       </div>
+                    </div>
+                  </article>
+                </div>
+              )}
+
+              {/* Rest of stories */}
+              {rest.length > 0 && (
+                <div>
+                  <div className="section-header" style={{ borderColor: cat.color }}>
+                    <h2 className="font-condensed font-black text-xl uppercase" style={{ color: cat.color }}>
+                      More {cat.label} Stories
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {rest.map((post) => (
+                      <NewsCard key={post.slug} post={post} variant="large" />
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Newsletter */}
-              <div className="sidebar-widget border-t-4" style={{ borderColor: cat.color }}>
-                <div className="p-4">
-                  <h3 className="font-condensed font-black text-base uppercase text-gray-900 mb-1">
-                    Stay Updated on {cat.label}
-                  </h3>
-                  <p className="text-xs text-gray-500 mb-3 leading-relaxed">
-                    Get the latest {cat.label.toLowerCase()} news delivered to your inbox.
-                  </p>
-                  <NewsletterForm />
+              {filtered.length > 12 && (
+                <p className="text-center text-gray-400 font-condensed text-xs tracking-wide mt-10 pt-6 border-t border-gray-100 uppercase">
+                  Showing all {filtered.length} stories • Check back daily for updates
+                </p>
+              )}
+            </div>
+
+            {/* Sidebar */}
+            <div className="lg:col-span-4">
+              <div className="sticky top-24 space-y-5">
+
+                {/* Trending in category */}
+                {rest.length > 0 && (
+                  <div className="sidebar-widget">
+                    <div
+                      className="font-condensed font-black text-[10px] tracking-[2px] uppercase text-white px-3 py-2.5"
+                      style={{ backgroundColor: cat.color }}
+                    >
+                      Trending in {cat.label}
+                    </div>
+                    <div className="divide-y divide-gray-100">
+                      {rest.slice(0, 5).map((p, i) => (
+                        <div key={p.slug} className="flex items-start gap-3 p-3 hover:bg-gray-50 transition-colors">
+                          <span className="trending-num">{i + 1}</span>
+                          <Link
+                            href={`/news/${p.slug}`}
+                            className="text-[13px] font-semibold text-gray-800 leading-snug hover:text-[#CC0000] transition-colors line-clamp-3"
+                          >
+                            {p.title}
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Newsletter */}
+                <div className="sidebar-widget border-t-4" style={{ borderColor: cat.color }}>
+                  <div className="p-4">
+                    <h3 className="font-condensed font-black text-base uppercase text-gray-900 mb-1">
+                      Stay Updated on {cat.label}
+                    </h3>
+                    <p className="text-xs text-gray-500 mb-3 leading-relaxed">
+                      Get the latest {cat.label.toLowerCase()} news delivered to your inbox.
+                    </p>
+                    <NewsletterForm />
+                  </div>
                 </div>
-              </div>
 
-              {/* Ad slot */}
-              <div className="sidebar-widget">
-                <div className="sidebar-widget__head">Advertisement</div>
-                <div className="ad-slot h-[250px]"><span>300 × 250</span></div>
-              </div>
+                {/* Ad slot */}
+                <div className="sidebar-widget">
+                  <div className="sidebar-widget__head">Advertisement</div>
+                  <div className="ad-slot h-[250px]"><span>300 × 250</span></div>
+                </div>
 
-              <Sidebar />
+                <Sidebar />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

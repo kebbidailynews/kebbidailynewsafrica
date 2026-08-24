@@ -1,7 +1,16 @@
-# Keep only your admin redirect
+# ── www → non-www (301) ───────────────────────────────────────
+# Must come FIRST — Netlify processes redirects top-to-bottom.
+# force = true means this fires even if the path exists as a file.
 [[redirects]]
-  from = "/admin"
-  to = "/admin/index.html"
+  from   = "https://www.kebbidailynews.com/*"
+  to     = "https://kebbidailynews.com/:splat"
+  status = 301
+  force  = true
+
+# ── Admin ─────────────────────────────────────────────────────
+[[redirects]]
+  from   = "/admin"
+  to     = "/admin/index.html"
   status = 200
 
 [build]

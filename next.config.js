@@ -3,16 +3,15 @@ const nextConfig = {
   trailingSlash: false,
 
   // ── www → non-www canonical redirect ──────────────────────────
-  // Netlify already handles this at the DNS level, but having it
-  // here too ensures Next.js itself never serves www URLs — which
-  // clears the "Page with redirect" errors in Google Search Console.
+  // Belt-and-suspenders alongside the netlify.toml redirect.
+  // Ensures Next.js itself never serves www URLs.
   async redirects() {
     return [
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'www.kebbidailynews.com' }],
         destination: 'https://kebbidailynews.com/:path*',
-        permanent: true, // 301 — tells Google this is the real URL forever
+        permanent: true, // 301
       },
     ];
   },
@@ -26,8 +25,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'kebbidailynews.com',
       },
-      // www still needed here so Next.js can process any legacy
-      // image URLs that might still reference the www subdomain
+      // www kept so Next.js can process any legacy image URLs
       {
         protocol: 'https',
         hostname: 'www.kebbidailynews.com',
@@ -68,11 +66,10 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
           },
-          // Tells Google and other crawlers this is the canonical domain
-          {
-            key: 'Link',
-            value: '<https://kebbidailynews.com>; rel="canonical"',
-          },
+          // REMOVED: global Link canonical header — it was overriding every
+          // page's own canonical with the homepage URL, causing GSC to report
+          // "Redirect error" on all /category/* pages. Each page now declares
+          // its own canonical via generateMetadata → alternates.canonical.
         ],
       },
       {
@@ -93,7 +90,7 @@ const nextConfig = {
           },
         ],
       },
-      // ── News article pages: no-cache so Google always gets fresh content ──
+      // News article pages: no-cache so Google always gets fresh content
       {
         source: '/news/:slug*',
         headers: [

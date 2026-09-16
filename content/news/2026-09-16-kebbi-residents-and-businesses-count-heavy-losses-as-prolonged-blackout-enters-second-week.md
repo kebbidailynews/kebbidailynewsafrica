@@ -10,7 +10,7 @@ summary: "A cold water seller in the Bayan Kara area, Ummu Abubakar, said she
   her products chilled or attract customers. "
 author: Kebbi Daily News
 date: 2026-09-15T23:57:31.388Z
-draft: true
+draft: false
 tags:
   - Kebbi
   - Blackout
